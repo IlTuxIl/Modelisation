@@ -19,6 +19,14 @@ class vector3{
   public:
     vector3(double _x = 0, double _y = 0, double _z = 0) : x(_x), y(_y), z(_z){};
 
+    double& getX() {return x;};
+    double& getY() {return y;};
+    double& getZ() {return z;};
+
+    double getX() const{return x;};
+    double getY() const{return y;};
+    double getZ() const{return z;};
+
     vector3 operator+(const vector3&)const;
     vector3 operator-(const vector3&)const;
     vector3 operator*(float)const;
@@ -42,6 +50,12 @@ private:
 class vector2{
   public:
     vector2(double _x = 0, double _y = 0) : x(_x), y(_y){};
+
+    double& getX() {return x;};
+    double& getY() {return y;};
+
+    double getX() const{return x;};
+    double getY() const{return y;};
 
     vector2 operator+(const vector2&)const;
     vector2 operator-(const vector2&)const;
