@@ -5,6 +5,10 @@
 #include <iostream>
 #include "HeightField.h"
 
+void HeightField::load(std::string filename, const vector2 &min, const vector2 &max, double zMin, double zMax) {
+
+}
+
 double HeightField::getHeight(const vector2 &v, interpolMethod method) const {
     if (v.getX() >= width && v.getY() >= height && v.getX() < 0 && v.getY() < 0){
         std::cout << "HeightField : ATTENTION v hors du tableau" << std::endl;

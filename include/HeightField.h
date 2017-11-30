@@ -7,12 +7,13 @@
 
 
 #include "Vector.h"
-
 enum interpolMethod{TRIANGULAIRE, BILINEAIRE, BICUBIQUE};
 
 class HeightField {
 
   public:
+
+    void load(std::string filename, const vector2& min, const vector2& max, double zMin, double zMax);
     double getIndex(int x, int y)const{return x + y * width;};
     double getHeight(const vector2& v, interpolMethod method = BILINEAIRE)const;
 
