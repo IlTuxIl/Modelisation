@@ -35,6 +35,7 @@ Image Tools::load(std::string filename)
     }
 
     fichier >> CodePPM >> height >> width >> max_value;
+
     Image img = Image(width, height);
 
     for(int i = 0; i < width; i++)
