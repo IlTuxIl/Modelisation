@@ -18,8 +18,9 @@ public:
 
 class Tools
 {
-  Image load(std::string filename);
-  save(HeightField hf);
+  public:
+    Image load(std::string filename);
+//    save(HeightField hf);
 };
 
 
