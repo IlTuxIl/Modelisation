@@ -34,7 +34,9 @@ Image Tools::load(std::string filename)
         std::cout << "Impossible d'ouvrir le fichier en lecture !" << std::endl;
     }
 
-    fichier >> CodePPM >> height >> width >> max_value;
+    std::string toto;
+    fichier >> CodePPM;
+    fichier >> height >> width >> max_value;
     Image img = Image(width, height);
 
     for(int i = 0; i < width; i++)
