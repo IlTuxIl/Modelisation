@@ -6,7 +6,9 @@
 #define MODELISATION_LAYERFIELD_H
 
 
-class LayerField {
+#include "Array.h"
+
+class LayerField : public Array{
 
 };
 

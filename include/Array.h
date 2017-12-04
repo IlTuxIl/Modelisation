@@ -6,8 +6,19 @@
 #define MODELISATION_ARRAY_H
 
 
-class Array {
+#include "Box.h"
 
+class Array : public Box{
+  public:
+    Array() = default;
+    Array(const vector2& min, const vector2& max, int nx, int ny) : Box(min, max), sizeX(nx), sizeY(ny){};
+    vector2 getVertex(int x , int y);
+    vector2 getIndex(int x , int y){return x + y * sizeX;};
+
+    int getSizeX() {return sizeX;}
+    int getSizeY() {return sizeY;}
+  protected:
+    int sizeX, sizeY;
 };
 
 

@@ -19,6 +19,10 @@ class vector3{
   public:
     vector3(double _x = 0, double _y = 0, double _z = 0) : x(_x), y(_y), z(_z){};
 
+    void setX(double val) {x = val;};
+    void setY(double val) {y = val;};
+    void setZ(double val) {z = val;};
+
     double& getX() {return x;};
     double& getY() {return y;};
     double& getZ() {return z;};
@@ -50,6 +54,9 @@ private:
 class vector2{
   public:
     vector2(double _x = 0, double _y = 0) : x(_x), y(_y){};
+
+    void setX(double val) {x = val;};
+    void setY(double val) {y = val;};
 
     double& getX() {return x;};
     double& getY() {return y;};

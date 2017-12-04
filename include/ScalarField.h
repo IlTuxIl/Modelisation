@@ -2,13 +2,19 @@
 // Created by julien on 04/12/17.
 //
 
-#ifndef MODELISATION_SCALARFIELD$_H
-#define MODELISATION_SCALARFIELD$_H
+#ifndef MODELISATION_SCALARFIELD_H
+#define MODELISATION_SCALARFIELD_H
 
 
-class ScalarField$ {
+#include "Array.h"
 
+class ScalarField : public Array {
+public:
+    ScalarField() = default;
+    ScalarField(const vector2& _min, const vector2& _max) : xyMin(_min);
+protected:
+    double* value;
 };
 
 
-#endif //MODELISATION_SCALARFIELD$_H
+#endif //MODELISATION_SCALARFIELD_H
