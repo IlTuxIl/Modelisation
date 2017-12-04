@@ -3,9 +3,11 @@
 //
 
 #include <iostream>
+#include <Image.h>
 #include "HeightField.h"
 
 void HeightField::load(std::string filename, const vector2 &min, const vector2 &max, double zMin, double zMax) {
+
 
 }
 
