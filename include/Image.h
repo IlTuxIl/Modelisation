@@ -13,7 +13,7 @@ private:
 public:
     Image() = default;
     Image(std::string filename);
-    Image(std::string filename, int height, int width, const double* vals);
+    Image(std::string filename, int height, int width, const unsigned char* vals);
 
     int getHeight(){return height;}
     int getWidth(){return width;}
