@@ -8,10 +8,14 @@ class Image
 {
 private:
     int height, width;
-    double* values;
+    int* values;
 
 public:
     Image(std::string filename);
-    double* getValues(){return values;};
+    int getHeight(){return height;}
+    int getWidth(){return width;}
+    int getValue(int x, int y){return values[x + width * y];};
+
+    int* getValues(){return values;};
     ~Image();
 };

@@ -3,7 +3,7 @@
 Image::Image(std::string filename)
 {
     std::string CodePPM;
-    double max_value;
+    int max_value;
 
     std::ifstream fichier(filename, std::ios::out | std::ios::binary);
     if(!fichier.is_open())
@@ -14,13 +14,16 @@ Image::Image(std::string filename)
     std::string toto;
     fichier >> CodePPM;
     fichier >> height >> width >> max_value;
+    values = new int[height * width];
 
-    values = new double[height * width];
+    unsigned char octet;
 
-    for(int i = 0; i < width; i++)
-        for (int j = 0; j < height; j++)
-            fichier >> values[i + j * width];
-
+    for(int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++){
+            fichier >> octet;
+            values[j + height * i] = octet;
+        }
+    }
     fichier.close();  // on ferme le fichier
 }
 

@@ -12,6 +12,7 @@ class ScalarField : public Array {
 public:
     ScalarField() = default;
     ScalarField(const vector2& _min, const vector2& _max);
+
 protected:
     double* value;
 };

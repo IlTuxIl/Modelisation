@@ -6,7 +6,7 @@
 #include "Array.h"
 
 
-vector2 Array::getVertex(int i, int j) {
+vector2 Array::getVertex(int i, int j) const {
     vector2 ret;
 
     if(i > sizeX-1 || j > sizeY-1)
@@ -15,4 +15,9 @@ vector2 Array::getVertex(int i, int j) {
     ret.setX(xyMin.getX() + ((xyMax.getX() - xyMin.getX()) / (sizeX - 1)) * i);
     ret.setY(xyMin.getY() + ((xyMax.getY() - xyMin.getY()) / (sizeY - 1)) * j);
     return ret;
+}
+
+void Array::getGridIndex(const vector2 &vec, int &x, int &y) const {
+    x = (vec.getX() / (xyMax.getX() - xyMin.getX()) - xyMin.getX()) * sizeX;
+    y = (vec.getY() / (xyMax.getY() - xyMin.getY()) - xyMin.getY()) * sizeY;
 }

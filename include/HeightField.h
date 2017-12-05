@@ -8,6 +8,7 @@
 
 #include "Vector.h"
 #include "Array.h"
+#include "ScalarField.h"
 
 enum interpolMethod{TRIANGULAIRE, BILINEAIRE, BICUBIQUE};
 
@@ -16,6 +17,7 @@ class HeightField : public Array {
   public:
 
     void load(std::string filename, const vector2& min, const vector2& max, double zMin, double zMax);
+    void destroy();
     double getHeight(const vector2& v, interpolMethod method = BILINEAIRE)const;
 
     double interpolationTriangulaire(const vector2& v)const;
@@ -25,8 +27,6 @@ class HeightField : public Array {
 protected:
 
     double* value = NULL;
-    int  height = -1;
-    int width = -1;
 
 };
 
