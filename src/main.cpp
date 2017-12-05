@@ -11,6 +11,6 @@ int main() {
     int x,y;
     hf.getGridIndex(vector2(2,0), x,y);
     std::cout << x<< " " <<y <<std::endl;
-    std::cout << hf.getHeight(vector2(247.55,73.33)) << std::endl;
+    hf.saveImg("data/toto.ppm");
     return 0;
 }

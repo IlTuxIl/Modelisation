@@ -11,7 +11,7 @@
 class ScalarField : public Array {
 public:
     ScalarField() = default;
-    ScalarField(const vector2& _min, const vector2& _max);
+    void saveImg(std::string filename);
 
 protected:
     double* value;

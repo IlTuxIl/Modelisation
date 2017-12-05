@@ -12,7 +12,7 @@
 
 enum interpolMethod{TRIANGULAIRE, BILINEAIRE, BICUBIQUE};
 
-class HeightField : public Array {
+class HeightField : public ScalarField {
 
   public:
 
@@ -25,8 +25,6 @@ class HeightField : public Array {
     double interpolationBicubique(const vector2& v)const;
 
 protected:
-
-    double* value = NULL;
 
 };
 
