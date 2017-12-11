@@ -8,8 +8,8 @@
 
 void HeightField::load(std::string filename, const vector2 &min, const vector2 &max, double zMin, double zMax) {
     Image img(filename);
-    sizeX = img.getHeight();
-    sizeY = img.getWidth();
+    sizeX = img.getWidth();
+    sizeY = img.getHeight();
     value = new double[sizeX * sizeY];
     xyMin = min;
     xyMax = max;
@@ -71,4 +71,41 @@ double HeightField::interpolationBicubique(const vector2& v)const{
 
 void HeightField::destroy() {
     delete[] value;
+}
+
+Maillage HeightField::getMaillage() {
+    Maillage ret;
+    std::vector<float> vertex;
+    std::vector<unsigned int> face;
+
+    for(int i = 0; i < sizeY; ++i){
+        for(int j = 0; j < sizeX; ++j) {
+            vertex.push_back(j * sizeGridX);
+            vertex.push_back(i * sizeGridY);
+            vertex.push_back(getHeight(getVertex(j,i)));
+        }
+    }
+
+    for(int i = 0; i < (sizeX-1); i++){
+        int cptY = 0 ;
+        int cptZ = 0;
+        for(int j = 0; j < (sizeY-1); j++){
+            int cptX = 0;
+            cptZ++;
+            for(int k = 0; k < 2; k++){
+                face.push_back(j * sizeX + cptX + i);
+                face.push_back(sizeX * cptZ + i);
+                face.push_back(sizeX * cptY + i + 1);
+
+                cptX++;
+                if(k == 0)
+                    cptY++;
+            }
+        }
+    }
+
+    ret.setNbIndiceFace(3);
+    ret.setVertexBuffer(vertex);
+    ret.setIndiceBuffer(face);
+    return ret;
 }

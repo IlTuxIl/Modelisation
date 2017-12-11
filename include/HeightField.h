@@ -9,6 +9,7 @@
 #include "Vector.h"
 #include "Array.h"
 #include "ScalarField.h"
+#include "Maillage.h"
 
 enum interpolMethod{TRIANGULAIRE, BILINEAIRE, BICUBIQUE};
 
@@ -19,6 +20,7 @@ class HeightField : public ScalarField {
     void load(std::string filename, const vector2& min, const vector2& max, double zMin, double zMax);
     void destroy();
     double getHeight(const vector2& v, interpolMethod method = BILINEAIRE)const;
+    Maillage getMaillage();
 
     double interpolationTriangulaire(const vector2& v)const;
     double interpolationBilineaire(const vector2& v)const;

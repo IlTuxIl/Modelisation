@@ -2,25 +2,27 @@
 // Created by julien on 30/10/17.
 //
 
+#include <fstream>
+#include <iomanip>
 #include "Maillage.h"
 
-void GeoLib::Maillage::setNbIndiceFace(int v) {
+void Maillage::setNbIndiceFace(int v) {
     nbIndicesFace = v;
 }
 
-void GeoLib::Maillage::setVertexBuffer(std::vector<float> &p) {
+void Maillage::setVertexBuffer(std::vector<float> &p) {
     vertex = p;
 }
 
-void GeoLib::Maillage::setIndiceBuffer(const std::vector<unsigned int> &p) {
+void Maillage::setIndiceBuffer(const std::vector<unsigned int> &p) {
     indice = p;
 }
 
-int GeoLib::Maillage::getNbIndiceFace() const {
+int Maillage::getNbIndiceFace() const {
     return nbIndicesFace;
 }
 
-std::vector<float> GeoLib::Maillage::getVertex() {
+std::vector<float> Maillage::getVertex() {
 
 //    std::vector<float> ret;
 //    ret.reserve(vertex.size() * 3);
@@ -34,14 +36,29 @@ std::vector<float> GeoLib::Maillage::getVertex() {
     return vertex;
 }
 
-std::vector<unsigned int> GeoLib::Maillage::getIndice() {
+std::vector<unsigned int> Maillage::getIndice() {
     return indice;
 }
 
-size_t GeoLib::Maillage::getVertexBufferSize() const {
+size_t Maillage::getVertexBufferSize() const {
     return vertex.size() * sizeof(float) * 3;
 }
 
-size_t GeoLib::Maillage::getIndiceBufferSize() const {
+size_t Maillage::getIndiceBufferSize() const {
     return indice.size() * sizeof(unsigned int);
+}
+
+void Maillage::saveOBJ(std::string filename) {
+
+    std::ofstream fichier(filename);
+    fichier << "o Terrain" << std::endl;
+    fichier << std::endl;
+    for(int i = 0; i < vertex.size(); i += 3){
+        fichier << std::fixed << std::setprecision(10) << "v " << vertex[i] << " " << vertex[i+1] << " " << vertex[i+2] << std::endl;
+    }
+    fichier << std::endl;
+    for(int i = 0; i < indice.size(); i += 3){
+        fichier << "f " << indice[i]+1 << "// " << indice[i+1]+1 << "// " << indice[i+2]+1 << "//"<< std::endl;
+    }
+    fichier.close();
 }

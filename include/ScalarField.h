@@ -19,3 +19,4 @@ protected:
 
 
 #endif //MODELISATION_SCALARFIELD_H
+

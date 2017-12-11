@@ -13,7 +13,7 @@ Image::Image(std::string filename)
 
     std::string toto;
     fichier >> CodePPM;
-    fichier >> height >> width >> max_value;
+    fichier >> width >> height >> max_value;
     values = new unsigned char[height * width];
 
     unsigned char octet;
@@ -28,7 +28,7 @@ Image::Image(std::string filename)
     fichier.close();  // on ferme le fichier
 }
 
-Image::Image(std::string filename, int _height, int _width, const unsigned char *vals) {
+Image::Image(std::string filename, int _width, int _height, const unsigned char *vals) {
     height = _height;
     width = _width;
     values = new unsigned char[height * width * 3];
@@ -45,7 +45,7 @@ Image::Image(std::string filename, int _height, int _width, const unsigned char 
     std::ofstream fichier(filename, std::ios::binary);
 
     fichier << "P6" << std::endl;
-    fichier << height << " " << width << std::endl;
+    fichier << width << " " << height << std::endl;
     fichier << 255 << std::endl;
     fichier.write((char*) values, height * width * 3);
 
