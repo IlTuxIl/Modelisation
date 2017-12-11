@@ -33,12 +33,13 @@ public:
 
     int init() {
 
-        int x = 500;
-        int y = 500;
+        int x = 1500;
+        int y = 1500;
 
         Array a(vector2(0,0), vector2(1,2), 10, 10);
         HeightField hf;
-        hf.load("data/terrain.ppm", vector2(0,0), vector2(x,y), 0, 50.0);
+//        hf.load("data/terrain.ppm", vector2(0,0), vector2(x,y), 0, 50.0);
+        hf.noise(vector2(0,0), vector2(x,y), 0, 50.0, 100, 100);
         m_camera.lookat(Point(0,0), Point(x,y));
 
 //        hf.saveImg("data/toto.ppm");

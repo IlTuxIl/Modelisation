@@ -4,7 +4,28 @@
 
 #include <iostream>
 #include <Image.h>
+#include <Noise.h>
 #include "HeightField.h"
+
+void HeightField::noise(const vector2 &min, const vector2 &max, double zMin, double zMax, int _sizeX, int _sizeY) {
+
+    Noise n;
+    sizeX = _sizeX;
+    sizeY = _sizeY;
+    value = new double[sizeX * sizeY];
+    xyMin = min;
+    xyMax = max;
+    sizeGridX = (getXMax() - getXMin()) / (sizeX -1);
+    sizeGridY = (getYMax() - getYMin()) / (sizeY -1);
+
+    for(int i = 0; i < sizeY; ++i){
+        for(int j = 0; j < sizeX; ++j){
+            double newVal = zMin + ((n.At(vector2(j, i))+1)/2.0) * (zMax-zMin);
+            value[getIndex(j,i)] = newVal;
+        }
+    }
+
+}
 
 void HeightField::load(std::string filename, const vector2 &min, const vector2 &max, double zMin, double zMax) {
     Image img(filename);
@@ -13,8 +34,8 @@ void HeightField::load(std::string filename, const vector2 &min, const vector2 &
     value = new double[sizeX * sizeY];
     xyMin = min;
     xyMax = max;
-    sizeGridX = (getXMax() - getXMin()) / sizeX;
-    sizeGridY = (getYMax() - getYMin()) / sizeY;
+    sizeGridX = (getXMax() - getXMin()) / (sizeX -1);
+    sizeGridY = (getYMax() - getYMin()) / (sizeY -1);
 
     for(int i = 0; i < sizeY; ++i){
         for(int j = 0; j < sizeX; ++j){
@@ -117,3 +138,57 @@ Maillage HeightField::getMaillage() {
     ret.setIndiceBuffer(face);
     return ret;
 }
+
+vector3 HeightField::getNormal(int x, int y) const {
+
+//    for(int i = 0; i < (sizeX-1); i++){
+//        int cptY = 0 ;
+//        int cptZ = 0;
+//        for(int j = 0; j < (sizeY-1); j++){
+//            int cptX = 0;
+//            cptZ++;
+//            for(int k = 0; k < 2; k++){
+//                face.push_back(j * sizeX + cptX + i);
+//                face.push_back(sizeX * cptZ + i);
+//                face.push_back(sizeX * cptY + i + 1);
+//
+//                cptX++;
+//                if(k == 0)
+//                    cptY++;
+//            }
+//        }
+//    }
+
+
+    return vector3();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
