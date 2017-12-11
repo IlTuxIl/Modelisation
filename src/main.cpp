@@ -33,11 +33,13 @@ public:
 
     int init() {
 
+        int x = 500;
+        int y = 500;
 
         Array a(vector2(0,0), vector2(1,2), 10, 10);
         HeightField hf;
-        hf.load("data/terrain.ppm", vector2(0,0), vector2(500,250), 0, 255);
-        m_camera.lookat(Point(0,0), Point(hf.getSizeX(),hf.getSizeY()));
+        hf.load("data/terrain.ppm", vector2(0,0), vector2(x,y), 0, 255);
+        m_camera.lookat(Point(0,0), Point(x,y));
 
 //        hf.saveImg("data/toto.ppm");
         std::vector<Maillage *> mesh;
@@ -92,12 +94,12 @@ protected:
 
 int main(int argc, char **argv) {
 
-    Framebuffer tp;
-    tp.run();
+//    Framebuffer tp;
+//    tp.run();
 //
-//    HeightField hf;
-//    hf.load("data/terrain.ppm", vector2(0,0), vector2(500,250), 0, 255);
-//    hf.saveImg("data/toto.ppm");
+    HeightField hf;
+    hf.load("data/terrain.ppm", vector2(0,0), vector2(500,500), 0, 255);
+
 //    Maillage _mesh = hf.getMaillage();
 //    _mesh.saveOBJ("data/terrain.obj");
 

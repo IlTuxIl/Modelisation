@@ -14,10 +14,10 @@ class Box {
     Box(const vector2& min, const vector2& max);
 
     vector2 getCorner(int i);
-    double getXMin(){return xyMin.getX();}
-    double getXMax(){return xyMax.getX();}
-    double getYMin(){return xyMin.getY();}
-    double getYMax(){return xyMax.getY();}
+    double getXMin()const{return xyMin.getX();}
+    double getXMax()const{return xyMax.getX();}
+    double getYMin()const{return xyMin.getY();}
+    double getYMax()const{return xyMax.getY();}
 
 protected:
     vector2 xyMin;

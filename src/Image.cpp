@@ -24,9 +24,7 @@ Image::Image(std::string filename)
                 std::cout << "r != b != g" << std::endl;
             values[j + width * i] = r;
 
-            printf("%d ", values[j + width * i]);
         }
-        std::cout << std::endl;
     }
     fichier.clear();
     fichier.close();  // on ferme le fichier

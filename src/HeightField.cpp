@@ -18,18 +18,11 @@ void HeightField::load(std::string filename, const vector2 &min, const vector2 &
 
     for(int i = 0; i < sizeY; ++i){
         for(int j = 0; j < sizeX; ++j){
-//            std::cout << img.getValue(j, i) << " ";
             double newVal = zMin + ((double)img.getValue(j, i)/255.0) * (zMax-zMin);
             value[getIndex(j,i)] = newVal;
         }
-//        std::cout << std::endl;
     }
 
-//    for(int i = 0; i < sizeY; ++i) {
-//        for (int j = 0; j < sizeX; ++j)
-//            std::cout << value[getIndex(j, i)] << " ";
-//        std::cout << std::endl;
-//    }
 }
 
 double HeightField::getHeight(const vector2 &v, interpolMethod method) const {
@@ -56,6 +49,7 @@ double HeightField::interpolationBilineaire(const vector2& vec)const{
     int xGrid, yGrid;
     vector2 tmp(vec);
     getGridIndex(vec, xGrid, yGrid);
+
 
     double x0y0 = value[xGrid + yGrid*sizeX];
     double x1y0 = value[xGrid + 1 + yGrid*sizeX];
@@ -89,9 +83,14 @@ Maillage HeightField::getMaillage() {
 
     for(int i = 0; i < sizeY; ++i){
         for(int j = 0; j < sizeX; ++j) {
-            vertex.push_back(j * sizeGridX);
-            vertex.push_back(i * sizeGridY);
-            vertex.push_back(getHeight(getVertex(j,i)));
+
+            float x = j * sizeGridX;
+            float y = i * sizeGridY;
+            float z = getHeight(getVertex(j,i));
+
+            vertex.push_back(x);
+            vertex.push_back(y);
+            vertex.push_back(z);
         }
     }
 
