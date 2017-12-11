@@ -8,18 +8,18 @@ class Image
 {
 private:
     int height, width;
-    unsigned char* values;
+    int* values;
 
 public:
     Image() = default;
     Image(std::string filename);
-    Image(std::string filename, int height, int width, const unsigned char* vals);
+    Image(std::string filename, int height, int width, const int* vals);
 
     int getHeight(){return height;}
     int getWidth(){return width;}
     void setHeight(int val){height = val;}
     void setWidth(int val){width = val;}
     int getValue(int x, int y){return values[x + width * y];};
-    unsigned char* getValues(){return values;};
+    int* getValues(){return values;};
     ~Image();
 };

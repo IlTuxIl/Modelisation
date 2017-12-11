@@ -13,7 +13,7 @@ class Array : public Box{
     Array() = default;
     Array(const vector2& min, const vector2& max, int nx, int ny) : Box(min, max), sizeX(nx), sizeY(ny){};
     vector2 getVertex(int x , int y)const;
-    vector2 getIndex(int x , int y)const{return x + y * sizeX;};
+    int getIndex(int x , int y)const{return x + y * sizeX;};
     void getGridIndex(const vector2& vec, int& x, int& y)const;
     int getSizeX() {return sizeX;}
     int getSizeY() {return sizeY;}

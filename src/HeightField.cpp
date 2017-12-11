@@ -15,12 +15,21 @@ void HeightField::load(std::string filename, const vector2 &min, const vector2 &
     xyMax = max;
     sizeGridX = (getXMax() - getXMin()) / sizeX;
     sizeGridY = (getYMax() - getYMin()) / sizeY;
+
     for(int i = 0; i < sizeY; ++i){
         for(int j = 0; j < sizeX; ++j){
+//            std::cout << img.getValue(j, i) << " ";
             double newVal = zMin + ((double)img.getValue(j, i)/255.0) * (zMax-zMin);
-            value[i * sizeX + j] = newVal;
+            value[getIndex(j,i)] = newVal;
         }
+//        std::cout << std::endl;
     }
+
+//    for(int i = 0; i < sizeY; ++i) {
+//        for (int j = 0; j < sizeX; ++j)
+//            std::cout << value[getIndex(j, i)] << " ";
+//        std::cout << std::endl;
+//    }
 }
 
 double HeightField::getHeight(const vector2 &v, interpolMethod method) const {
