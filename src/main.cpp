@@ -38,7 +38,7 @@ public:
 
         Array a(vector2(0,0), vector2(1,2), 10, 10);
         HeightField hf;
-        hf.load("data/terrain.ppm", vector2(0,0), vector2(x,y), 0, 255);
+        hf.load("data/terrain.ppm", vector2(0,0), vector2(x,y), 0, 50.0);
         m_camera.lookat(Point(0,0), Point(x,y));
 
 //        hf.saveImg("data/toto.ppm");
@@ -94,11 +94,11 @@ protected:
 
 int main(int argc, char **argv) {
 
-//    Framebuffer tp;
-//    tp.run();
+    Framebuffer tp;
+    tp.run();
 //
-    HeightField hf;
-    hf.load("data/terrain.ppm", vector2(0,0), vector2(500,500), 0, 255);
+//    HeightField hf;
+//    hf.load("data/terrain.ppm", vector2(0,0), vector2(500,500), 0, 255);
 
 //    Maillage _mesh = hf.getMaillage();
 //    _mesh.saveOBJ("data/terrain.obj");

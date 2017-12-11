@@ -20,6 +20,8 @@ class HeightField : public ScalarField {
     void load(std::string filename, const vector2& min, const vector2& max, double zMin, double zMax);
     void destroy();
     double getHeight(const vector2& v, interpolMethod method = BILINEAIRE)const;
+    double getNormal(const vector2& v, interpolMethod method = BILINEAIRE)const;
+
     Maillage getMaillage();
 
     double interpolationTriangulaire(const vector2& v)const;

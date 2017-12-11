@@ -18,6 +18,7 @@ vector2 Array::getVertex(int i, int j) const {
 }
 
 void Array::getGridIndex(const vector2 &vec, int &x, int &y) const {
+    //ATTENTION FORMULE PAS SUR
     x = (vec.getX() - xyMin.getY()) / (xyMax.getX() - xyMin.getX()) * sizeX - 1;
     y = (vec.getY() - xyMin.getY()) / (xyMax.getY() - xyMin.getY()) * sizeY - 1;
 }
