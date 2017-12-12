@@ -33,14 +33,36 @@ public:
 
     int init() {
 
-        int x = 100;
-        int y = 100;
+        double x = 10000.0f;
+        double y = 10000.0f;
 
         Array a(Vector2(0,0), Vector2(1,2), 10, 10);
         HeightField hf;
         hf.load("data/terrain.ppm", Vector2(0,0), Vector2(x,y), 0, 5.0);
 //        hf.noise(Vector2(0,0), Vector2(x,y), 0, 50.0, 100, 100);
         std::cout << hf.getNormal(7,0) << std::endl;
+        Array a(vector2(0,0), vector2(1,2), 10, 10);
+
+
+        std::vector<double> freq;
+        std::vector<double> ampli;
+
+        freq.push_back(5000.0);
+        freq.push_back(2450.0);
+        freq.push_back(1220.0);
+        freq.push_back(550.0);
+
+        ampli.push_back(300.0);
+        ampli.push_back(140.0);
+        ampli.push_back(65.0);
+        ampli.push_back(30.0);
+
+        AnalyticHeightField hf(vector2(0,0), vector2(x,y), 100, 100, freq, ampli);
+//        hf.load("data/terrain.ppm", vector2(0,0), vector2(x,y), 0, 5.0);
+//        hf.noise(vector2(0,0), vector2(x,y), 0, 100.0, 100, 100);
+
+
+
 
         m_camera.lookat(Point(0,0), Point(x,y));
 

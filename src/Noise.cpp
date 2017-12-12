@@ -107,3 +107,9 @@ double Noise::At(const Vector2 & p) const
     // The result is scaled to return values in the interval [-1,1].
     return 70.0 * (n[0] + n[1] + n[2]);
 }
+
+double Noise::AtRidg(const vector2 &p) const {
+
+    return -fabs(At(p));
+
+}
