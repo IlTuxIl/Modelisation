@@ -20,11 +20,10 @@ void HeightField::noise(const vector2 &min, const vector2 &max, double zMin, dou
 
     for(int i = 0; i < sizeY; ++i){
         for(int j = 0; j < sizeX; ++j){
-            double newVal = zMin + ((n.At(vector2(j, i))+1)/2.0) * (zMax-zMin);
+            double newVal = zMax * n.At(vector2(j, i)/100);
             value[getIndex(j,i)] = newVal;
         }
     }
-
 }
 
 void HeightField::load(std::string filename, const vector2 &min, const vector2 &max, double zMin, double zMax) {
