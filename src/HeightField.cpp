@@ -141,24 +141,130 @@ Maillage HeightField::getMaillage() {
 
 vector3 HeightField::getNormal(int x, int y) const {
 
-//    for(int i = 0; i < (sizeX-1); i++){
-//        int cptY = 0 ;
-//        int cptZ = 0;
-//        for(int j = 0; j < (sizeY-1); j++){
-//            int cptX = 0;
-//            cptZ++;
-//            for(int k = 0; k < 2; k++){
-//                face.push_back(j * sizeX + cptX + i);
-//                face.push_back(sizeX * cptZ + i);
-//                face.push_back(sizeX * cptY + i + 1);
-//
-//                cptX++;
-//                if(k == 0)
-//                    cptY++;
-//            }
-//        }
-//    }
+    if (x >= sizeX && y >= sizeY && x < 0 && y < 0){
+        std::cout << "HeightField getNormal : ATTENTION x,y hors du tableau" << std::endl;
+        return vector3();
+    }
 
+    if(x > 0 && x < sizeX -1 && y > 0 && y < sizeY - 1) { // cas général
+
+    }
+    //      b
+    //      |\
+    //      | \
+    //      a--c
+    if(x == 0 && y == 0){ //cas bas gauche
+        vector3 a(0        , 0        , value[0]);
+        vector3 b(0        , sizeGridY, value[sizeX]);
+        vector3 c(sizeGridX, 0        , value[1]);
+        return ((c-a).cross(b-a)).normalize();
+    }
+
+    //      c--d
+    //      |\ |
+    //      | \|
+    //      b--a
+    if(x == sizeX-1 && y == 0){//cas bas droite
+        vector3 a(sizeGridX * (x)  , 0, value[x]);
+        vector3 b(sizeGridX * (x-1), 0, value[x-1]);
+        vector3 c(sizeGridX * (x-1), 1, value[2*sizeX - 2]);
+        vector3 d(sizeGridX * (x)  , 1, value[2*sizeX - 1]);
+
+        vector3 abc((c-a).cross(b-a));
+        vector3 acd((d-a).cross(c-a));
+        return (abc * 0.5 + acd * 0.5).normalize();
+    }
+    //       b--a
+    //        \ |
+    //         \|
+    //          c
+    if(x == sizeX-1 && y == sizeY-1){
+        vector3 a(sizeGridX * (sizeX-1), sizeGridY * (sizeY-1), value[x + sizeX * y]);
+        vector3 b(sizeGridX * (sizeX-2), sizeGridY * (sizeY-1), value[x-1 + sizeX * y]);
+        vector3 c(sizeGridX * (sizeX-1), sizeGridY * (sizeY-2), value[x + sizeX * (y-1)]);
+        return ((b-a).cross(c-a)).normalize();
+    }
+    //      a--b
+    //      |\ |
+    //      | \|
+    //      d--c
+    if(x == 0 && y == sizeY-1){
+        vector3 a(        0, sizeGridY * (y)  , value[sizeX * y]);
+        vector3 b(sizeGridX, sizeGridY * (y)  , value[sizeX * y + 1]);
+        vector3 c(sizeGridX, sizeGridY * (y-1), value[sizeX * (y-1) + 1]);
+        vector3 d(        0, sizeGridY * (y-1), value[sizeX * (y-1)]);
+
+        vector3 abc((c-a).cross(b-a));
+        vector3 acd((d-a).cross(c-a));
+        return (abc * 0.5 + acd * 0.5).normalize();
+    }
+
+    //    b
+    //    |\
+    //    a-c
+    //    |\|
+    //    e-d
+    if(x == 0){
+        vector3 a(0        , sizeGridY * (y)  , value[sizeX * y]);
+        vector3 b(0        , sizeGridY * (y+1), value[sizeX * (y+1)]);
+        vector3 c(sizeGridX, sizeGridY * (y)  , value[sizeX * y + 1]);
+        vector3 d(sizeGridX, sizeGridY * (y-1), value[sizeX * (y-1) + 1]);
+        vector3 e(0        , sizeGridY * (y-1), value[sizeX * (y-1)]);
+
+        vector3 abc((c-a).cross(b-a));
+        vector3 acd((d-a).cross(c-a));
+        vector3 ade((e-a).cross(d-a));
+        return (abc * 0.33 + acd * 0.33 + ade * 0.33).normalize();
+    }
+
+    //    c-b
+    //    |\|
+    //    d-a
+    //     \|
+    //      e
+    if(x == sizeX -1){
+        vector3 a(sizeGridX * (x)  , sizeGridY * (y), value[sizeX * y + x]);
+        vector3 b(sizeGridX * (x)  , sizeGridY * (y+1), value[sizeX * (y+1) + x]);
+        vector3 c(sizeGridX * (x-1), sizeGridY * (y+1), value[sizeX * (y+1) + x - 1]);
+        vector3 d(sizeGridX * (x-1), sizeGridY * (y), value[sizeX * y + x - 1]);
+        vector3 e(sizeGridX * (x)  , sizeGridY * (y-1), value[sizeX * (y-1) + x]);
+
+        vector3 abc((b-a).cross(c-a));
+        vector3 acd((c-a).cross(d-a));
+        vector3 ade((d-a).cross(e-a));
+        return (abc * 0.33 + acd * 0.33 + ade * 0.33).normalize();
+    }
+    //    c-d
+    //    |\|\
+    //    b-a-e
+    if(y == 0){
+        vector3 a(sizeGridX * (x)  , 0        , value[x]);
+        vector3 b(sizeGridX * (x-1), 0        , value[x-1]);
+        vector3 c(sizeGridX * (x-1), sizeGridY, value[sizeX + x - 1]);
+        vector3 d(sizeGridX * (x)  , sizeGridY, value[sizeX + x]);
+        vector3 e(sizeGridX * (x+1), 0        , value[x+1]);
+
+        vector3 abc((c-a).cross(b-a));
+        vector3 acd((d-a).cross(c-a));
+        vector3 ade((e-a).cross(d-a));
+        return (abc * 0.33 + acd * 0.33 + ade * 0.33).normalize();
+    }
+
+    //    b-a-e
+    //     \|\|
+    //      c-d
+    if(y == sizeY-1){
+        vector3 a(sizeGridX * (x)  , sizeGridY * (y)  , value[sizeX * y + x]);
+        vector3 b(sizeGridX * (x-1), sizeGridY * (y)  , value[sizeX * y + x - 1]);
+        vector3 c(sizeGridX * (x)  , sizeGridY * (y-1), value[sizeX * (y-1) + x]);
+        vector3 d(sizeGridX * (x+1), sizeGridY * (y-1), value[sizeX * (y-1) + x + 1]);
+        vector3 e(sizeGridX * (x+1), sizeGridY * (y)  , value[sizeX * y + x + 1]);
+
+        vector3 abc((b-a).cross(c-a));
+        vector3 acd((c-a).cross(d-a));
+        vector3 ade((d-a).cross(e-a));
+        return (abc * 0.33 + acd * 0.33 + ade * 0.33).normalize();
+    }
 
     return vector3();
 }

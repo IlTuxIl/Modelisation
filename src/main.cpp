@@ -33,13 +33,15 @@ public:
 
     int init() {
 
-        int x = 1500;
-        int y = 1500;
+        int x = 100;
+        int y = 100;
 
         Array a(vector2(0,0), vector2(1,2), 10, 10);
         HeightField hf;
-//        hf.load("data/terrain.ppm", vector2(0,0), vector2(x,y), 0, 50.0);
-        hf.noise(vector2(0,0), vector2(x,y), 0, 50.0, 100, 100);
+        hf.load("data/terrain.ppm", vector2(0,0), vector2(x,y), 0, 5.0);
+//        hf.noise(vector2(0,0), vector2(x,y), 0, 50.0, 100, 100);
+        std::cout << hf.getNormal(7,0) << std::endl;
+
         m_camera.lookat(Point(0,0), Point(x,y));
 
 //        hf.saveImg("data/toto.ppm");
@@ -58,6 +60,8 @@ public:
         glEnable(GL_DEPTH_TEST);
         glFrontFace(GL_CW);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+        hf.destroy();
         return 0;   // ras, pas d'erreur
     }
 
