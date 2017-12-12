@@ -47,7 +47,7 @@ int Noise::Integer(const double & x) const
     return(res);
 }
 
-double Noise::At(const vector2 & p) const
+double Noise::At(const Vector2 & p) const
 {
     const double& x = p[0];
     const double& y = p[1];
@@ -103,7 +103,7 @@ double Noise::At(const vector2 & p) const
         t2 *= t2;
         n[2] = t2 * t2 * dot(grad2[gi2], x2, y2);
     }
-    // Add contributions from each corner to get the final noise value.
+    // Add contributions from each corner to get the final noise values.
     // The result is scaled to return values in the interval [-1,1].
     return 70.0 * (n[0] + n[1] + n[2]);
 }

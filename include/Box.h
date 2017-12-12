@@ -11,17 +11,17 @@
 class Box {
   public:
     Box() = default;
-    Box(const vector2& min, const vector2& max);
+    Box(const Vector2& min, const Vector2& max);
 
-    vector2 getCorner(int i);
+    Vector2 getCorner(int i);
     double getXMin()const{return xyMin.getX();}
     double getXMax()const{return xyMax.getX();}
     double getYMin()const{return xyMin.getY();}
     double getYMax()const{return xyMax.getY();}
 
 protected:
-    vector2 xyMin;
-    vector2 xyMax;
+    Vector2 xyMin;
+    Vector2 xyMax;
 
 };
 

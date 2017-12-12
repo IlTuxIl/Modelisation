@@ -16,17 +16,18 @@ enum interpolMethod{TRIANGULAIRE, BILINEAIRE, BICUBIQUE};
 class HeightField : public ScalarField {
 
   public:
-    void noise(const vector2& min, const vector2& max, double zMin, double zMax, int _sizeX, int _sizeY);
-    void load(std::string filename, const vector2& min, const vector2& max, double zMin, double zMax);
+    ScalarField Slope() const;
+    void noise(const Vector2& min, const Vector2& max, double zMin, double zMax, int _sizeX, int _sizeY);
+    void load(std::string filename, const Vector2& min, const Vector2& max, double zMin, double zMax);
     void destroy();
-    double getHeight(const vector2& v, interpolMethod method = BILINEAIRE)const;
-    vector3 getNormal(int x, int y)const;
+    double getHeight(const Vector2& v, interpolMethod method = BILINEAIRE)const;
+    Vector3 getNormal(int x, int y)const;
 
     Maillage getMaillage();
 
-    double interpolationTriangulaire(const vector2& v)const;
-    double interpolationBilineaire(const vector2& v)const;
-    double interpolationBicubique(const vector2& v)const;
+    double interpolationTriangulaire(const Vector2& v)const;
+    double interpolationBilineaire(const Vector2& v)const;
+    double interpolationBicubique(const Vector2& v)const;
 
 protected:
 

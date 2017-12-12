@@ -5,21 +5,21 @@
 #include <iostream>
 #include "Box.h"
 
-Box::Box(const vector2 &min, const vector2 &max) {
+Box::Box(const Vector2 &min, const Vector2 &max) {
     xyMin = min;
     xyMax = max;
 }
 
-vector2 Box::getCorner(int i) {
+Vector2 Box::getCorner(int i) {
     switch (i){
         case 0:
-            return vector2(xyMin.getX(), xyMax.getY());
+            return Vector2(xyMin.getX(), xyMax.getY());
         case 1:
-            return vector2(xyMax.getX(), xyMax.getY());
+            return Vector2(xyMax.getX(), xyMax.getY());
         case 2:
-            return vector2(xyMin.getX(), xyMin.getY());
+            return Vector2(xyMin.getX(), xyMin.getY());
         case 3:
-            return vector2(xyMax.getX(), xyMin.getY());
+            return Vector2(xyMax.getX(), xyMin.getY());
         default:
             std::cout << "Box : ATTENTION i > 3" << std::endl;
     }

@@ -27,7 +27,7 @@ std::vector<float> Maillage::getVertex() {
 //    std::vector<float> ret;
 //    ret.reserve(vertex.size() * 3);
 //
-//    for(vector3 s : vertex.getVector()){
+//    for(Vector3 s : vertex.getVector()){
 //        ret.push_back((float) s.x());
 //        ret.push_back((float) s.y());
 //        ret.push_back((float) s.z());

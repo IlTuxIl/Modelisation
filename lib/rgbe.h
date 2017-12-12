@@ -16,7 +16,7 @@ typedef struct {
                          * after "#?".  defaults to "RGBE" */ 
   float gamma;          /* image has already been gamma corrected with 
                          * given gamma.  defaults to 1.0 (no correction) */
-  float exposure;       /* a value of 1.0 in an image corresponds to
+  float exposure;       /* a values of 1.0 in an image corresponds to
 			 * <exposure> watts/steradian/m^2. 
 			 * defaults to 1.0 */
 } rgbe_header_info;

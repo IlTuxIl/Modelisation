@@ -174,7 +174,7 @@ along with gkit2light.  If not, see <http://www.gnu.org/licenses/>.
 				int j = (i+1)%3;
 				int k = (i+2)%3;
 
-				// Compute first value:
+				// Compute first values:
 				q[i] = sqrt(m[i][i]-m[j][j]-m[k][k]+1.0)/2.0;
 
 				// And the others:

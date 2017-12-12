@@ -17,7 +17,7 @@
  By default there are three floats per pixel in the order red, green, blue.
  (RGBE_DATA_??? values control this.)  Only the mimimal header reading and
  writing is implemented.  Each routine does error checking and will return
- a status value as defined below.  This code is intended as a skeleton so
+ a status values as defined below.  This code is intended as a skeleton so
  feel free to modify it to suit your needs.
 
  (Place notice here if you modified the code.)
@@ -437,7 +437,7 @@ int RGBE_ReadPixels_RLE( FILE *fp, float *data, const int width, const int n )
                 }
                 if ( buf[0] > 128 )
                 {
-                    /* a run of the same value */
+                    /* a run of the same values */
                     count = buf[0] - 128;
                     if (( count == 0 ) || ( count > ptr_end - ptr ) )
                     {

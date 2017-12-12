@@ -36,10 +36,10 @@ public:
         int x = 100;
         int y = 100;
 
-        Array a(vector2(0,0), vector2(1,2), 10, 10);
+        Array a(Vector2(0,0), Vector2(1,2), 10, 10);
         HeightField hf;
-        hf.load("data/terrain.ppm", vector2(0,0), vector2(x,y), 0, 5.0);
-//        hf.noise(vector2(0,0), vector2(x,y), 0, 50.0, 100, 100);
+        hf.load("data/terrain.ppm", Vector2(0,0), Vector2(x,y), 0, 5.0);
+//        hf.noise(Vector2(0,0), Vector2(x,y), 0, 50.0, 100, 100);
         std::cout << hf.getNormal(7,0) << std::endl;
 
         m_camera.lookat(Point(0,0), Point(x,y));
@@ -103,7 +103,7 @@ int main(int argc, char **argv) {
     tp.run();
 //
 //    HeightField hf;
-//    hf.load("data/terrain.ppm", vector2(0,0), vector2(500,500), 0, 255);
+//    hf.load("data/terrain.ppm", Vector2(0,0), Vector2(500,500), 0, 255);
 
 //    Maillage _mesh = hf.getMaillage();
 //    _mesh.saveOBJ("data/terrain.obj");
