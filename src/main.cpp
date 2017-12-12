@@ -39,8 +39,16 @@ public:
         Array a(vector2(0,0), vector2(1,2), 10, 10);
         HeightField hf;
         hf.load("data/terrain.ppm", vector2(0,0), vector2(x,y), 0, 5.0);
-//        hf.noise(vector2(0,0), vector2(x,y), 0, 50.0, 100, 100);
+//        hf.noise(vector2(0,0), vector2(x,y), 0, 5.0, 100, 100);
         std::cout << hf.getNormal(7,0) << std::endl;
+        std::cout << hf.getNormal(0,7) << std::endl;
+        std::cout << hf.getNormal(99,12) << std::endl;
+        std::cout << hf.getNormal(12,99) << std::endl;
+        std::cout << hf.getNormal(25,45) << std::endl;
+        std::cout << hf.getNormal(0,0) << std::endl;
+        std::cout << hf.getNormal(99,99) << std::endl;
+        std::cout << hf.getNormal(0,99) << std::endl;
+        std::cout << hf.getNormal(99,0) << std::endl;
 
         m_camera.lookat(Point(0,0), Point(x,y));
 

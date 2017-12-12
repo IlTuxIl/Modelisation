@@ -146,7 +146,28 @@ vector3 HeightField::getNormal(int x, int y) const {
         return vector3();
     }
 
+    //     b-c
+    //     |\|\
+    //     g-a-d
+    //      \|\|
+    //       f-e
     if(x > 0 && x < sizeX -1 && y > 0 && y < sizeY - 1) { // cas général
+        vector3 a(getVertex(x,y), value[getIndex(x,y)]);
+        vector3 b(getVertex(x-1,y+1), value[getIndex(x-1,y+1)]);
+        vector3 c(getVertex(x,y+1), value[getIndex(x,y+1)]);
+        vector3 d(getVertex(x+1,y), value[getIndex(x+1,y)]);
+        vector3 e(getVertex(x+1,y-1), value[getIndex(x+1,y-1)]);
+        vector3 f(getVertex(x,y-1), value[getIndex(x,y-1)]);
+        vector3 g(getVertex(x-1,y), value[getIndex(x-1,y)]);
+
+        vector3 abc((c-a).cross(b-a));
+        vector3 acd((d-a).cross(c-a));
+        vector3 ade((e-a).cross(d-a));
+        vector3 aef((f-a).cross(e-a));
+        vector3 afg((g-a).cross(f-a));
+        vector3 agb((b-a).cross(g-a));
+
+        return ((abc + acd + ade + aef + afg + agb) / 6.0).normalize();
 
     }
     //      b
@@ -154,9 +175,9 @@ vector3 HeightField::getNormal(int x, int y) const {
     //      | \
     //      a--c
     if(x == 0 && y == 0){ //cas bas gauche
-        vector3 a(0        , 0        , value[0]);
-        vector3 b(0        , sizeGridY, value[sizeX]);
-        vector3 c(sizeGridX, 0        , value[1]);
+        vector3 a(getVertex(x,y)  , value[getIndex(x,y)]);
+        vector3 b(getVertex(x,y+1), value[getIndex(x,y+1)]);
+        vector3 c(getVertex(x+1,y), value[getIndex(x+1,y)]);
         return ((c-a).cross(b-a)).normalize();
     }
 
@@ -165,23 +186,23 @@ vector3 HeightField::getNormal(int x, int y) const {
     //      | \|
     //      b--a
     if(x == sizeX-1 && y == 0){//cas bas droite
-        vector3 a(sizeGridX * (x)  , 0, value[x]);
-        vector3 b(sizeGridX * (x-1), 0, value[x-1]);
-        vector3 c(sizeGridX * (x-1), 1, value[2*sizeX - 2]);
-        vector3 d(sizeGridX * (x)  , 1, value[2*sizeX - 1]);
+        vector3 a(getVertex(x,y)  , value[getIndex(x,y)]);
+        vector3 b(getVertex(x-1,y)  , value[getIndex(x-1,y)]);
+        vector3 c(getVertex(x-1,y+1)  , value[getIndex(x-1,y+1)]);
+        vector3 d(getVertex(x,y+1)  , value[getIndex(x,y+1)]);
 
         vector3 abc((c-a).cross(b-a));
         vector3 acd((d-a).cross(c-a));
-        return (abc * 0.5 + acd * 0.5).normalize();
+        return ((abc + acd) / 2.0).normalize();
     }
     //       b--a
     //        \ |
     //         \|
     //          c
     if(x == sizeX-1 && y == sizeY-1){
-        vector3 a(sizeGridX * (sizeX-1), sizeGridY * (sizeY-1), value[x + sizeX * y]);
-        vector3 b(sizeGridX * (sizeX-2), sizeGridY * (sizeY-1), value[x-1 + sizeX * y]);
-        vector3 c(sizeGridX * (sizeX-1), sizeGridY * (sizeY-2), value[x + sizeX * (y-1)]);
+        vector3 a(getVertex(x,y)  , value[getIndex(x,y)]);
+        vector3 b(getVertex(x-1,y)  , value[getIndex(x-1,y)]);
+        vector3 c(getVertex(x,y-1)  , value[getIndex(x,y-1)]);
         return ((b-a).cross(c-a)).normalize();
     }
     //      a--b
@@ -189,14 +210,14 @@ vector3 HeightField::getNormal(int x, int y) const {
     //      | \|
     //      d--c
     if(x == 0 && y == sizeY-1){
-        vector3 a(        0, sizeGridY * (y)  , value[sizeX * y]);
-        vector3 b(sizeGridX, sizeGridY * (y)  , value[sizeX * y + 1]);
-        vector3 c(sizeGridX, sizeGridY * (y-1), value[sizeX * (y-1) + 1]);
-        vector3 d(        0, sizeGridY * (y-1), value[sizeX * (y-1)]);
+        vector3 a(getVertex(x,y)  , value[getIndex(x,y)]);
+        vector3 b(getVertex(x+1,y)  , value[getIndex(x+1,y)]);
+        vector3 c(getVertex(x+1,y-1)  , value[getIndex(x+1,y-1)]);
+        vector3 d(getVertex(x,y-1)  , value[getIndex(x,y-1)]);
 
         vector3 abc((c-a).cross(b-a));
         vector3 acd((d-a).cross(c-a));
-        return (abc * 0.5 + acd * 0.5).normalize();
+        return ((abc + acd) / 2.0).normalize();
     }
 
     //    b
@@ -205,16 +226,16 @@ vector3 HeightField::getNormal(int x, int y) const {
     //    |\|
     //    e-d
     if(x == 0){
-        vector3 a(0        , sizeGridY * (y)  , value[sizeX * y]);
-        vector3 b(0        , sizeGridY * (y+1), value[sizeX * (y+1)]);
-        vector3 c(sizeGridX, sizeGridY * (y)  , value[sizeX * y + 1]);
-        vector3 d(sizeGridX, sizeGridY * (y-1), value[sizeX * (y-1) + 1]);
-        vector3 e(0        , sizeGridY * (y-1), value[sizeX * (y-1)]);
+        vector3 a(getVertex(x,y)  , value[getIndex(x,y)]);
+        vector3 b(getVertex(x,y+1)  , value[getIndex(x,y+1)]);
+        vector3 c(getVertex(x+1,y)  , value[getIndex(x+1,y)]);
+        vector3 d(getVertex(x+1,y-1)  , value[getIndex(x+1,y-1)]);
+        vector3 e(getVertex(x,y-1)  , value[getIndex(x,y-1)]);
 
         vector3 abc((c-a).cross(b-a));
         vector3 acd((d-a).cross(c-a));
         vector3 ade((e-a).cross(d-a));
-        return (abc * 0.33 + acd * 0.33 + ade * 0.33).normalize();
+        return ((abc + acd + ade) / 3.0).normalize();
     }
 
     //    c-b
@@ -223,47 +244,47 @@ vector3 HeightField::getNormal(int x, int y) const {
     //     \|
     //      e
     if(x == sizeX -1){
-        vector3 a(sizeGridX * (x)  , sizeGridY * (y), value[sizeX * y + x]);
-        vector3 b(sizeGridX * (x)  , sizeGridY * (y+1), value[sizeX * (y+1) + x]);
-        vector3 c(sizeGridX * (x-1), sizeGridY * (y+1), value[sizeX * (y+1) + x - 1]);
-        vector3 d(sizeGridX * (x-1), sizeGridY * (y), value[sizeX * y + x - 1]);
-        vector3 e(sizeGridX * (x)  , sizeGridY * (y-1), value[sizeX * (y-1) + x]);
+        vector3 a(getVertex(x,y)  , value[getIndex(x,y)]);
+        vector3 b(getVertex(x,y+1)  , value[getIndex(x,y+1)]);
+        vector3 c(getVertex(x-1,y+1)  , value[getIndex(x-1,y+1)]);
+        vector3 d(getVertex(x-1,y)  , value[getIndex(x-1,y)]);
+        vector3 e(getVertex(x,y-1)  , value[getIndex(x,y-1)]);
 
         vector3 abc((b-a).cross(c-a));
         vector3 acd((c-a).cross(d-a));
         vector3 ade((d-a).cross(e-a));
-        return (abc * 0.33 + acd * 0.33 + ade * 0.33).normalize();
+        return ((abc + acd + ade) / 3.0).normalize();
     }
     //    c-d
     //    |\|\
     //    b-a-e
     if(y == 0){
-        vector3 a(sizeGridX * (x)  , 0        , value[x]);
-        vector3 b(sizeGridX * (x-1), 0        , value[x-1]);
-        vector3 c(sizeGridX * (x-1), sizeGridY, value[sizeX + x - 1]);
-        vector3 d(sizeGridX * (x)  , sizeGridY, value[sizeX + x]);
-        vector3 e(sizeGridX * (x+1), 0        , value[x+1]);
+        vector3 a(getVertex(x,y)  , value[getIndex(x,y)]);
+        vector3 b(getVertex(x-1,y)  , value[getIndex(x-1,y)]);
+        vector3 c(getVertex(x-1,y+1)  , value[getIndex(x-1,y+1)]);
+        vector3 d(getVertex(x,y+1)  , value[getIndex(x,y+1)]);
+        vector3 e(getVertex(x+1,y)  , value[getIndex(x+1,y)]);
 
         vector3 abc((c-a).cross(b-a));
         vector3 acd((d-a).cross(c-a));
         vector3 ade((e-a).cross(d-a));
-        return (abc * 0.33 + acd * 0.33 + ade * 0.33).normalize();
+        return ((abc + acd + ade) / 3.0).normalize();
     }
 
     //    b-a-e
     //     \|\|
     //      c-d
     if(y == sizeY-1){
-        vector3 a(sizeGridX * (x)  , sizeGridY * (y)  , value[sizeX * y + x]);
-        vector3 b(sizeGridX * (x-1), sizeGridY * (y)  , value[sizeX * y + x - 1]);
-        vector3 c(sizeGridX * (x)  , sizeGridY * (y-1), value[sizeX * (y-1) + x]);
-        vector3 d(sizeGridX * (x+1), sizeGridY * (y-1), value[sizeX * (y-1) + x + 1]);
-        vector3 e(sizeGridX * (x+1), sizeGridY * (y)  , value[sizeX * y + x + 1]);
+        vector3 a(getVertex(x,y)  , value[getIndex(x,y)]);
+        vector3 b(getVertex(x-1,y)  , value[getIndex(x-1,y)]);
+        vector3 c(getVertex(x,y-1)  , value[getIndex(x,y-1)]);
+        vector3 d(getVertex(x+1,y-1)  , value[getIndex(x+1,y-1)]);
+        vector3 e(getVertex(x+1,y)  , value[getIndex(x+1,y)]);
 
         vector3 abc((b-a).cross(c-a));
         vector3 acd((c-a).cross(d-a));
         vector3 ade((d-a).cross(e-a));
-        return (abc * 0.33 + acd * 0.33 + ade * 0.33).normalize();
+        return ((abc + acd + ade) / 3.0).normalize();
     }
 
     return vector3();

@@ -12,11 +12,45 @@
  */
 #include <ostream>
 
+
+class vector2{
+public:
+    vector2(double _x = 0, double _y = 0) : x(_x), y(_y){};
+
+    void setX(double val) {x = val;};
+    void setY(double val) {y = val;};
+
+    double& getX() {return x;};
+    double& getY() {return y;};
+
+    double getX() const{return x;};
+    double getY() const{return y;};
+
+    vector2 operator+(const vector2&)const;
+    vector2 operator-(const vector2&)const;
+    vector2 operator*(float)const;
+    vector2 operator/(float)const;
+    bool operator==(const vector2&)const;
+    double& operator[](int);
+    double operator[](int)const;
+
+    friend std::ostream& operator<< (std::ostream&, const vector2&);
+
+    double length()const;
+    double length2()const;
+    vector2 normalize()const;
+
+private:
+    double x,y;
+};
+
+
 /*!\class vector3
  * \brief vector3 = triplet de double
  */
 class vector3{
   public:
+    vector3(vector2 vec, double _z = 0) : x(vec.getX()), y(vec.getY()), z(_z){};
     vector3(double _x = 0, double _y = 0, double _z = 0) : x(_x), y(_y), z(_z){};
 
     void setX(double val) {x = val;};
@@ -49,37 +83,6 @@ class vector3{
 
 private:
     double x,y,z;
-};
-
-class vector2{
-  public:
-    vector2(double _x = 0, double _y = 0) : x(_x), y(_y){};
-
-    void setX(double val) {x = val;};
-    void setY(double val) {y = val;};
-
-    double& getX() {return x;};
-    double& getY() {return y;};
-
-    double getX() const{return x;};
-    double getY() const{return y;};
-
-    vector2 operator+(const vector2&)const;
-    vector2 operator-(const vector2&)const;
-    vector2 operator*(float)const;
-    vector2 operator/(float)const;
-    bool operator==(const vector2&)const;
-    double& operator[](int);
-    double operator[](int)const;
-
-    friend std::ostream& operator<< (std::ostream&, const vector2&);
-
-    double length()const;
-    double length2()const;
-    vector2 normalize()const;
-
-  private:
-    double x,y;
 };
 
 #endif //MODELISATION_VECTOR_H
