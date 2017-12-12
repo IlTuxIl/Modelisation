@@ -34,7 +34,7 @@ public:
     double& operator[](int);
     double operator[](int)const;
 
-    friend std::ostream& operator<< (std::ostream&, const vector2&);
+    friend std::ostream& operator<< (std::ostream&, const Vector2&);
 
     double length()const;
     double length2()const;
@@ -83,37 +83,6 @@ class Vector3{
 
 private:
     double x,y,z;
-};
-
-class vector2{
-  public:
-    vector2(double _x = 0, double _y = 0) : x(_x), y(_y){};
-
-    void setX(double val) {x = val;};
-    void setY(double val) {y = val;};
-
-    double& getX() {return x;};
-    double& getY() {return y;};
-
-    double getX() const{return x;};
-    double getY() const{return y;};
-
-    vector2 operator+(const vector2&)const;
-    vector2 operator-(const vector2&)const;
-    vector2 operator*(float)const;
-    vector2 operator/(float)const;
-    bool operator==(const vector2&)const;
-    double& operator[](int);
-    double operator[](int)const;
-
-    friend std::ostream& operator<< (std::ostream&, const vector2&);
-
-    double length()const;
-    double length2()const;
-    vector2 normalize()const;
-
-  private:
-    double x,y;
 };
 
 #endif //MODELISATION_VECTOR_H

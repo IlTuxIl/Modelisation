@@ -6,12 +6,12 @@
 #include <iostream>
 #include "AnalyticHeightField.h"
 
-AnalyticHeightField::AnalyticHeightField(vector2 min, vector2 max, int _sizeX, int _sizeY,
+AnalyticHeightField::AnalyticHeightField(Vector2 min, Vector2 max, int _sizeX, int _sizeY,
                                          std::vector<double> freq, std::vector<double> ampli) {
     Noise n;
     sizeX = _sizeX;
     sizeY = _sizeY;
-    value = new double[sizeX * sizeY];
+    values = new double[sizeX * sizeY];
     xyMin = min;
     xyMax = max;
     sizeGridX = (getXMax() - getXMin()) / (sizeX -1);
@@ -24,7 +24,7 @@ AnalyticHeightField::AnalyticHeightField(vector2 min, vector2 max, int _sizeX, i
             for(int k = 0; k < freq.size(); ++k)
                 newVal += ampli[k] * (n.AtRidg(getVertex(j,i)/freq[k]));
 
-            value[getIndex(j,i)] = newVal;
+            values[getIndex(j,i)] = newVal;
         }
     }
 

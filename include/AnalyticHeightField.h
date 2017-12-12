@@ -10,7 +10,7 @@
 
 class AnalyticHeightField : public HeightField {
 public:
-    AnalyticHeightField(vector2 min, vector2 max, int _sizeX, int _sizeY, std::vector<double> freq, std::vector<double> ampli);
+    AnalyticHeightField(Vector2 min, Vector2 max, int _sizeX, int _sizeY, std::vector<double> freq, std::vector<double> ampli);
 
 };
 

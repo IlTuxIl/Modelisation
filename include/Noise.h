@@ -16,7 +16,6 @@ class Noise {
     public:
         int Integer(const double & x) const;
         double At(const Vector2 & p) const;
-        double At(const Vector2 & p) const;
         double AtRidg(const Vector2 & p) const;
 
         inline double dot(const int *g, const double & x, const double & y) const

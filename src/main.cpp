@@ -1,4 +1,5 @@
 #include <iostream>
+#include <AnalyticHeightField.h>
 
 #include "HeightField.h"
 #include "Image.h"
@@ -37,12 +38,10 @@ public:
         double y = 10000.0f;
 
         Array a(Vector2(0,0), Vector2(1,2), 10, 10);
-        HeightField hf;
-        hf.load("data/terrain.ppm", Vector2(0,0), Vector2(x,y), 0, 5.0);
+        //HeightField hf;
+        //hf.load("data/terrain.ppm", Vector2(0,0), Vector2(x,y), 0, 5.0);
 //        hf.noise(Vector2(0,0), Vector2(x,y), 0, 50.0, 100, 100);
-        std::cout << hf.getNormal(7,0) << std::endl;
-        Array a(vector2(0,0), vector2(1,2), 10, 10);
-
+//        std::cout << hf.getNormal(7,0) << std::endl;
 
         std::vector<double> freq;
         std::vector<double> ampli;
@@ -57,7 +56,7 @@ public:
         ampli.push_back(65.0);
         ampli.push_back(30.0);
 
-        AnalyticHeightField hf(vector2(0,0), vector2(x,y), 100, 100, freq, ampli);
+        AnalyticHeightField hf(Vector2(0,0), Vector2(x,y), 100, 100, freq, ampli);
 //        hf.load("data/terrain.ppm", vector2(0,0), vector2(x,y), 0, 5.0);
 //        hf.noise(vector2(0,0), vector2(x,y), 0, 100.0, 100, 100);
 
