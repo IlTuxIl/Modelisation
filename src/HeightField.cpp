@@ -13,11 +13,25 @@ ScalarField HeightField::Slope() const {
 
     for(int i = 0; i < sizeY; ++i) {
         for (int j = 0; j < sizeX; ++j) {
-            sf.setValue(j, i, GradientNorm(j,i));
+            sf.addValue(GradientNorm(j,i));
         }
     }
 
     return sf;
+}
+
+HeightField HeightField::reSample(int _sizeX, int _sizeY) {
+    HeightField ret(xyMin, xyMax, _sizeX, _sizeY);
+
+    ret.values.reserve(sizeX * sizeY);;
+
+    for(int i = 0; i < ret.sizeY; ++i) {
+        for (int j = 0; j < ret.sizeX; ++j) {
+            ret.values.push_back(getHeight(ret.getVertex(j, i)));
+        }
+    }
+
+    return ret;
 }
 
 void HeightField::noise(const Vector2 &min, const Vector2 &max, double zMin, double zMax, int _sizeX, int _sizeY) {
@@ -25,7 +39,7 @@ void HeightField::noise(const Vector2 &min, const Vector2 &max, double zMin, dou
     Noise n;
     sizeX = _sizeX;
     sizeY = _sizeY;
-    values = new double[sizeX * sizeY];
+    values.reserve(sizeX * sizeY);
     xyMin = min;
     xyMax = max;
     sizeGridX = (getXMax() - getXMin()) / (sizeX -1);
@@ -44,7 +58,7 @@ void HeightField::load(std::string filename, const Vector2 &min, const Vector2 &
     Image img(filename);
     sizeX = img.getWidth();
     sizeY = img.getHeight();
-    values = new double[sizeX * sizeY];
+    values.reserve(sizeX * sizeY);
     xyMin = min;
     xyMax = max;
     sizeGridX = (getXMax() - getXMin()) / (sizeX -1);
@@ -53,61 +67,14 @@ void HeightField::load(std::string filename, const Vector2 &min, const Vector2 &
     for(int i = 0; i < sizeY; ++i){
         for(int j = 0; j < sizeX; ++j){
             double newVal = zMin + ((double)img.getValue(j, i)/255.0) * (zMax-zMin);
-            values[getIndex(j,i)] = newVal;
+            values.push_back(newVal);
         }
     }
 
 }
 
-double HeightField::getHeight(const Vector2 &v, interpolMethod method) const {
-    if (v.getX() >= sizeX && v.getY() >= sizeY && v.getX() < 0 && v.getY() < 0){
-        std::cout << "HeightField : ATTENTION v hors du tableau" << std::endl;
-        return 0.0;
-    }
-
-    switch (method){
-        case TRIANGULAIRE:
-            return interpolationTriangulaire(v);
-        case BILINEAIRE:
-            return interpolationBilineaire(v);
-        case BICUBIQUE:
-            return interpolationBicubique(v);
-    }
-}
-
-double HeightField::interpolationTriangulaire(const Vector2& v)const{
-    return 0;
-}
-
-double HeightField::interpolationBilineaire(const Vector2& vec)const{
-    int xGrid, yGrid;
-    Vector2 tmp(vec);
-    getGridIndex(vec, xGrid, yGrid);
-
-
-    double x0y0 = values[xGrid + yGrid*sizeX];
-    double x1y0 = values[xGrid + 1 + yGrid*sizeX];
-    double x0y1 = values[xGrid + (yGrid+1)*sizeX];
-    double x1y1 = values[xGrid + 1 + (yGrid+1)*sizeX];
-
-    tmp[0] = tmp[0] - (xGrid * sizeGridX);
-    tmp[1] = tmp[1] - (yGrid * sizeGridY);
-
-    double U = tmp.getX() / sizeGridX;
-    double V = tmp.getY() / sizeGridY;
-
-    return (1-U) * (1-V) * x0y0 +
-            (1-U) * (V) * x0y1 +
-            (U) * (1-V) * x1y0 +
-            (U) * (V) * x1y1;
-}
-
-double HeightField::interpolationBicubique(const Vector2& v)const{
-    return 2;
-}
 
 void HeightField::destroy() {
-    delete[] values;
 }
 
 Maillage HeightField::getMaillage() {

@@ -14,6 +14,9 @@ class Box {
     Box(const Vector2& min, const Vector2& max);
 
     Vector2 getCorner(int i);
+    void setMin(Vector2 v){xyMin = v;}
+    void setMax(Vector2 v){xyMax = v;}
+
     double getXMin()const{return xyMin.getX();}
     double getXMax()const{return xyMax.getX();}
     double getYMin()const{return xyMin.getY();}

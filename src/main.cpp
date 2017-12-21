@@ -1,5 +1,6 @@
 #include <iostream>
 #include <AnalyticHeightField.h>
+#include <LayerField.h>
 
 #include "HeightField.h"
 #include "Image.h"
@@ -34,12 +35,12 @@ public:
 
     int init() {
 
-        double x = 10000.0f;
-        double y = 10000.0f;
+        double x = 1000.0f;
+        double y = 1000.0f;
 
         Array a(Vector2(0,0), Vector2(1,2), 10, 10);
-        //HeightField hf;
-        //hf.load("data/terrain.ppm", Vector2(0,0), Vector2(x,y), 0, 5.0);
+//        HeightField hf;
+//        hf.load("data/terrain.ppm", Vector2(0,0), Vector2(x,y), 0, 5.0);
 //        hf.noise(Vector2(0,0), Vector2(x,y), 0, 50.0, 100, 100);
 //        std::cout << hf.getNormal(7,0) << std::endl;
 
@@ -56,12 +57,26 @@ public:
         ampli.push_back(65.0);
         ampli.push_back(30.0);
 
-        AnalyticHeightField hf(Vector2(0,0), Vector2(x,y), 100, 100, freq, ampli);
+//        AnalyticHeightField sand(Vector2(0,0), Vector2(x,y), 100, 100, freq, ampli);
 //        hf.load("data/terrain.ppm", vector2(0,0), vector2(x,y), 0, 5.0);
 //        hf.noise(vector2(0,0), vector2(x,y), 0, 100.0, 100, 100);
 
+        HeightField hf;
+//        HeightField tmp;
+        hf.load("data/terrain.ppm", Vector2(0,0), Vector2(x,y), 0, 100.0);
 
+//        ScalarField sand;
+//        ScalarField bedRock;
+//
+//        sand.readImg("data/terrain.ppm");
+//        bedRock.readImg("data/img.ppm");
+//
+//        LayerField lf(&bedRock, &sand, Vector2(0,0), Vector2(x,y), 100, 100);
+//        HeightField hf = lf.toHeightField(0, 100);
 
+        ScalarField s = hf.Slope();
+        s.saveImg("data/slope.ppm");
+//
 
         m_camera.lookat(Point(0,0), Point(x,y));
 
@@ -122,12 +137,6 @@ int main(int argc, char **argv) {
 
     Framebuffer tp;
     tp.run();
-//
-//    HeightField hf;
-//    hf.load("data/terrain.ppm", Vector2(0,0), Vector2(500,500), 0, 255);
-
-//    Maillage _mesh = hf.getMaillage();
-//    _mesh.saveOBJ("data/terrain.obj");
 
     return 0;
 }

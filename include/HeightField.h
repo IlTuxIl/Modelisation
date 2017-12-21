@@ -11,23 +11,20 @@
 #include "ScalarField.h"
 #include "Maillage.h"
 
-enum interpolMethod{TRIANGULAIRE, BILINEAIRE, BICUBIQUE};
 
 class HeightField : public ScalarField {
 
   public:
+    HeightField() = default;
+    HeightField(const Vector2& min, const Vector2& max, int _sizeX, int _sizeY) : ScalarField(min, max, _sizeX, _sizeY){} ;
     ScalarField Slope() const;
+    HeightField reSample(int _sizeX, int _sizeY);
     void noise(const Vector2& min, const Vector2& max, double zMin, double zMax, int _sizeX, int _sizeY);
     void load(std::string filename, const Vector2& min, const Vector2& max, double zMin, double zMax);
     void destroy();
-    double getHeight(const Vector2& v, interpolMethod method = BILINEAIRE)const;
     Vector3 getNormal(int x, int y)const;
-
     Maillage getMaillage();
 
-    double interpolationTriangulaire(const Vector2& v)const;
-    double interpolationBilineaire(const Vector2& v)const;
-    double interpolationBicubique(const Vector2& v)const;
 
 protected:
 

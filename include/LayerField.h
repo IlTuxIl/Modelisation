@@ -13,9 +13,8 @@
 class LayerField : public Array{
 
 public:
-    LayerField(ScalarField* _bedRock, ScalarField* _sand);
-
-    HeightField toHeightField();
+    LayerField(ScalarField* _bedRock, ScalarField* _sand, const Vector2& min, const Vector2& max, int sx, int sy);
+    HeightField toHeightField(double zMin, double zMax);
 
 
 protected:

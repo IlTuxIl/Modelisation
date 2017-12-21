@@ -17,6 +17,11 @@ class Array : public Box{
     void getGridIndex(const Vector2& vec, int& x, int& y)const;
     int getSizeX() {return sizeX;}
     int getSizeY() {return sizeY;}
+
+
+    void setSizeGridX(double v){sizeGridX = v;}
+    void setSizeGridY(double v){sizeGridY = v;}
+
     int getSizeGridX() {return sizeGridX;}
     int getSizeGridY() {return sizeGridY;}
     Vector2 cellDiagonal() const
