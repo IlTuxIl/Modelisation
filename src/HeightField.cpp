@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <Image.h>
-#include <Noise.h>
+#include <algorithm>
 #include "HeightField.h"
 
 ScalarField HeightField::Slope() const {
@@ -20,6 +20,25 @@ ScalarField HeightField::Slope() const {
     return sf;
 }
 
+ScalarField HeightField::Water(double w) const {
+    ScalarField ret(xyMin, xyMax, sizeX, sizeY);
+    std::stack<int> ordre = getStack();
+
+    for(int i = 0; i < ret.values.size(); ++i)
+        ret.values[i] = w;
+
+    while(!ordre.empty()){
+        int id = ordre.top();
+        ordre.pop();
+
+
+
+        triStack(ordre);
+    }
+
+    return ret;
+}
+
 HeightField HeightField::reSample(int _sizeX, int _sizeY) {
     HeightField ret(xyMin, xyMax, _sizeX, _sizeY);
 
@@ -33,26 +52,25 @@ HeightField HeightField::reSample(int _sizeX, int _sizeY) {
 
     return ret;
 }
-
-void HeightField::noise(const Vector2 &min, const Vector2 &max, double zMin, double zMax, int _sizeX, int _sizeY) {
-
-    Noise n;
-    sizeX = _sizeX;
-    sizeY = _sizeY;
-    values.reserve(sizeX * sizeY);
-    xyMin = min;
-    xyMax = max;
-    sizeGridX = (getXMax() - getXMin()) / (sizeX -1);
-    sizeGridY = (getYMax() - getYMin()) / (sizeY -1);
-
-    for(int i = 0; i < sizeY; ++i){
-        for(int j = 0; j < sizeX; ++j){
-            double newVal = zMin + ((n.At(Vector2(j, i))+1)/2.0) * (zMax-zMin);
-            values[getIndex(j,i)] = newVal;
-        }
-    }
-
-}
+//void HeightField::noise(const Vector2 &min, const Vector2 &max, double zMin, double zMax, int _sizeX, int _sizeY) {
+//
+//    Noise n;
+//    sizeX = _sizeX;
+//    sizeY = _sizeY;
+//    values.reserve(sizeX * sizeY);
+//    xyMin = min;
+//    xyMax = max;
+//    sizeGridX = (getXMax() - getXMin()) / (sizeX -1);
+//    sizeGridY = (getYMax() - getYMin()) / (sizeY -1);
+//
+//    for(int i = 0; i < sizeY; ++i){
+//        for(int j = 0; j < sizeX; ++j){
+//            double newVal = zMin + ((n.At(Vector2(j, i))+1)/2.0) * (zMax-zMin);
+//            values[getIndex(j,i)] = newVal;
+//        }
+//    }
+//
+//}
 
 void HeightField::load(std::string filename, const Vector2 &min, const Vector2 &max, double zMin, double zMax) {
     Image img(filename);
@@ -72,7 +90,6 @@ void HeightField::load(std::string filename, const Vector2 &min, const Vector2 &
     }
 
 }
-
 
 void HeightField::destroy() {
 }
@@ -249,6 +266,42 @@ Vector3 HeightField::getNormal(int x, int y) const {
     return Vector3();
 }
 
+bool HeightField::max(int a, int b) const {
+    return values[a] > values[b];
+}
+
+std::stack<int> HeightField::getStack() const {
+
+    std::vector<int> v;
+    std::stack<int> ret;
+
+    for(int i = 0; i < values.size(); ++i)
+        v.push_back(i);
+
+    std::sort(v.begin(), v.end(), Trie(*this));
+
+    for(int i : v)
+        ret.push(i);
+
+    return ret;
+}
+
+std::stack<int> HeightField::triStack(std::stack<int>& input) const {
+    std::stack<int> tmpStack;
+
+    while(!input.empty()){
+        int tmp = input.top();
+        input.pop();
+
+        while(!tmpStack.empty() && values[tmpStack.top()] > values[tmp]){
+            input.push(tmpStack.top());
+            tmpStack.pop();
+        }
+        tmpStack.push(tmp);
+    }
+
+    return tmpStack;
+}
 
 
 

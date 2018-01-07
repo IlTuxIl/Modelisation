@@ -135,8 +135,10 @@ protected:
 
 int main(int argc, char **argv) {
 
-    Framebuffer tp;
-    tp.run();
-
+//    Framebuffer tp;
+//    tp.run();
+    HeightField hf;
+    hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 100.0);
+    hf.Water();
     return 0;
 }
