@@ -28,10 +28,10 @@ class HeightField : public ScalarField {
     Maillage getMaillage();
 
   protected:
+    void PowerStream(ScalarField& sf, int x) const;
     std::stack<int> getStack() const;
     std::stack<int> triStack(std::stack<int>& input) const;
     bool max(int,int)const;
-    void ecoulement(int id);
 
 };
 

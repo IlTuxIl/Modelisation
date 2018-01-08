@@ -24,12 +24,19 @@ public:
     void setValue(int x, int y, double value) {
         values[getIndex(x,y)] = value;
     }
+
+    void setValue(int x, double value) {
+        values[x] = value;
+    }
+
     double getValue(int x, int y) const {
         return values[getIndex(x,y)];
     }
     double getValue(int x) const {
         return values[x];
     }
+
+    int getSize()const{return values.size();}
 
     double GradientNorm(int i, int j) const;
     Vector2 Gradient(int i, int j) const;

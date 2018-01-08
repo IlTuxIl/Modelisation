@@ -24,16 +24,16 @@ ScalarField HeightField::Water(double w) const {
     ScalarField ret(xyMin, xyMax, sizeX, sizeY);
     std::stack<int> ordre = getStack();
 
-    for(int i = 0; i < ret.values.size(); ++i)
-        ret.values[i] = w;
+    for(int i = 0; i < values.size(); ++i)
+        ret.addValue(w);
 
     while(!ordre.empty()){
         int id = ordre.top();
         ordre.pop();
 
+        PowerStream(ret, id);
 
-
-        triStack(ordre);
+        std::cout << ordre.size() << std::endl;
     }
 
     return ret;
@@ -286,24 +286,36 @@ std::stack<int> HeightField::getStack() const {
     return ret;
 }
 
-std::stack<int> HeightField::triStack(std::stack<int>& input) const {
-    std::stack<int> tmpStack;
+void HeightField::PowerStream(ScalarField &sf, int id) const {
+    int y = id / sf.getSizeX();
+    int x = id % sf.getSizeX();
 
-    while(!input.empty()){
-        int tmp = input.top();
-        input.pop();
+    float somme = 0;
 
-        while(!tmpStack.empty() && values[tmpStack.top()] > values[tmp]){
-            input.push(tmpStack.top());
-            tmpStack.pop();
+    for(int i = y-1; i < y+1; ++i){
+        for(int j = x-1; j < x+1; ++j) {
+            if(checkBound(j, i)) {
+                if (i == y && j == x || values[getIndex(j, i)] >= values[id])
+                    continue;
+                somme += values[id] - values[getIndex(j, i)];
+            }
         }
-        tmpStack.push(tmp);
     }
 
-    return tmpStack;
+    for(int i = y-1; i < y+1; ++i){
+        for(int j = x-1; j < x+1; ++j) {
+            if(checkBound(j, i)) {
+
+                if (i == y && j == x || values[getIndex(j, i)] >= values[id])
+                    continue;
+
+                double tmp = sf.getValue(j, i) + (values[id] - values[getIndex(j, i)]) / somme;
+                sf.setValue(j, i, tmp);
+            }
+        }
+    }
+
 }
-
-
 
 
 

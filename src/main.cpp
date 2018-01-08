@@ -139,6 +139,8 @@ int main(int argc, char **argv) {
 //    tp.run();
     HeightField hf;
     hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 100.0);
-    hf.Water();
+    hf.Slope().saveImg("data/Slope.ppm");
+    hf.Water(1).saveImg("data/WaterPower.ppm");
+
     return 0;
 }

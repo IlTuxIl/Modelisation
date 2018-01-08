@@ -9,6 +9,7 @@
 ScalarField::ScalarField(const Vector2 &min, const Vector2 &max, int _sizeX, int _sizeY) : Array(min, max, _sizeX,
                                                                                                  _sizeY) {
     values.reserve(sizeX * sizeY);
+
     sizeGridX = (getXMax() - getXMin()) / (sizeX - 1);
     sizeGridY = (getYMax() - getYMin()) / (sizeY - 1);
 }
