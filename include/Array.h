@@ -17,7 +17,7 @@ class Array : public Box{
     void getGridIndex(const Vector2& vec, int& x, int& y)const;
     int getSizeX() {return sizeX;}
     int getSizeY() {return sizeY;}
-
+    bool checkBound(int x, int y) const {return x >= 0 && x < sizeX && y >= 0 && y < sizeY;};
 
     void setSizeGridX(double v){sizeGridX = v;}
     void setSizeGridY(double v){sizeGridY = v;}

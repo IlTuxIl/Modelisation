@@ -2,7 +2,10 @@
 // Created by julien on 30/11/17.
 //
 
-#include <../../include/HeightField.h>
+#include <iostream>
+#include <Image.h>
+#include <algorithm>
+#include "HeightField.h"
 
 ScalarField HeightField::Slope() const {
 
@@ -10,11 +13,38 @@ ScalarField HeightField::Slope() const {
 
     for(int i = 0; i < sizeY; ++i) {
         for (int j = 0; j < sizeX; ++j) {
-            sf.addValue(GradientNorm(j,i));
+            sf.setValue(j, i, GradientNorm(j,i));
         }
     }
 
     return sf;
+}
+
+ScalarField HeightField::Drainage(double w) const {
+    ScalarField ret(xyMin, xyMax, sizeX, sizeY);
+    std::stack<int> ordre = getStack();
+
+    for(int i = 0; i < values.size(); ++i)
+        ret.setValue(i, w);
+
+    while(!ordre.empty()){
+        int id = ordre.top();
+        ordre.pop();
+
+        drainage(ret, id);
+    }
+
+    return ret;
+}
+
+ScalarField HeightField::PowerStream(const ScalarField& slope, const ScalarField& drainage) const {
+    ScalarField ret(xyMin, xyMax, sizeX, sizeY);
+
+    for(int i = 0; i < sizeY; ++i)
+        for(int j = 0; j < sizeX; ++j)
+            ret.setValue(j, i, slope.getValue(j,i) * pow(drainage.getValue(j, i), 0.5));
+
+    return ret;
 }
 
 HeightField HeightField::reSample(int _sizeX, int _sizeY) {
@@ -30,26 +60,25 @@ HeightField HeightField::reSample(int _sizeX, int _sizeY) {
 
     return ret;
 }
-
-void HeightField::noise(const Vector2 &min, const Vector2 &max, double zMin, double zMax, int _sizeX, int _sizeY) {
-
-    Noise n;
-    sizeX = _sizeX;
-    sizeY = _sizeY;
-    values.reserve(sizeX * sizeY);
-    xyMin = min;
-    xyMax = max;
-    sizeGridX = (getXMax() - getXMin()) / (sizeX -1);
-    sizeGridY = (getYMax() - getYMin()) / (sizeY -1);
-
-    for(int i = 0; i < sizeY; ++i){
-        for(int j = 0; j < sizeX; ++j){
-            double newVal = zMin + ((n.At(Vector2(j, i))+1)/2.0) * (zMax-zMin);
-            values[getIndex(j,i)] = newVal;
-        }
-    }
-
-}
+//void HeightField::noise(const Vector2 &min, const Vector2 &max, double zMin, double zMax, int _sizeX, int _sizeY) {
+//
+//    Noise n;
+//    sizeX = _sizeX;
+//    sizeY = _sizeY;
+//    values.reserve(sizeX * sizeY);
+//    xyMin = min;
+//    xyMax = max;
+//    sizeGridX = (getXMax() - getXMin()) / (sizeX -1);
+//    sizeGridY = (getYMax() - getYMin()) / (sizeY -1);
+//
+//    for(int i = 0; i < sizeY; ++i){
+//        for(int j = 0; j < sizeX; ++j){
+//            double newVal = zMin + ((n.At(Vector2(j, i))+1)/2.0) * (zMax-zMin);
+//            values[getIndex(j,i)] = newVal;
+//        }
+//    }
+//
+//}
 
 void HeightField::load(std::string filename, const Vector2 &min, const Vector2 &max, double zMin, double zMax) {
     Image img(filename);
@@ -69,7 +98,6 @@ void HeightField::load(std::string filename, const Vector2 &min, const Vector2 &
     }
 
 }
-
 
 void HeightField::destroy() {
 }
@@ -246,8 +274,56 @@ Vector3 HeightField::getNormal(int x, int y) const {
     return Vector3();
 }
 
+bool HeightField::max(int a, int b) const {
+    return values[a] > values[b];
+}
 
+std::stack<int> HeightField::getStack() const {
 
+    std::vector<int> v;
+    std::stack<int> ret;
+
+    for(int i = 0; i < values.size(); ++i)
+        v.push_back(i);
+
+    std::sort(v.begin(), v.end(), Trie(*this));
+
+    for(int i : v)
+        ret.push(i);
+
+    return ret;
+}
+
+void HeightField::drainage(ScalarField &sf, int id) const {
+    int y = id / sf.getSizeX();
+    int x = id % sf.getSizeX();
+
+    float somme = 0;
+
+    for(int i = y-1; i <= y+1; ++i){
+        for(int j = x-1; j <= x+1; ++j) {
+            if(checkBound(j, i)) {
+                if (i == y && j == x || values[getIndex(j, i)] >= values[id])
+                    continue;
+                somme += values[id] - values[getIndex(j, i)];
+            }
+        }
+    }
+
+    for(int i = y-1; i <= y+1; ++i){
+        for(int j = x-1; j <= x+1; ++j) {
+            if(checkBound(j, i)) {
+
+                if (i == y && j == x || values[getIndex(j, i)] >= values[id])
+                    continue;
+
+                double tmp = sf.getValue(j, i) + (values[id] - values[getIndex(j, i)]) / somme;
+                sf.setValue(j, i, tmp);
+            }
+        }
+    }
+
+}
 
 
 
