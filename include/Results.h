@@ -1,12 +1,10 @@
 #ifndef RESULTS
 #define RESULTS
 
-#include <../../include/HeightField.h>
-#include <QString>
-#include <QImage>
+#include "HeightField.h"
+#include "Image.h"
 #include <set>
 
-class Image;
 class Results{
 
 public:

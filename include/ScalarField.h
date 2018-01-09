@@ -7,7 +7,7 @@
 
 #include <cmath>
 #include <vector>
-#include<../../include/Image.h>
+#include "Image.h"
 #include "Array.h"
 
 enum interpolMethod{TRIANGULAIRE, BILINEAIRE, BICUBIQUE};

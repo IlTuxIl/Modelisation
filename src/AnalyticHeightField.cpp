@@ -3,8 +3,8 @@
 //
 
 #include <iostream>
-#include <../../include/Noise.h>
-#include <../../include/AnalyticHeightField.h>
+#include "Noise.h"
+#include "AnalyticHeightField.h"
 
 
 AnalyticHeightField::AnalyticHeightField(Vector2 min, Vector2 max, int _sizeX, int _sizeY,

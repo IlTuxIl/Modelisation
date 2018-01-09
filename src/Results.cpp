@@ -1,4 +1,5 @@
-#include <../../include/Results.h>
+#include "Results.h"
+#include <QImage>
 
 void Results::SetImage(const std::string & nomDuFichier)
 {

@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include <../../include/LayerField.h>
+#include "LayerField.h"
 
 LayerField::LayerField(ScalarField *_bedRock, ScalarField *_sand, const Vector2& min, const Vector2& max, int _sizeX, int _sizeY) : Array(min, max, _sizeX, _sizeY) {
     sizeGridX = (getXMax() - getXMin()) / (sizeX - 1);

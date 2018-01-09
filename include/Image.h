@@ -1,3 +1,6 @@
+#ifndef IMAGE
+#define IMAGE
+
 #include <vector>
 #include <string>
 #include <fstream>
@@ -22,3 +25,5 @@ public:
     int* getValues(){return values;};
     ~Image();
 };
+
+#endif //IMAGE

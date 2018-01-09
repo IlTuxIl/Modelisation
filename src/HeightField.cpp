@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include <Image.h>
+#include "Image.h"
 #include <algorithm>
 #include "HeightField.h"
 

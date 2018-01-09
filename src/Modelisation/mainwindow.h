@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <../../include/Results.h>
+#include "Results.h"
 
 #include <QMainWindow>
 #include <QtOpenGL/QGLWidget>

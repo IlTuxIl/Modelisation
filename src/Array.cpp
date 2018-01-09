@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include <../../include/Array.h>
+#include "Array.h"
 
 
 Vector2 Array::getVertex(int i, int j) const {

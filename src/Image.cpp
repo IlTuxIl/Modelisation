@@ -1,4 +1,4 @@
-#include<../../include/Image.h>
+#include "Image.h"
 
 Image::Image(std::string filename)
 {

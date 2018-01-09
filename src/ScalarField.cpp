@@ -2,7 +2,7 @@
 // Created by julien on 04/12/17.
 //
 
-#include <../../include/ScalarField.h>
+#include "ScalarField.h"
 
 ScalarField::ScalarField(const Vector2 &min, const Vector2 &max, int _sizeX, int _sizeY) : Array(min, max, _sizeX,
                                                                                                  _sizeY) {

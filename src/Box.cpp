@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include <../../include/Box.h>
+#include "Box.h"
 
 
 Box::Box(const Vector2 &min, const Vector2 &max) {
