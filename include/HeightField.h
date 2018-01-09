@@ -5,12 +5,12 @@
 #ifndef MODELISATION_HEIGHTFIELD_H
 #define MODELISATION_HEIGHTFIELD_H
 
-
+#include <iostream>
+#include <../../include/Noise.h>
 #include "Vector.h"
 #include "Array.h"
 #include "ScalarField.h"
 #include "Maillage.h"
-
 
 class HeightField : public ScalarField {
 

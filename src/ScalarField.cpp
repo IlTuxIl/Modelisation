@@ -2,9 +2,7 @@
 // Created by julien on 04/12/17.
 //
 
-#include <Image.h>
-#include <cmath>
-#include "ScalarField.h"
+#include <../../include/ScalarField.h>
 
 ScalarField::ScalarField(const Vector2 &min, const Vector2 &max, int _sizeX, int _sizeY) : Array(min, max, _sizeX,
                                                                                                  _sizeY) {
@@ -45,7 +43,7 @@ Vector2 ScalarField::Gradient(int i, int j) const {
     return n;
 }
 
-void ScalarField::saveImg(std::string filename) {
+Image ScalarField::saveImg(std::string filename) {
     std::vector<int> tmp;
     tmp.reserve(sizeX * sizeY);
     double max = 0.0;
@@ -55,7 +53,9 @@ void ScalarField::saveImg(std::string filename) {
     for(int i = 0; i < sizeY * sizeX; ++i) {
         tmp[i] = (unsigned char) (((values[i])/max) * 255);
     }
+
     Image img(filename, sizeX, sizeY, tmp.data());
+    return img;
 }
 
 void ScalarField::readImg(std::string filename) {

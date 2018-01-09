@@ -2,10 +2,10 @@
 // Created by julien on 17/10/17.
 //
 
-#include "Render.h"
-#include "window.h"
-#include "program.h"
-#include "uniforms.h"
+#include <../../include/Render.h>
+#include <../../lib/window.h>
+#include <../../lib/program.h>
+#include <../../lib/uniforms.h>
 
 namespace GeoLib {
 

@@ -4,7 +4,7 @@
 
 #include <fstream>
 #include <iomanip>
-#include "Maillage.h"
+#include <../../include/Maillage.h>
 
 void Maillage::setNbIndiceFace(int v) {
     nbIndicesFace = v;

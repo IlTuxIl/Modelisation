@@ -15,7 +15,7 @@ int AppTime::run( )
         return -1;
     
     // requete pour mesurer le temps gpu
-    glGenQueries(1, &m_time_query);
+    lGenQueries(1, &m_time_query);
     
     // affichage du temps  dans la fenetre
     m_console= create_text();

@@ -6,7 +6,7 @@
 #define MODELISATION_ARRAY_H
 
 
-#include "Box.h"
+#include <../../include/Box.h>
 
 class Array : public Box{
   public:

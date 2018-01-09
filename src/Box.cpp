@@ -3,7 +3,8 @@
 //
 
 #include <iostream>
-#include "Box.h"
+#include <../../include/Box.h>
+
 
 Box::Box(const Vector2 &min, const Vector2 &max) {
     xyMin = min;

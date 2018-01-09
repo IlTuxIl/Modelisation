@@ -5,9 +5,10 @@
 #ifndef MODELISATION_SCALARFIELD_H
 #define MODELISATION_SCALARFIELD_H
 
-
-#include "Array.h"
+#include <cmath>
 #include <vector>
+#include<../../include/Image.h>
+#include "Array.h"
 
 enum interpolMethod{TRIANGULAIRE, BILINEAIRE, BICUBIQUE};
 
@@ -30,7 +31,7 @@ public:
 
     double GradientNorm(int i, int j) const;
     Vector2 Gradient(int i, int j) const;
-    void saveImg(std::string filename);
+    Image saveImg(std::string filename);
     void readImg(std::string filename);
 
 

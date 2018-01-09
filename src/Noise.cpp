@@ -3,7 +3,7 @@
 //
 
 #include <math.h>
-#include "Noise.h"
+#include <../../include/Noise.h>
 
 // Gradients
 const int Noise::grad2[8][2] = {

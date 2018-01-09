@@ -6,9 +6,9 @@
 #define GEOALGO_RENDER_H
 
 #include <GL/glew.h>
-#include "Maillage.h"
-#include "orbiter.h"
-#include "color.h"
+#include <../../include/Maillage.h>
+#include <../../lib/orbiter.h>
+#include <../../lib/color.h>
 
 /*!
  * \file Render.h

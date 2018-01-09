@@ -2,9 +2,9 @@
 // Created by julien on 17/10/17.
 //
 
-#include "Vector.h"
 #include <cmath>
 #include <iostream>
+#include <../../include/Vector.h>
 
 Vector3 Vector3::operator+(const Vector3& vec) const {
     return Vector3(x + vec.x, y + vec.y, z+ vec.z);

@@ -2,10 +2,7 @@
 // Created by julien on 30/11/17.
 //
 
-#include <iostream>
-#include <Image.h>
-#include <Noise.h>
-#include "HeightField.h"
+#include <../../include/HeightField.h>
 
 ScalarField HeightField::Slope() const {
 

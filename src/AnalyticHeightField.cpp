@@ -2,9 +2,10 @@
 // Created by julien on 12/12/17.
 //
 
-#include <Noise.h>
 #include <iostream>
-#include "AnalyticHeightField.h"
+#include <../../include/Noise.h>
+#include <../../include/AnalyticHeightField.h>
+
 
 AnalyticHeightField::AnalyticHeightField(Vector2 min, Vector2 max, int _sizeX, int _sizeY,
                                          std::vector<double> freq, std::vector<double> ampli) : HeightField(min, max, _sizeX, _sizeY){
