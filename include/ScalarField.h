@@ -36,6 +36,8 @@ public:
         return values[x];
     }
 
+    void normalize();
+
     int getSize()const{return values.size();}
 
     double GradientNorm(int i, int j) const;
@@ -54,7 +56,7 @@ protected:
     public:
         Trie(const ScalarField& _sf):sf(_sf){};
         const ScalarField& sf;
-        bool operator()(int a, int b)const { return sf.getValue(a) > sf.getValue(b);}
+        bool operator()(int a, int b)const { return sf.getValue(a) < sf.getValue(b);}
     };
 };
 

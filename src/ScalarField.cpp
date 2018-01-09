@@ -8,7 +8,7 @@
 
 ScalarField::ScalarField(const Vector2 &min, const Vector2 &max, int _sizeX, int _sizeY) : Array(min, max, _sizeX,
                                                                                                  _sizeY) {
-    values.reserve(sizeX * sizeY);
+    values.resize(sizeX * sizeY);
 
     sizeGridX = (getXMax() - getXMin()) / (sizeX - 1);
     sizeGridY = (getYMax() - getYMin()) / (sizeY - 1);
@@ -21,7 +21,7 @@ double ScalarField::GradientNorm(int i, int j) const {
 
     Vector2 grad = Gradient(i,j);
 
-    return sqrt(pow(grad.getX(), 2) + pow(grad.getY(), 2));
+    return sqrt(grad.getX() * grad.getX()+ grad.getY() * grad.getY());
 }
 
 Vector2 ScalarField::Gradient(int i, int j) const {
@@ -58,6 +58,23 @@ void ScalarField::saveImg(std::string filename) {
     }
     Image img(filename, sizeX, sizeY, tmp.data());
 }
+
+void ScalarField::normalize() {
+    double max = 0.0;
+    double min = 9999999;
+
+    for(double v : values){
+        if(v > max)
+            max = v;
+        if(v < min)
+            min = v;
+    }
+
+    for(int i = 0; i < values.size(); ++i) {
+        values[i] = ((values[i] - min) / (max - min)) * 255;
+    }
+}
+
 
 void ScalarField::readImg(std::string filename) {
     Image img(filename);

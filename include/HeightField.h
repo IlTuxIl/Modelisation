@@ -19,7 +19,9 @@ class HeightField : public ScalarField {
     HeightField() = default;
     HeightField(const Vector2& min, const Vector2& max, int _sizeX, int _sizeY) : ScalarField(min, max, _sizeX, _sizeY){} ;
     ScalarField Slope() const;
-    ScalarField Water(double = 50) const;
+    ScalarField Drainage(double = 50) const;
+    ScalarField PowerStream(const ScalarField& slope, const ScalarField& drainage) const;
+
     HeightField reSample(int _sizeX, int _sizeY);
 //    void noise(const Vector2& min, const Vector2& max, double zMin, double zMax, int _sizeX, int _sizeY);
     void load(std::string filename, const Vector2& min, const Vector2& max, double zMin, double zMax);
@@ -28,7 +30,7 @@ class HeightField : public ScalarField {
     Maillage getMaillage();
 
   protected:
-    void PowerStream(ScalarField& sf, int x) const;
+    void drainage(ScalarField& sf, int x) const;
     std::stack<int> getStack() const;
     std::stack<int> triStack(std::stack<int>& input) const;
     bool max(int,int)const;

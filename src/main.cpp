@@ -138,9 +138,15 @@ int main(int argc, char **argv) {
 //    Framebuffer tp;
 //    tp.run();
     HeightField hf;
-    hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 100.0);
-    hf.Slope().saveImg("data/Slope.ppm");
-    hf.Water(1).saveImg("data/WaterPower.ppm");
+    hf.load("data/test.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 100.0);
+    ScalarField s = hf.Slope();
+    ScalarField a = hf.Drainage(1);
+
+    a.normalize();
+    a.saveImg("data/Drainage.ppm");
+    s.saveImg("data/Slope.ppm");
+
+    hf.PowerStream(s, a).saveImg("data/WaterPower.ppm");
 
     return 0;
 }

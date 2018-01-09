@@ -13,28 +13,36 @@ ScalarField HeightField::Slope() const {
 
     for(int i = 0; i < sizeY; ++i) {
         for (int j = 0; j < sizeX; ++j) {
-            sf.addValue(GradientNorm(j,i));
+            sf.setValue(j, i, GradientNorm(j,i));
         }
     }
 
     return sf;
 }
 
-ScalarField HeightField::Water(double w) const {
+ScalarField HeightField::Drainage(double w) const {
     ScalarField ret(xyMin, xyMax, sizeX, sizeY);
     std::stack<int> ordre = getStack();
 
     for(int i = 0; i < values.size(); ++i)
-        ret.addValue(w);
+        ret.setValue(i, w);
 
     while(!ordre.empty()){
         int id = ordre.top();
         ordre.pop();
 
-        PowerStream(ret, id);
-
-        std::cout << ordre.size() << std::endl;
+        drainage(ret, id);
     }
+
+    return ret;
+}
+
+ScalarField HeightField::PowerStream(const ScalarField& slope, const ScalarField& drainage) const {
+    ScalarField ret(xyMin, xyMax, sizeX, sizeY);
+
+    for(int i = 0; i < sizeY; ++i)
+        for(int j = 0; j < sizeX; ++j)
+            ret.setValue(j, i, slope.getValue(j,i) * pow(drainage.getValue(j, i), 0.5));
 
     return ret;
 }
@@ -286,14 +294,14 @@ std::stack<int> HeightField::getStack() const {
     return ret;
 }
 
-void HeightField::PowerStream(ScalarField &sf, int id) const {
+void HeightField::drainage(ScalarField &sf, int id) const {
     int y = id / sf.getSizeX();
     int x = id % sf.getSizeX();
 
     float somme = 0;
 
-    for(int i = y-1; i < y+1; ++i){
-        for(int j = x-1; j < x+1; ++j) {
+    for(int i = y-1; i <= y+1; ++i){
+        for(int j = x-1; j <= x+1; ++j) {
             if(checkBound(j, i)) {
                 if (i == y && j == x || values[getIndex(j, i)] >= values[id])
                     continue;
@@ -302,8 +310,8 @@ void HeightField::PowerStream(ScalarField &sf, int id) const {
         }
     }
 
-    for(int i = y-1; i < y+1; ++i){
-        for(int j = x-1; j < x+1; ++j) {
+    for(int i = y-1; i <= y+1; ++i){
+        for(int j = x-1; j <= x+1; ++j) {
             if(checkBound(j, i)) {
 
                 if (i == y && j == x || values[getIndex(j, i)] >= values[id])
