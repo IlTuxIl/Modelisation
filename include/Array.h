@@ -15,14 +15,15 @@ class Array : public Box{
     Vector2 getVertex(int x , int y)const;
     int getIndex(int x , int y)const{return x + y * sizeX;};
     void getGridIndex(const Vector2& vec, int& x, int& y)const;
-    int getSizeX() {return sizeX;}
-    int getSizeY() {return sizeY;}
+    int getSizeX() const {return sizeX;}
+    int getSizeY() const {return sizeY;}
     bool checkBound(int x, int y) const {return x >= 0 && x < sizeX && y >= 0 && y < sizeY;};
 
+    Array getArray()const{return *this;}
     void setSizeGridX(double v){sizeGridX = v;}
     void setSizeGridY(double v){sizeGridY = v;}
 
-    Vector2 getRandPos();
+    Vector2 getRandPos()const ;
     int getSizeGridX() {return sizeGridX;}
     int getSizeGridY() {return sizeGridY;}
     Vector2 cellDiagonal() const

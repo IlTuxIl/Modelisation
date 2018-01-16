@@ -1,6 +1,7 @@
 #include <iostream>
 #include <AnalyticHeightField.h>
 #include <LayerField.h>
+#include <Terrain.h>
 
 #include "HeightField.h"
 #include "Image.h"
@@ -126,17 +127,25 @@ protected:
 
 int main(int argc, char **argv) {
 
-    Framebuffer tp;
-    tp.run();
-//    HeightField hf;
-//    hf.load("data/test.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 100.0);
-//    ScalarField s = hf.Slope();
-//    ScalarField a = hf.Drainage(1);
-//
+//    Framebuffer tp;
+//    tp.run();
+    HeightField hf;
+    hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 700.0);
+
+    Terrain t(hf);
+
+    Foret f = t.Vegetation(10.0);
+
+    ScalarField foret = f.toScalar();
+    foret.normalize();
+    foret.saveImg("data/Veget.ppm");
+
+    t.getWetness().normalize();
+    t.getWetness().saveImg("data/Wetness.ppm");
 //    a.normalize();
 //    a.saveImg("data/Drainage.ppm");
 //    s.saveImg("data/Slope.ppm");
-//
+
 //    hf.PowerStream(s, a).saveImg("data/WaterPower.ppm");
 
     return 0;

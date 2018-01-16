@@ -15,11 +15,12 @@ enum interpolMethod{TRIANGULAIRE, BILINEAIRE, BICUBIQUE};
 class ScalarField : public Array {
 public:
     ScalarField() = default;
-    ScalarField(const Vector2& min, const Vector2& max, int _sizeX, int _sizeY) ;
+    ScalarField(const Array& a, double defValue = 0.0) ;
+    ScalarField(const Vector2& min, const Vector2& max, int _sizeX, int _sizeY, double defValue = 0.0) ;
     ~ScalarField();
 
-    void addValue(double value) {
-        values.push_back(value);
+    void addValue(int x, int y, double value) {
+        values[getIndex(x,y)] += value;;
     }
 
     void setValue(int x, int y, double value) {

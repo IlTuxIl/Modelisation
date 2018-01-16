@@ -34,7 +34,7 @@ HeightField LayerField::toHeightField(double zMin, double zMax) {
             double hBedRock = bedRock->getHeight(getVertex(j,i));
             double hSand = sand->getHeight(getVertex(j,i));
 
-            ret.addValue(zMin + ((hSand + hBedRock) / 510) * zMax);
+            ret.setValue(j, i, zMin + ((hSand + hBedRock) / 510) * zMax);
         }
     }
 

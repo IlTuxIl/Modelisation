@@ -13,7 +13,7 @@ class Box {
     Box() = default;
     Box(const Vector2& min, const Vector2& max);
 
-    Vector2 getCorner(int i);
+    Vector2 getCorner(int i) const;
     void setMin(Vector2 v){xyMin = v;}
     void setMax(Vector2 v){xyMax = v;}
 
