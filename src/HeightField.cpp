@@ -6,6 +6,7 @@
 #include "Image.h"
 #include <algorithm>
 #include "HeightField.h"
+#include "Veget.h"
 
 ScalarField HeightField::Slope() const {
 
@@ -47,19 +48,31 @@ ScalarField HeightField::PowerStream(const ScalarField& slope, const ScalarField
     return ret;
 }
 
+Foret HeightField::Vegetation(const ScalarField &slope, const ScalarField &drainage, int nbIter) const {
+//    Foret ret;
+//    std::vector<Vector2> spawnPossible;
+//    bool flag;
+//    for(int i = 0; i < nbIter; ++i){
+//        flag = true;
+//        Vector2 tmpPos = Vector2()
+////        for(int j = 0; j < spawnPossible.size(); ++j){
+//
+//        }
+//    }
+//
+//    return ret;
+}
+
 HeightField HeightField::reSample(int _sizeX, int _sizeY) {
     HeightField ret(xyMin, xyMax, _sizeX, _sizeY);
 
-    ret.values.reserve(sizeX * sizeY);;
-
-    for(int i = 0; i < ret.sizeY; ++i) {
-        for (int j = 0; j < ret.sizeX; ++j) {
-            ret.values.push_back(getHeight(ret.getVertex(j, i)));
-        }
-    }
+    for(int i = 0; i < ret.sizeY; ++i)
+        for (int j = 0; j < ret.sizeX; ++j)
+            ret.values[ret.getIndex(j, i)] = getHeight(ret.getVertex(j, i));
 
     return ret;
 }
+
 //void HeightField::noise(const Vector2 &min, const Vector2 &max, double zMin, double zMax, int _sizeX, int _sizeY) {
 //
 //    Noise n;

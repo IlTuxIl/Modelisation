@@ -7,8 +7,8 @@
 
 #include <GL/glew.h>
 #include "Maillage.h"
-#include "lib/orbiter.h"
-#include "lib/color.h"
+#include "orbiter.h"
+#include "color.h"
 
 /*!
  * \file Render.h

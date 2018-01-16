@@ -11,6 +11,8 @@
 #include "Array.h"
 #include "ScalarField.h"
 #include "Maillage.h"
+#include "Veget.h"
+#include "Foret.h"
 
 
 class HeightField : public ScalarField {
@@ -21,6 +23,8 @@ class HeightField : public ScalarField {
     ScalarField Slope() const;
     ScalarField Drainage(double = 50) const;
     ScalarField PowerStream(const ScalarField& slope, const ScalarField& drainage) const;
+    Foret Vegetation(const ScalarField& slope, const ScalarField& drainage, int nbIter = 10000) const;
+
 
     HeightField reSample(int _sizeX, int _sizeY);
 //    void noise(const Vector2& min, const Vector2& max, double zMin, double zMax, int _sizeX, int _sizeY);
@@ -32,7 +36,6 @@ class HeightField : public ScalarField {
   protected:
     void drainage(ScalarField& sf, int x) const;
     std::stack<int> getStack() const;
-    std::stack<int> triStack(std::stack<int>& input) const;
     bool max(int,int)const;
 
 };
