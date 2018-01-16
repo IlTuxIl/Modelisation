@@ -23,6 +23,7 @@ Vector2 Box::getCorner(int i) {
             return Vector2(xyMax.getX(), xyMin.getY());
         default:
             std::cout << "Box : ATTENTION i > 3" << std::endl;
+            return Vector2();
     }
 }
 

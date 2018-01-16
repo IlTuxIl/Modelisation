@@ -17,6 +17,17 @@ Vector2 Array::getVertex(int i, int j) const {
     return ret;
 }
 
+Vector2 Array::getRandPos() {
+
+    double p1 = (double) rand() / RAND_MAX;
+    double p2 = (double) rand() / RAND_MAX;
+
+    double x = p1 * (getXMax()-getXMin()) + getXMin();
+    double y = p2 * (getYMax()-getYMin()) + getYMin();
+
+    return Vector2(x, y);
+}
+
 void Array::getGridIndex(const Vector2 &vec, int &x, int &y) const {
     //ATTENTION FORMULE PAS SUR
     x = (vec.getX() - xyMin.getX()) / (xyMax.getX() - xyMin.getX()) * (sizeX - 1);

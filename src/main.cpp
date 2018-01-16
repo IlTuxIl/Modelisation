@@ -35,8 +35,8 @@ public:
 
     int init() {
 
-        double x = 1000.0f;
-        double y = 1000.0f;
+        double x = 10000.0f;
+        double y = 10000.0f;
 
         Array a(Vector2(0,0), Vector2(1,2), 10, 10);
 //        HeightField hf;
@@ -57,26 +57,17 @@ public:
         ampli.push_back(65.0);
         ampli.push_back(30.0);
 
-//        AnalyticHeightField sand(Vector2(0,0), Vector2(x,y), 100, 100, freq, ampli);
-//        hf.load("data/terrain.ppm", vector2(0,0), vector2(x,y), 0, 5.0);
-//        hf.noise(vector2(0,0), vector2(x,y), 0, 100.0, 100, 100);
+//        AnalyticHeightField hf(Vector2(0,0), Vector2(x,y), 100, 100, freq, ampli);
+//        hf.normalize();
+//        hf.saveImg("data/test.ppm");
 
         HeightField hf;
-//        HeightField tmp;
-        hf.load("data/terrain.ppm", Vector2(0,0), Vector2(x,y), 0, 100.0);
+        hf.load("data/test.ppm", Vector2(0,0), Vector2(x,y), 0, 500);
+//        hf.noise(vector2(0,0), vector2(x,y), 0, 100.0, 100, 100);
 
-//        ScalarField sand;
-//        ScalarField bedRock;
-//
-//        sand.readImg("data/terrain.ppm");
-//        bedRock.readImg("data/img.ppm");
-//
-//        LayerField lf(&bedRock, &sand, Vector2(0,0), Vector2(x,y), 100, 100);
-//        HeightField hf = lf.toHeightField(0, 100);
-
-        ScalarField s = hf.Slope();
-        s.saveImg("data/slope.ppm");
-//
+//        HeightField hf;
+//        hf.load("data/terrain.ppm", Vector2(0,0), Vector2(x,y), 0, 700.0);
+//        hf = hf.reSample(200, 200);
 
         m_camera.lookat(Point(0,0), Point(x,y));
 
@@ -135,18 +126,18 @@ protected:
 
 int main(int argc, char **argv) {
 
-//    Framebuffer tp;
-//    tp.run();
-    HeightField hf;
-    hf.load("data/test.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 100.0);
-    ScalarField s = hf.Slope();
-    ScalarField a = hf.Drainage(1);
-
-    a.normalize();
-    a.saveImg("data/Drainage.ppm");
-    s.saveImg("data/Slope.ppm");
-
-    hf.PowerStream(s, a).saveImg("data/WaterPower.ppm");
+    Framebuffer tp;
+    tp.run();
+//    HeightField hf;
+//    hf.load("data/test.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 100.0);
+//    ScalarField s = hf.Slope();
+//    ScalarField a = hf.Drainage(1);
+//
+//    a.normalize();
+//    a.saveImg("data/Drainage.ppm");
+//    s.saveImg("data/Slope.ppm");
+//
+//    hf.PowerStream(s, a).saveImg("data/WaterPower.ppm");
 
     return 0;
 }

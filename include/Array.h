@@ -22,6 +22,7 @@ class Array : public Box{
     void setSizeGridX(double v){sizeGridX = v;}
     void setSizeGridY(double v){sizeGridY = v;}
 
+    Vector2 getRandPos();
     int getSizeGridX() {return sizeGridX;}
     int getSizeGridY() {return sizeGridY;}
     Vector2 cellDiagonal() const

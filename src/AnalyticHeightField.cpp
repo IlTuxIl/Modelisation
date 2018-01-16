@@ -18,7 +18,7 @@ AnalyticHeightField::AnalyticHeightField(Vector2 min, Vector2 max, int _sizeX, i
             for(int k = 0; k < freq.size(); ++k)
                 newVal += ampli[k] * (n.AtRidg(getVertex(j,i)/freq[k]));
 
-            values.push_back(newVal);
+            values[getIndex(j, i)] = newVal;
         }
     }
 
