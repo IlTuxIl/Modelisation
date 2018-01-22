@@ -3,6 +3,7 @@ project(Modelisation)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
 INCLUDE(FindPkgConfig)
 
 include_directories(include)
@@ -32,4 +33,4 @@ list(REMOVE_ITEM QTSRC "src/main.cpp")
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 add_executable(QtModelisation ${GKIT} ${QTSRC})
-target_link_libraries(QtModelisation ${OPENGL_LIBRARIES} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} Qt5::Widgets Qt5::Core Qt5::Gui ${GLEW_LIBRARY})
+target_link_libraries(QtModelisation ${OPENGL_LIBRARIES} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} Qt5::Core Qt5::Widgets Qt5::Gui ${GLEW_LIBRARY})

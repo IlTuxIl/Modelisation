@@ -1,3 +1,4 @@
+#include <QtWidgets/QFileDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
