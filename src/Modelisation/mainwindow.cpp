@@ -1,3 +1,4 @@
+//#include <QtOpenGL/QGLWidget>
 #include <QtWidgets/QFileDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -39,14 +40,14 @@ void MainWindow::onNoise()
 
     AnalyticHeightField ahf(Vector2(0,0), Vector2(x,y), 100, 100, freq, ampli);
     ahf.normalize();
-    ahf.saveImg("../../data/noise.ppm");
+    ahf.saveImg("data/noise.ppm");
 
     ScalarField s1 = ahf.Slope();
-    s1.saveImg("../../data/slope.ppm");
+    s1.saveImg("data/slope.ppm");
 
     ScalarField s2 = ahf.Drainage();
     s2.normalize();
-    s2.saveImg("../../data/stream.ppm");
+    s2.saveImg("data/stream.ppm");
 
     Affiche();
 }
@@ -64,16 +65,16 @@ void MainWindow::onCharger()
 
         std::string filename_std = file.fileName().toStdString().c_str();
         noNoiseFilename = filename_std;
-        filename_std = "../../data/" + filename_std;
+        filename_std = "data/" + filename_std;
         HeightField hf;
         hf.load(filename_std, Vector2(0,0), Vector2(x,y), 0, 100.0);
 
         ScalarField s1 = hf.Slope();
-        s1.saveImg("../../data/slope.ppm");
+        s1.saveImg("data/slope.ppm");
 
         ScalarField s2 = hf.Drainage();
         s2.normalize();
-        s2.saveImg("../../data/stream.ppm");
+        s2.saveImg("data/stream.ppm");
 
         Affiche(filename_std);
     }
@@ -87,13 +88,13 @@ void MainWindow::Affiche(std::string filename)
     QPixmap px = QPixmap::fromImage(image_affichee);
     ui->labelHauteur->setPixmap(px);
 
-    str = QString::fromStdString("../../data/slope.ppm");
+    str = QString::fromStdString("data/slope.ppm");
     image_affichee = QImage(str);
     image_affichee = image_affichee.scaled(ui->scrollAreaPente->width()-20, ui->scrollAreaPente->height()-20, Qt::KeepAspectRatio);
     px = QPixmap::fromImage(image_affichee);
     ui->labelPente->setPixmap(px);
 
-    str = QString::fromStdString("../../data/stream.ppm");
+    str = QString::fromStdString("data/stream.ppm");
     image_affichee = QImage(str);
     image_affichee = image_affichee.scaled(ui->scrollAreaEau->width()-20, ui->scrollAreaEau->height()-20, Qt::KeepAspectRatio);
     px = QPixmap::fromImage(image_affichee);

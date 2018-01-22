@@ -33,7 +33,7 @@ private:
     bool noiseFct;
     std::string noNoiseFilename;
 
-    void Affiche(std::string filename = "../../data/noise.ppm");
+    void Affiche(std::string filename = "data/noise.ppm");
 
 private:
     Ui::MainWindow *ui;
