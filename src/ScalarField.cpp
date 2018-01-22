@@ -4,9 +4,22 @@
 
 #include "ScalarField.h"
 
-ScalarField::ScalarField(const Vector2 &min, const Vector2 &max, int _sizeX, int _sizeY) : Array(min, max, _sizeX,
+ScalarField::ScalarField(const Array &a, double defValue) : Array(a){
+    values.resize(sizeX * sizeY);
+
+    for(int i = 0; i < sizeX * sizeY; ++i)
+        values[i] = defValue;
+
+    sizeGridX = (getXMax() - getXMin()) / (sizeX - 1);
+    sizeGridY = (getYMax() - getYMin()) / (sizeY - 1);
+}
+
+ScalarField::ScalarField(const Vector2 &min, const Vector2 &max, int _sizeX, int _sizeY, double defValue) : Array(min, max, _sizeX,
                                                                                                  _sizeY) {
     values.resize(sizeX * sizeY);
+
+    for(int i = 0; i < sizeX * sizeY; ++i)
+        values[i] = defValue;
 
     sizeGridX = (getXMax() - getXMin()) / (sizeX - 1);
     sizeGridY = (getYMax() - getYMin()) / (sizeY - 1);

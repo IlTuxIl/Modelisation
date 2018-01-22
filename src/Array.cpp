@@ -17,7 +17,7 @@ Vector2 Array::getVertex(int i, int j) const {
     return ret;
 }
 
-Vector2 Array::getRandPos() {
+Vector2 Array::getRandPos() const{
 
     double p1 = (double) rand() / RAND_MAX;
     double p2 = (double) rand() / RAND_MAX;

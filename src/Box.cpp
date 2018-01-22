@@ -11,7 +11,7 @@ Box::Box(const Vector2 &min, const Vector2 &max) {
     xyMax = max;
 }
 
-Vector2 Box::getCorner(int i) {
+Vector2 Box::getCorner(int i) const {
     switch (i){
         case 0:
             return Vector2(xyMin.getX(), xyMax.getY());

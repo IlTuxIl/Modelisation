@@ -22,11 +22,8 @@ ScalarField HeightField::Slope() const {
 }
 
 ScalarField HeightField::Drainage(double w) const {
-    ScalarField ret(xyMin, xyMax, sizeX, sizeY);
+    ScalarField ret(xyMin, xyMax, sizeX, sizeY, w);
     std::stack<int> ordre = getStack();
-
-    for(int i = 0; i < values.size(); ++i)
-        ret.setValue(i, w);
 
     while(!ordre.empty()){
         int id = ordre.top();
@@ -34,6 +31,16 @@ ScalarField HeightField::Drainage(double w) const {
 
         drainage(ret, id);
     }
+
+    return ret;
+}
+
+ScalarField HeightField::Wetness(const ScalarField &slope, const ScalarField &drainage, int k) const {
+    ScalarField ret(xyMin, xyMax, sizeX, sizeY);
+
+    for(int i = 0; i < sizeY; ++i)
+        for(int j = 0; j < sizeX; ++j)
+            ret.setValue(j, i, log(drainage.getValue(j, i) / (1 + k * slope.getValue(j, i))));
 
     return ret;
 }
@@ -48,20 +55,7 @@ ScalarField HeightField::PowerStream(const ScalarField& slope, const ScalarField
     return ret;
 }
 
-Foret HeightField::Vegetation(const ScalarField &slope, const ScalarField &drainage, int nbIter) const {
-//    Foret ret;
-//    std::vector<Vector2> spawnPossible;
-//    bool flag;
-//    for(int i = 0; i < nbIter; ++i){
-//        flag = true;
-//        Vector2 tmpPos = Vector2()
-////        for(int j = 0; j < spawnPossible.size(); ++j){
-//
-//        }
-//    }
-//
-//    return ret;
-}
+
 
 HeightField HeightField::reSample(int _sizeX, int _sizeY) {
     HeightField ret(xyMin, xyMax, _sizeX, _sizeY);
@@ -72,26 +66,6 @@ HeightField HeightField::reSample(int _sizeX, int _sizeY) {
 
     return ret;
 }
-
-//void HeightField::noise(const Vector2 &min, const Vector2 &max, double zMin, double zMax, int _sizeX, int _sizeY) {
-//
-//    Noise n;
-//    sizeX = _sizeX;
-//    sizeY = _sizeY;
-//    values.reserve(sizeX * sizeY);
-//    xyMin = min;
-//    xyMax = max;
-//    sizeGridX = (getXMax() - getXMin()) / (sizeX -1);
-//    sizeGridY = (getYMax() - getYMin()) / (sizeY -1);
-//
-//    for(int i = 0; i < sizeY; ++i){
-//        for(int j = 0; j < sizeX; ++j){
-//            double newVal = zMin + ((n.At(Vector2(j, i))+1)/2.0) * (zMax-zMin);
-//            values[getIndex(j,i)] = newVal;
-//        }
-//    }
-//
-//}
 
 void HeightField::load(std::string filename, const Vector2 &min, const Vector2 &max, double zMin, double zMax) {
     Image img(filename);
