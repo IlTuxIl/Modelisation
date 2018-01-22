@@ -1,8 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "Results.h"
-
 #include <QMainWindow>
 #include <QtOpenGL/QGLWidget>
 #include <QDebug>
@@ -10,8 +8,10 @@
 #include <QtGui>
 #include <QApplication>
 #include <QScrollArea>
-
 #include <QDesktopWidget>
+
+#include "AnalyticHeightField.h"
+#include "HeightField.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,20 +23,20 @@ class MainWindow : public QMainWindow
 
 public slots:
     void onCharger();
-    void onReset();
-
-    //void onNoise();
+    void onNoise();
 
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
 private:
-    void Affiche();
+    bool noiseFct;
+    std::string noNoiseFilename;
+
+    void Affiche(std::string filename = "../../data/noise.ppm");
 
 private:
     Ui::MainWindow *ui;
-    Results * results;
 };
 
 #endif // MAINWINDOW_H

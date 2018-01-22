@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Modelisation"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/k/Bureau/Modelisation/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/k/Bureau/Modelisation/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/k/Bureau/Modelisation/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Modelisation">
+				<Option output="/home/k/Bureau/Modelisation/cmake-build-debug/Modelisation" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir=""/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/k/Bureau/Modelisation/include"/>
+					<Add directory="/home/k/Bureau/Modelisation/lib"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 Modelisation"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Modelisation/fast">
+				<Option output="/home/k/Bureau/Modelisation/cmake-build-debug/Modelisation" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir=""/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/k/Bureau/Modelisation/include"/>
+					<Add directory="/home/k/Bureau/Modelisation/lib"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 Modelisation/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/k/Bureau/Modelisation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/k/Bureau/Modelisation/include/AnalyticHeightField.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/include/Array.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/include/Box.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/include/HeightField.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/include/Image.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/include/LayerField.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/include/Maillage.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/include/Noise.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/include/Render.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/include/ScalarField.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/include/Vector.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/app.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/app.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/app_time.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/app_time.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/color.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/color.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/draw.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/draw.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/gamepads.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/gamepads.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/glcore.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/image.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/image.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/image_hdr.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/image_hdr.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/image_io.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/image_io.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/mat.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/mat.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/mesh.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/mesh.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/orbiter.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/orbiter.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/program.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/program.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/quaternion.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/rgbe.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/rgbe.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/text.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/text.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/texture.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/texture.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/uniforms.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/uniforms.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/vec.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/vec.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/wavefront.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/wavefront.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/widgets.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/widgets.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/window.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/lib/window.h">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/src/AnalyticHeightField.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/src/Array.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/src/Box.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/src/HeightField.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/src/Image.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/src/LayerField.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/src/Maillage.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/src/Noise.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/src/Render.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/src/ScalarField.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/src/Vector.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/src/main.cpp">
+			<Option target="Modelisation"/>
+		</Unit>
+		<Unit filename="/home/k/Bureau/Modelisation/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
