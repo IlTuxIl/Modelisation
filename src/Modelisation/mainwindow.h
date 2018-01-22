@@ -1,8 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "Results.h"
-
 #include <QMainWindow>
 #include <QtOpenGL/QGLWidget>
 #include <QDebug>
