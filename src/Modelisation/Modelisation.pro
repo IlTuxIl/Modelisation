@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     ../Noise.cpp \
     ../ScalarField.cpp \
     ../Vector.cpp \
-    ../Results.cpp
+    ../Foret.cpp \
+    ../Veget.cpp
 
 HEADERS  += mainwindow.h \
     ../../include/AnalyticHeightField.h \
@@ -36,10 +37,10 @@ HEADERS  += mainwindow.h \
     ../../include/LayerField.h \
     ../../include/Maillage.h \
     ../../include/Noise.h \
-    ../../include/Render.h \
     ../../include/ScalarField.h \
     ../../include/Vector.h \
-    ../../include/Results.h
+    ../../include/Veget.h \
+    ../../include/Foret.h
 
 FORMS    += mainwindow.ui
 
