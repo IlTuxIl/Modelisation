@@ -72,7 +72,8 @@ Image ScalarField::saveImg(std::string filename) {
     return img;
 }
 
-void ScalarField::normalize() {
+ScalarField ScalarField::normalize() const {
+    ScalarField ret(*this);
     double max = 0.0;
     double min = 9999999;
 
@@ -83,9 +84,19 @@ void ScalarField::normalize() {
             min = v;
     }
 
-    for(int i = 0; i < values.size(); ++i) {
-        values[i] = ((values[i] - min) / (max - min)) * 255;
-    }
+    for(int i = 0; i < values.size(); ++i)
+        ret.values[i] = ((values[i] - min) / (max - min)) * 255;
+
+    return ret;
+}
+
+ScalarField ScalarField::racineCarre() const {
+    ScalarField ret(*this);
+
+    for(int i = 0; i < values.size(); ++i)
+        ret.values[i] = std::sqrt(values[i]);
+
+    return ret;
 }
 
 
@@ -134,7 +145,6 @@ double ScalarField::interpolationBilineaire(const Vector2& vec)const{
     int xGrid, yGrid;
     Vector2 tmp(vec);
     getGridIndex(vec, xGrid, yGrid);
-
 
     double x0y0 = values[xGrid + yGrid*sizeX];
     double x1y0 = values[xGrid + 1 + yGrid*sizeX];

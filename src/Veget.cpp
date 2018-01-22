@@ -3,3 +3,15 @@
 //
 
 #include "Veget.h"
+
+std::string Veget::getEspece() {
+
+    switch (espece){
+        case sapin:
+            return "Sapin";
+        case pommier:
+            return "Pommier";
+
+    }
+    return "erreur";
+}

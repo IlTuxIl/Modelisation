@@ -20,6 +20,14 @@ out vec4 fragment_color;
 
 void main( )
 {
-    fragment_color = color;
+    vec4 color2 = vec4(0);
+//    if(gl_FrontFacing == false) // if(!gl_FrontFacing) bug sur mac ?!
+//    {
+//        ivec2 pixel= ivec2(gl_FragCoord.xy / 4) % ivec2(2, 2);
+//        if((pixel.x ^ pixel.y) == 0)
+//            color2 = vec4(0.8, 0.4, 0, 1);
+//    }
+
+    fragment_color = color + color2;
 }
 #endif

@@ -38,7 +38,8 @@ public:
         return values[x];
     }
 
-    void normalize();
+    ScalarField normalize() const ;
+    ScalarField racineCarre() const ;
 
     int getSize()const{return values.size();}
 
@@ -52,8 +53,16 @@ public:
     double interpolationBilineaire(const Vector2& v)const;
     double interpolationBicubique(const Vector2& v)const;
 
+//    double getMin()const{return valMin; }
+//    double getMax()const{return valMax; }
+
+//    void setMin(double v){valMin = v; }
+//    void setMax(double v){valMax = v; }
+
 protected:
     std::vector<double> values;
+//    double valMin, valMax;
+
     class Trie{
     public:
         Trie(const ScalarField& _sf):sf(_sf){};
