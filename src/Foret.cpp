@@ -32,13 +32,13 @@ Foret::Foret(std::vector<Vector2> spawn, Terrain& t, double angleMax, double min
             random *= (1.0 - tmp) * (1.0 - tmp);
 
         }
-
+        int age = rand() % 100;
         if(random < 10)
             continue;
         else if(random < 80)
-            veget.push_back(Sapin(spawn[i]));
+            veget.push_back(Sapin(spawn[i], age));
         else
-            veget.push_back(Pommier(spawn[i]));
+            veget.push_back(Pommier(spawn[i], age));
     }
 }
 

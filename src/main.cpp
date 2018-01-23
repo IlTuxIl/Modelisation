@@ -68,10 +68,10 @@ public:
         HeightField hf;
         hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 700.0);
 
-//        hf = hf.reSample(200, 200);
+        hf = hf.reSample(250, 250);
         Terrain t(hf);
         Foret f = t.Vegetation(10.0);
-
+        f.saveForet("data/terrain.veget");
 //        hf.noise(vector2(0,0), vector2(x,y), 0, 100.0, 100, 100);
 
 //        HeightField hf;
@@ -136,7 +136,7 @@ protected:
     Render r;
     Maillage _mesh;
     Maillage foret;
-    float camSpeed = 10;
+    float camSpeed = 5;
 };
 
 
@@ -166,6 +166,10 @@ int main(int argc, char **argv) {
 //    veget.saveImg("data/Veget.ppm");
 //
 //    f.saveForet("data/terrain.veget");
-//
+
+//    HeightField hf;
+//    hf.load("data/img.ppm", Vector2(0,0), Vector2(10.f,10.f), 0, 1.0);
+//    hf.getHeight(Vector2(10.0f, 10.0f));
+
     return 0;
 }

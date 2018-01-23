@@ -12,8 +12,8 @@ Vector2 Array::getVertex(int i, int j) const {
     if(i > sizeX-1 || j > sizeY-1)
         std::cout << "Array : ATTENTION index hors tableau" << std::endl;
 
-    ret.setX(xyMin.getX() + (sizeGridX) * (i-1));
-    ret.setY(xyMin.getY() + (sizeGridY) * (j-1));
+    ret.setX(xyMin.getX() + (sizeGridX) * (i));
+    ret.setY(xyMin.getY() + (sizeGridY) * (j));
     return ret;
 }
 
