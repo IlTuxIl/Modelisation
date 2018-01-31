@@ -94,7 +94,7 @@ Route::Route(const Vector2& depart, const Vector2& objectif, const HeightField& 
                 c.cout = cout_voisin;
 
                 // On considère la distance euclidienne comme heurisitique
-                c.heuristique = cout_voisin + (int) distance(voisin, index_objectif);
+                c.heuristique = cout_voisin + (int) distance(voisin, index_objectif); // TODO : Ajouter pente
             }
         }
     }
@@ -105,6 +105,7 @@ Route::Route(const Vector2& depart, const Vector2& objectif, const HeightField& 
 
 std::vector<Index> Route::getVoisins(const Index& p, int tailleX, int tailleY)
 {
+    // TODO Faire voisinage de distance 2
     std::vector<Index> res;
     for(int i = p.x - 1; i <= p.x + 1; i++)
     {
@@ -120,7 +121,7 @@ std::vector<Index> Route::getVoisins(const Index& p, int tailleX, int tailleY)
 
 float Route::calculeCout(const Index& pos_courante,const Index& voisin, const HeightField& hf)
 {
-    return 1.f;
+    return 1.f; // TODO Prendre en compte la distance et la pente
 }
 
 Index Route::findBest(const std::set<Index> &liste, const std::vector<std::vector<Case>>& t_cases)
