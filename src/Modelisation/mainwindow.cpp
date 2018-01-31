@@ -1,4 +1,3 @@
-#include <QtWidgets/QFileDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -8,13 +7,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     connect(ui->buttonCharger, SIGNAL(clicked()), this, SLOT(onCharger()));
     connect(ui->buttonNoise, SIGNAL(clicked()), this, SLOT(onNoise()));
-
-    //Placage de la fenêtre au centre
-    QDesktopWidget bureau;
-    QRect surface_bureau = bureau.screenGeometry();
-    int x = surface_bureau.width()/2 - width()/2;
-    int y = surface_bureau.height()/2 - height()/2;
-    move(x,y);
 }
 
 void MainWindow::onNoise()
@@ -47,6 +39,17 @@ void MainWindow::onNoise()
     ScalarField s2 = ahf.Drainage();
     s2.normalize();
     s2.saveImg("../../data/stream.ppm");
+
+    /*ScalarField s3 = ahf.;
+    s3.normalize();
+    s3.saveImg("../../data/veget.ppm");*/
+
+    Route r(Vector2(10,100), Vector2(300,600), ahf);
+    const std::vector<Index>& test = r.getChemin();
+    for(uint i = 0; i < test.size(); i++)
+    {
+        std::cout<<test[i].x<<" "<<test[i].y<<std::endl;
+    }
 
     Affiche();
 }
@@ -103,4 +106,17 @@ void MainWindow::Affiche(std::string filename)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::closeEvent (QCloseEvent * event)
+{
+    if(event != NULL) exit(0);
+}
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    if(event != NULL)
+    {
+        if(noiseFct)                        Affiche();
+        else if(!noNoiseFilename.empty())   Affiche(noNoiseFilename);
+    }
 }
