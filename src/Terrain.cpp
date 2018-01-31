@@ -7,10 +7,11 @@
 Terrain::Terrain(const HeightField &h) : height(h){
     slope = height.Slope();
     drainage = height.Drainage();
-    wetness = height.Wetness(slope, drainage, 100);
+    wetness = height.Wetness(slope, drainage, 5);
+    powerStream = height.PowerStream(slope, drainage);
 }
 
-Foret Terrain::Vegetation(double canope, int nbIter) const {
+Foret Terrain::Vegetation(double canope, int nbIter) {
         std::vector<Vector2> spawnPossible;
         bool flag;
 
