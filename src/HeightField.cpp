@@ -11,51 +11,77 @@
 ScalarField HeightField::Slope() const {
 
     ScalarField sf(xyMin, xyMax,sizeX,sizeY);
-
+//    double min = 9999;
+//    double max = 0;
     for(int i = 0; i < sizeY; ++i) {
         for (int j = 0; j < sizeX; ++j) {
             sf.setValue(j, i, GradientNorm(j,i));
+//            if (sf.getValue(j, i) < min)
+//                min = sf.getValue(j, i);
+//            if (sf.getValue(j, i) > max)
+//                max = sf.getValue(j, i);
         }
     }
-
+//    sf.setMin(min);
+//    sf.setMax(max);
     return sf;
 }
 
 ScalarField HeightField::Drainage(double w) const {
     ScalarField ret(xyMin, xyMax, sizeX, sizeY, w);
     std::stack<int> ordre = getStack();
-
+    double min = w;
+//    double max = 0.0;
+    int id;
     while(!ordre.empty()){
-        int id = ordre.top();
+        id = ordre.top();
         ordre.pop();
 
         drainage(ret, id);
     }
-
+//    max = ret.getValue(id);
+//    ret.setMin(min);
+//    ret.setMax(max);
     return ret;
 }
 
 ScalarField HeightField::Wetness(const ScalarField &slope, const ScalarField &drainage, int k) const {
     ScalarField ret(xyMin, xyMax, sizeX, sizeY);
 
-    for(int i = 0; i < sizeY; ++i)
-        for(int j = 0; j < sizeX; ++j)
-            ret.setValue(j, i, log(drainage.getValue(j, i) / (1 + k * slope.getValue(j, i))));
+//    double min = 999.0;
+//    double max = 0.0;
 
+    for (int i = 0; i < sizeY; ++i)
+        for (int j = 0; j < sizeX; ++j) {
+            ret.setValue(j, i, log(drainage.getValue(j, i)) / (1 + k * slope.getValue(j, i)));
+//            if(ret.getValue(j, i) > max)
+//                max = getValue(j, i);
+//            if(ret.getValue(j, i) < min)
+//                min = getValue(j, i);
+        }
+//    ret.setMin(min);
+//    ret.setMax(max);
     return ret;
 }
 
 ScalarField HeightField::PowerStream(const ScalarField& slope, const ScalarField& drainage) const {
     ScalarField ret(xyMin, xyMax, sizeX, sizeY);
 
-    for(int i = 0; i < sizeY; ++i)
-        for(int j = 0; j < sizeX; ++j)
-            ret.setValue(j, i, slope.getValue(j,i) * pow(drainage.getValue(j, i), 0.5));
+//    double min = 999.0;
+//    double max = 0.0;
 
+    for(int i = 0; i < sizeY; ++i)
+        for(int j = 0; j < sizeX; ++j){
+            ret.setValue(j, i, slope.getValue(j,i) * pow(drainage.getValue(j, i), 0.5));
+//        if(ret.getValue(j, i) > max)
+//            max = getValue(j, i);
+//        if(ret.getValue(j, i) < min)
+//            min = getValue(j, i);
+    }
+//    ret.setMin(min);
+//    ret.setMax(max);
     return ret;
 }
-
-
 
 HeightField HeightField::reSample(int _sizeX, int _sizeY) {
     HeightField ret(xyMin, xyMax, _sizeX, _sizeY);

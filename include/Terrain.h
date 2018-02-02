@@ -10,19 +10,21 @@
 class Foret;
 class Terrain {
 public:
+    Terrain() = default;
     Terrain(const HeightField& h);
-    Foret Vegetation(double canope, int nbIter = 10000) const;
+    Foret Vegetation(double canope, int nbIter = 10000);
 
     ScalarField getSlope() const {return slope;}
     ScalarField getDrainage() const {return drainage;}
     ScalarField getWetness() const {return wetness;}
-    HeightField getHeight() const {return height;}
+    ScalarField getPowerStream() const {return powerStream;}
+    HeightField getHeightMap() const {return height;}
 
     Array getArray() const {return height.getArray();};
 
 
 protected:
-    ScalarField slope, drainage, wetness;
+    ScalarField slope, drainage, wetness, powerStream;
     HeightField height;
 };
 

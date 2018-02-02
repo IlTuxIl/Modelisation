@@ -32,9 +32,9 @@ void Orbiter::translation( const float x, const float y )
 
 void Orbiter::move( const float z )
 {
-    m_size= m_size - m_size * 0.01f * z;
-    if(m_size < 0.01f)
-        m_size= 0.01f;
+    m_size= m_size - /*m_size * */5.f * z;
+//    if(m_size < 0.01f)
+//        m_size= 0.01f;
 }
 
 Transform Orbiter::view( ) const
