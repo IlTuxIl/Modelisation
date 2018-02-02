@@ -12,8 +12,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 void MainWindow::onNoise()
 {
-    noiseFct = true;
-
     std::vector<double> freq;
     std::vector<double> ampli;
 
@@ -32,7 +30,8 @@ void MainWindow::onNoise()
 
     AnalyticHeightField ahf(Vector2(0,0), Vector2(x,y), 100, 100, freq, ampli);
     ahf.normalize();
-    ahf.saveImg("../../data/noise.ppm");
+    std::string filename_std("../../data/noise.ppm");
+    ahf.saveImg(filename_std);
 
     ScalarField s1 = ahf.Slope();
     s1.saveImg("../../data/slope.ppm");
@@ -41,24 +40,15 @@ void MainWindow::onNoise()
     s2.normalize();
     s2.saveImg("../../data/stream.ppm");
 
-    /*ScalarField s3 = ahf.;
-    s3.normalize();
-    s3.saveImg("../../data/veget.ppm");*/
+    // TODO remplir image Foret -> s3.saveImg("../../data/veget.ppm");
 
-    Route r(Vector2(10,100), Vector2(300,600), ahf);
-    const std::vector<Index>& test = r.getChemin();
-    for(uint i = 0; i < test.size(); i++)
-    {
-        std::cout<<test[i].x<<" "<<test[i].y<<std::endl;
-    }
+    // TODO remplir image Route -> s4.saveImg("../../data/route.ppm");
 
-    Affiche();
+    Affiche(filename_std);
 }
 
 void MainWindow::onCharger()
 {
-    noiseFct = false;
-
     QFileInfo file = QFileDialog::getOpenFileName(this, "Charger image");
 
     if(file.exists())
@@ -67,7 +57,6 @@ void MainWindow::onCharger()
         double y = 1000.0f;
 
         std::string filename_std = file.fileName().toStdString().c_str();
-        noNoiseFilename = filename_std;
         filename_std = "../../data/" + filename_std;
         HeightField hf;
         hf.load(filename_std, Vector2(0,0), Vector2(x,y), 0, 100.0);
@@ -78,6 +67,10 @@ void MainWindow::onCharger()
         ScalarField s2 = hf.Drainage();
         s2.normalize();
         s2.saveImg("../../data/stream.ppm");
+
+        // TODO remplir image Foret -> s3.saveImg("../../data/veget.ppm");
+
+        // TODO remplir image Route -> s4.saveImg("../../data/route.ppm");
 
         Affiche(filename_std);
     }
@@ -102,6 +95,18 @@ void MainWindow::Affiche(std::string filename)
     image_affichee = image_affichee.scaled(ui->scrollAreaEau->width()-20, ui->scrollAreaEau->height()-20, Qt::KeepAspectRatio);
     px = QPixmap::fromImage(image_affichee);
     ui->labelEau->setPixmap(px);
+
+    str = QString::fromStdString("../../data/veget.ppm");
+    image_affichee = QImage(str);
+    image_affichee = image_affichee.scaled(ui->scrollAreaVegetation->width()-20, ui->scrollAreaVegetation->height()-20, Qt::KeepAspectRatio);
+    px = QPixmap::fromImage(image_affichee);
+    ui->labelVegetation->setPixmap(px);
+
+    str = QString::fromStdString("../../data/route.ppm");
+    image_affichee = QImage(str);
+    image_affichee = image_affichee.scaled(ui->scrollAreaRoute->width()-20, ui->scrollAreaRoute->height()-20, Qt::KeepAspectRatio);
+    px = QPixmap::fromImage(image_affichee);
+    ui->labelRoute->setPixmap(px);
 }
 
 MainWindow::~MainWindow()
@@ -112,12 +117,4 @@ MainWindow::~MainWindow()
 void MainWindow::closeEvent (QCloseEvent * event)
 {
     if(event != NULL) exit(0);
-}
-void MainWindow::resizeEvent(QResizeEvent *event)
-{
-    if(event != NULL)
-    {
-        if(noiseFct)                        Affiche();
-        else if(!noNoiseFilename.empty())   Affiche(noNoiseFilename);
-    }
 }
