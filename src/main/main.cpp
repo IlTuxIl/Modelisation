@@ -69,7 +69,7 @@ public:
 //        hf = hf.reSample(250, 250);
         t = Terrain(hf);
         f = t.Vegetation(10.f);
-        for(int i = 0; i < 10; ++i){
+        for(int i = 0; i < 1; ++i){
             ++annee;
             std::cout << "Simulation de l'année : " << annee << std::endl;
             f.simule();
@@ -118,6 +118,13 @@ public:
 
     // destruction des objets de l'application
     int quit() {
+
+        t.getDrainage().racineCarre().normalize().saveImg("data/Drainage.ppm");
+        t.getWetness().normalize().saveImg("data/Wetness.ppm");
+        t.getSlope().normalize().saveImg("data/Slope.ppm");
+        t.getPowerStream().normalize().saveImg("data/PowerStream.ppm");
+        f.toScalar().normalize().saveImg("data/Veget.ppm");
+
         return 0;
     }
 
@@ -131,9 +138,9 @@ public:
         moveCam();
         std::vector<bool> affiche;
 
-        if(key_state(' ') && canSimule){
+        if(key_state(' ')){
             ++annee;
-            std::cout << "Simulation de l'année : " << annee << std::endl;
+            std::cout << std::endl << "Simulation de l'année : " << annee << std::endl;
             f.simule();
             sapin.clear();
             sapin = f.toMaillage("Sapin");
@@ -142,9 +149,6 @@ public:
             canSimule = false;
             update = true;
         }
-        if(key_state('e'))
-            canSimule = true;
-
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -174,8 +178,8 @@ protected:
 
 int main(int argc, char **argv) {
 
-//    Framebuffer tp;
-//    tp.run();
+    Framebuffer tp;
+    tp.run();
 
     HeightField hf;
     hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 700.0);
@@ -188,33 +192,7 @@ int main(int argc, char **argv) {
 
     ScalarField route = r.toScalar();
 
-    route.saveImg("data/route.ppm");
-
-//    Foret f = t.Vegetation(10.f);
-//    Foret f = Foret("data/terrain.veget", t);
-
-//    for(int i = 0; i < 15; ++i){
-//        std::cout << "Simulation de la " << i << " annees..." << std::endl;
-//        f.simule();
-//    }
-
-//    ScalarField drai = t.getDrainage().racineCarre();
-//    drai = drai.normalize();
-//    ScalarField wet = t.getWetness().normalize();
-//    ScalarField slope = t.getSlope().normalize();
-//    ScalarField Pow = t.getPowerStream().normalize();
-//    ScalarField veget = f.toScalar().normalize();
-//
-//    wet.saveImg("data/Wetness.ppm");
-//    slope.saveImg("data/Slope.ppm");
-//    Pow.saveImg("data/PowerStream.ppm");
-//    drai.saveImg("data/Drainage.ppm");
-//    veget.saveImg("data/Veget.ppm");
-//    f.saveForet("data/terrain.veget");
-
-//    HeightField hf;
-//    hf.load("data/img.ppm", Vector2(0,0), Vector2(10.f,10.f), 0, 1.0);
-//    hf.getHeight(Vector2(10.0f, 10.0f));
+    route.saveImg("data/Route.ppm");
 
     return 0;
 }

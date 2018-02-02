@@ -58,8 +58,6 @@ namespace GeoLib {
             glBindBuffer(GL_ARRAY_BUFFER, buffer[i]);
             glBufferData(GL_ARRAY_BUFFER, sizeBuffer, nullptr, GL_STATIC_DRAW);
 
-            std::cout << offset << " " << sizeBuffer << std::endl;
-
             glBufferSubData(GL_ARRAY_BUFFER, offset, sizeBuffer, &mesh[i]->getVertex()[0]);
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (const void *) offset);
             glEnableVertexAttribArray(0);
