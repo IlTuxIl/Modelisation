@@ -1,6 +1,6 @@
-//#include <QtOpenGL/QGLWidget>
-#include <QtWidgets/QFileDialog>
 #include "mainwindow.h"
+#include <QFileDialog>
+#include <Foret.h>
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -9,19 +9,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     connect(ui->buttonCharger, SIGNAL(clicked()), this, SLOT(onCharger()));
     connect(ui->buttonNoise, SIGNAL(clicked()), this, SLOT(onNoise()));
-
-    //Placage de la fenêtre au centre
-    QDesktopWidget bureau;
-    QRect surface_bureau = bureau.screenGeometry();
-    int x = surface_bureau.width()/2 - width()/2;
-    int y = surface_bureau.height()/2 - height()/2;
-    move(x,y);
 }
 
 void MainWindow::onNoise()
 {
-    noiseFct = true;
-
     std::vector<double> freq;
     std::vector<double> ampli;
 
@@ -35,46 +26,71 @@ void MainWindow::onNoise()
     ampli.push_back(65.0);
     ampli.push_back(30.0);
 
+
     double x = 10000.0f;
     double y = 10000.0f;
 
     AnalyticHeightField ahf(Vector2(0,0), Vector2(x,y), 100, 100, freq, ampli);
-    ahf.normalize();
-    ahf.saveImg("data/noise.ppm");
+    ahf.retourne();
 
-    ScalarField s1 = ahf.Slope();
-    s1.saveImg("data/slope.ppm");
+    std::string filename_std("data/noise.ppm");
+    ahf.saveImg(filename_std);
+//
+//    ScalarField s1 = ahf.Slope();
+//    s1.saveImg("data/slope.ppm");
+//
+//    ScalarField s2 = ahf.Drainage();
+//    s2.normalize();
+//    s2.saveImg("data/drainage.ppm");
 
-    ScalarField s2 = ahf.Drainage();
-    s2.normalize();
-    s2.saveImg("data/stream.ppm");
+    Terrain t(ahf);
+    Foret f = t.Vegetation(10.f);
 
-    Affiche();
+    ScalarField drai = t.getDrainage().racineCarre();
+    drai = drai.normalize();
+    ScalarField slope = t.getSlope().normalize();
+    ScalarField veget = f.toScalar().normalize();
+
+    slope.saveImg("data/slope.ppm");
+    drai.saveImg("data/drainage.ppm");
+    veget.saveImg("data/veget.ppm");
+
+
+    // TODO remplir image Foret -> s3.saveImg("../../data/veget.ppm");
+
+    // TODO remplir image Route -> s4.saveImg("../../data/route.ppm");
+
+    Affiche(filename_std);
 }
 
 void MainWindow::onCharger()
 {
-    noiseFct = false;
-
     QFileInfo file = QFileDialog::getOpenFileName(this, "Charger image");
 
     if(file.exists())
     {
-        double x = 1000.0f;
-        double y = 1000.0f;
+        double x = 10000.0f;
+        double y = 10000.0f;
 
         std::string filename_std = file.fileName().toStdString().c_str();
-        noNoiseFilename = filename_std;
         filename_std = "data/" + filename_std;
+
         HeightField hf;
-        hf.load(filename_std, Vector2(0,0), Vector2(x,y), 0, 100.0);
+        hf.load(filename_std, Vector2(0,0), Vector2(x,y), 0, 700.f);
 
-        ScalarField s1 = hf.Slope();
-        s1.saveImg("data/slope.ppm");
+        Terrain t(hf);
+        Foret f = t.Vegetation(10.f);
 
-        ScalarField s2 = hf.Drainage();
-        s2.normalize();
-        s2.saveImg("data/stream.ppm");
+        ScalarField drai = t.getDrainage().racineCarre();
+        drai = drai.normalize();
+        ScalarField slope = t.getSlope().normalize();
+        ScalarField veget = f.toScalar().normalize();
+
+        slope.saveImg("data/slope.ppm");
+        drai.saveImg("data/drainage.ppm");
+        veget.saveImg("data/veget.ppm");
+
+        // TODO remplir image Route -> s4.saveImg("../../data/route.ppm");
 
         Affiche(filename_std);
     }
@@ -94,14 +110,31 @@ void MainWindow::Affiche(std::string filename)
     px = QPixmap::fromImage(image_affichee);
     ui->labelPente->setPixmap(px);
 
-    str = QString::fromStdString("data/stream.ppm");
+    str = QString::fromStdString("data/drainage.ppm");
     image_affichee = QImage(str);
     image_affichee = image_affichee.scaled(ui->scrollAreaEau->width()-20, ui->scrollAreaEau->height()-20, Qt::KeepAspectRatio);
     px = QPixmap::fromImage(image_affichee);
     ui->labelEau->setPixmap(px);
+
+    str = QString::fromStdString("data/veget.ppm");
+    image_affichee = QImage(str);
+    image_affichee = image_affichee.scaled(ui->scrollAreaVegetation->width()-20, ui->scrollAreaVegetation->height()-20, Qt::KeepAspectRatio);
+    px = QPixmap::fromImage(image_affichee);
+    ui->labelVegetation->setPixmap(px);
+
+    str = QString::fromStdString("data/route.ppm");
+    image_affichee = QImage(str);
+    image_affichee = image_affichee.scaled(ui->scrollAreaRoute->width()-20, ui->scrollAreaRoute->height()-20, Qt::KeepAspectRatio);
+    px = QPixmap::fromImage(image_affichee);
+    ui->labelRoute->setPixmap(px);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::closeEvent (QCloseEvent * event)
+{
+    if(event != NULL) exit(0);
 }

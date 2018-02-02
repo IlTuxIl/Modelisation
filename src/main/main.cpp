@@ -53,36 +53,43 @@ public:
         freq.push_back(1220.0);
         freq.push_back(550.0);
 
-        ampli.push_back(300.0);
-        ampli.push_back(140.0);
-        ampli.push_back(65.0);
-        ampli.push_back(30.0);
+        ampli.push_back(700.0);
+        ampli.push_back(354.0);
+        ampli.push_back(149.0);
+        ampli.push_back(85.0);
 
 //        AnalyticHeightField hf(Vector2(0,0), Vector2(x,y), 100, 100, freq, ampli);
-//        hf.normalize();
+//        hf.retourne();
 //        hf.saveImg("data/test.ppm");
-
-//        HeightField hf;
-//        hf.load("data/test.ppm", Vector2(0,0), Vector2(x,y), 0, 500);
 
         HeightField hf;
         hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 700.0);
 
-//        hf = hf.reSample(200, 200);
-        Terrain t(hf);
-        Foret f = t.Vegetation(10.0);
+//        hf = hf.reSample(250, 250);
+        t = Terrain(hf);
+        f = t.Vegetation(10.f);
+        for(int i = 0; i < 10; ++i){
+            ++annee;
+            std::cout << "Simulation de l'année : " << annee << std::endl;
+            f.simule();
+        }
+//        f.saveForet("data/terrain.veget");
+
+//        Foret f = Foret("data/terrain.veget", t);
+//        ScalarField veget = f.toScalar().normalize();
+//        veget.saveImg("data/Veget.ppm");
 
 //        hf.noise(vector2(0,0), vector2(x,y), 0, 100.0, 100, 100);
 
 //        HeightField hf;
-//        hf.load("data/terrain.ppm", Vector2(0,0), Vector2(x,y), 0, 700.0);
+//        hf.load("data/terrain.ppm", Vector2(0,0), Vector2(x,y), 0, 7a00.0);
 //        hf = hf.reSample(200, 200);
 
         m_camera.lookat(Point(0,0), Point(x,y));
 
 //        hf.saveImg("data/toto.ppm");
         std::vector<Maillage *> mesh;
-        foret = f.toMaillage(50);
+        foret = f.toMaillage();
 
         _mesh = hf.getMaillage();
         _mesh.saveOBJ("data/terrain.obj");
@@ -116,13 +123,25 @@ public:
 
     // dessiner une nouvelle image
     int render() {
+        bool update = false;
         moveCam();
         std::vector<bool> affiche;
-        bool update = false;
+
+        if(key_state(' ') && canSimule){
+            ++annee;
+            std::cout << "Simulation de l'année : " << annee << std::endl;
+            f.simule();
+            foret.clear();
+            foret = f.toMaillage();
+            canSimule = false;
+            update = true;
+        }
+        if(key_state('e'))
+            canSimule = true;
+
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        if(key_state(' '))
-            update = true;
         affiche.push_back(true);
         affiche.push_back(true);
 
@@ -136,36 +155,47 @@ protected:
     Render r;
     Maillage _mesh;
     Maillage foret;
-    float camSpeed = 10;
+    float camSpeed = 5;
+    Foret f;
+    Terrain t;
+    int annee = 0;
+    bool canSimule = true;
 };
-
 
 int main(int argc, char **argv) {
 
     Framebuffer tp;
     tp.run();
-//
+
 //    HeightField hf;
-//    hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 700.0);
-//
+//    hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 1500.0);
+
 //    Terrain t(hf);
-//
-//    Foret f = t.Vegetation(10.0);
-//
+//    Foret f = t.Vegetation(10.f);
+//    Foret f = Foret("data/terrain.veget", t);
+
+//    for(int i = 0; i < 15; ++i){
+//        std::cout << "Simulation de la " << i << " annees..." << std::endl;
+//        f.simule();
+//    }
+
 //    ScalarField drai = t.getDrainage().racineCarre();
 //    drai = drai.normalize();
 //    ScalarField wet = t.getWetness().normalize();
 //    ScalarField slope = t.getSlope().normalize();
 //    ScalarField Pow = t.getPowerStream().normalize();
 //    ScalarField veget = f.toScalar().normalize();
-//
+
 //    wet.saveImg("data/Wetness.ppm");
 //    slope.saveImg("data/Slope.ppm");
 //    Pow.saveImg("data/PowerStream.ppm");
 //    drai.saveImg("data/Drainage.ppm");
 //    veget.saveImg("data/Veget.ppm");
-//
 //    f.saveForet("data/terrain.veget");
-//
+
+//    HeightField hf;
+//    hf.load("data/img.ppm", Vector2(0,0), Vector2(10.f,10.f), 0, 1.0);
+//    hf.getHeight(Vector2(10.0f, 10.0f));
+
     return 0;
 }

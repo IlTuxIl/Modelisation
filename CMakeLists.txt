@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(Modelisation)
 
+
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -13,7 +14,7 @@ file(GLOB GKIT lib/*.cpp lib/*.h)
 file(GLOB SOURCES src/*.cpp include/*.h)
 file(GLOB QTSRC src/*.cpp include/*.h src/Modelisation/*.cpp src/Modelisation/*.h)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+#list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 find_package( Qt5Core REQUIRED )
 find_package( Qt5Widgets REQUIRED )

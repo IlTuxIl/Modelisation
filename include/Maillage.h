@@ -66,6 +66,8 @@ class Maillage{
 
     void saveOBJ(std::string filename);
 
+    void clear(){vertex.clear(); indice.clear();}
+
 protected:
     std::vector<float> vertex;
     std::vector<unsigned int> indice;

@@ -2,6 +2,7 @@
 // Created by julien on 04/12/17.
 //
 
+#include <HeightField.h>
 #include "ScalarField.h"
 
 ScalarField::ScalarField(const Array &a, double defValue) : Array(a){
@@ -25,8 +26,6 @@ ScalarField::ScalarField(const Vector2 &min, const Vector2 &max, int _sizeX, int
     sizeGridY = (getYMax() - getYMin()) / (sizeY - 1);
 }
 
-ScalarField::~ScalarField() {
-}
 
 double ScalarField::GradientNorm(int i, int j) const {
 
@@ -72,8 +71,24 @@ Image ScalarField::saveImg(std::string filename) {
     return img;
 }
 
+void ScalarField::normalize2(){
+    double max = 0.0;
+    double min = 9999999;
+
+    for(double v : values){
+        if(v > max)
+            max = v;
+        if(v < min)
+            min = v;
+    }
+
+    for(int i = 0; i < values.size(); ++i)
+        values[i] = ((values[i] - min) / (max - min)) * 255;
+
+}
+
 ScalarField ScalarField::normalize() const {
-    ScalarField ret(*this);
+    ScalarField ret(getArray());
     double max = 0.0;
     double min = 9999999;
 
@@ -137,8 +152,32 @@ double ScalarField::getHeight(const Vector2 &v, interpolMethod method) const {
     }
 }
 
-double ScalarField::interpolationTriangulaire(const Vector2& v)const{
-    return 0;
+double ScalarField::interpolationTriangulaire(const Vector2& vec)const{
+    int xGrid, yGrid;
+//    Vector2 tmp(vec);
+    getGridIndex(vec, xGrid, yGrid);
+
+    double U = vec.getX() / (sizeGridX * (1+xGrid));
+    double V = vec.getY() / (sizeGridY * (1+yGrid));
+
+    double x0y0 = values[xGrid + yGrid*sizeX];
+    double x1y0 = values[xGrid + 1 + yGrid*sizeX];
+    double x0y1 = values[xGrid + (yGrid+1)*sizeX];
+    double x1y1 = values[xGrid + 1 + (yGrid+1)*sizeX];
+
+//    double U = tmp.getX() / sizeGridX;
+//    double V = tmp.getY() / sizeGridY;
+
+    if(U+V < 1.0)
+        return (1-U) * (1-V) * x0y0 +
+               (1-U) * (V) * x0y1 +
+               (U) * (1-V) * x1y0;
+
+    else
+        return (1-U) * (V) * x0y1 +
+               (U) * (1-V) * x1y0 +
+               (U) * (V) * x1y1;
+
 }
 
 double ScalarField::interpolationBilineaire(const Vector2& vec)const{
@@ -146,10 +185,20 @@ double ScalarField::interpolationBilineaire(const Vector2& vec)const{
     Vector2 tmp(vec);
     getGridIndex(vec, xGrid, yGrid);
 
-    double x0y0 = values[xGrid + yGrid*sizeX];
-    double x1y0 = values[xGrid + 1 + yGrid*sizeX];
-    double x0y1 = values[xGrid + (yGrid+1)*sizeX];
-    double x1y1 = values[xGrid + 1 + (yGrid+1)*sizeX];
+    double x0y0 = values[getIndex(0, 0)];
+
+    if(checkBound(xGrid, yGrid))
+        x0y0 = values[getIndex(xGrid, yGrid)];
+    double x1y0 = x0y0;
+    double x0y1 = x0y0;
+    double x1y1 = x0y0;
+
+    if(checkBound(xGrid+1, yGrid))
+        x1y0 = values[getIndex(xGrid+1, yGrid)];
+    if(checkBound(xGrid, yGrid+1))
+        x0y1 = values[getIndex(xGrid, yGrid+1)];
+    if(checkBound(xGrid+1, yGrid+1))
+        x1y1 = values[getIndex(xGrid+1, yGrid+1)];
 
     tmp[0] = tmp[0] - (xGrid * sizeGridX);
     tmp[1] = tmp[1] - (yGrid * sizeGridY);
@@ -161,6 +210,7 @@ double ScalarField::interpolationBilineaire(const Vector2& vec)const{
            (1-U) * (V) * x0y1 +
            (U) * (1-V) * x1y0 +
            (U) * (V) * x1y1;
+
 }
 
 double ScalarField::interpolationBicubique(const Vector2& v)const{

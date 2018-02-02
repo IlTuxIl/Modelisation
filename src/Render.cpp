@@ -46,8 +46,8 @@ namespace GeoLib {
     void Render::initBuffer() {
 
         for(int i = 0; i < mesh.size(); i++){
-            size_t sizeBuffer = mesh[i]->getVertexBufferSize();
-            size_t offset= 0;
+            unsigned int sizeBuffer = mesh[i]->getVertexBufferSize();
+            unsigned int offset= 0;
 
             vao.push_back(GLuint());
             glGenVertexArrays(1, &vao[i]);
@@ -56,7 +56,9 @@ namespace GeoLib {
             buffer.push_back(GLuint());
             glGenBuffers(1, &buffer[i]);
             glBindBuffer(GL_ARRAY_BUFFER, buffer[i]);
-            glBufferData(GL_ARRAY_BUFFER, sizeBuffer, nullptr, GL_DYNAMIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, sizeBuffer, nullptr, GL_STATIC_DRAW);
+
+            std::cout << offset << " " << sizeBuffer << std::endl;
 
             glBufferSubData(GL_ARRAY_BUFFER, offset, sizeBuffer, &mesh[i]->getVertex()[0]);
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (const void *) offset);
@@ -66,7 +68,7 @@ namespace GeoLib {
             sizeBuffer = mesh[i]->getIndiceBufferSize();
             glGenBuffers(1, &indexBuffer[i]);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer[i]);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeBuffer, &mesh[i]->getIndice().front(), GL_DYNAMIC_DRAW);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeBuffer, &mesh[i]->getIndice().front(), GL_STATIC_DRAW);
         }
 
         glBindVertexArray(0);

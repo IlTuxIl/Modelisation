@@ -14,17 +14,23 @@
 
 class Foret {
 public:
+    Foret() = default;
     Foret(std::string filename, Terrain& t);
     Foret(std::vector<Vector2> spawn, Terrain& t, double angle = 0.8, double minWet = 0.2f, double maxWet = 1.0f);
     void simule();
     void saveForet(std::string filename)const;
     void loadForet(std::string filename);
-    Maillage toMaillage(float hauteur = 20.0) const;
+    Maillage toMaillage() const;
     ScalarField toScalar();
 protected:
+    void computeSpacialisation();
+    void addSpacialisation(int x, int y, const Veget& v);
+    void delSpacialisation(int x, int y, int id);
+    bool checkCanopee(int x, int y, Vector2 pos) const;
     Terrain* terrain;
     std::vector<Veget> veget;
     Array array;
+    std::vector<std::vector<Veget>> densiteVeget;
 };
 
 

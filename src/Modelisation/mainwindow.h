@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QtOpenGL/QGLWidget>
 #include <QDebug>
 #include <QLabel>
 #include <QtGui>
@@ -12,14 +11,15 @@
 
 #include "AnalyticHeightField.h"
 #include "HeightField.h"
+#include "Route.h"
 
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+Q_OBJECT
 
 public slots:
     void onCharger();
@@ -30,13 +30,11 @@ public:
     ~MainWindow();
 
 private:
-    bool noiseFct;
-    std::string noNoiseFilename;
-
-    void Affiche(std::string filename = "data/noise.ppm");
+    void Affiche(std::string filename);
 
 private:
     Ui::MainWindow *ui;
+    void closeEvent (QCloseEvent * event);
 };
 
 #endif // MAINWINDOW_H

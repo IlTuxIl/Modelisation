@@ -24,8 +24,8 @@ class Array : public Box{
     void setSizeGridY(double v){sizeGridY = v;}
 
     Vector2 getRandPos()const ;
-    int getSizeGridX() {return sizeGridX;}
-    int getSizeGridY() {return sizeGridY;}
+    int getSizeGridX() const {return sizeGridX;}
+    int getSizeGridY() const {return sizeGridY;}
     Vector2 cellDiagonal() const
     { Vector2 d = xyMax-xyMin; return Vector2(d.getX()/(sizeX-1), d.getY()/(sizeY-1)); }
 

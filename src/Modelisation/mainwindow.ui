@@ -2,12 +2,18 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1920</width>
-    <height>1080</height>
+    <width>1280</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -15,6 +21,18 @@
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>320</width>
+    <height>240</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1920</width>
+    <height>1080</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -26,13 +44,19 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
+   <property name="maximumSize">
+    <size>
+     <width>1920</width>
+     <height>1080</height>
+    </size>
+   </property>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>-1</x>
       <y>-1</y>
-      <width>1921</width>
-      <height>1081</height>
+      <width>1281</width>
+      <height>691</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1,0,1">
@@ -41,6 +65,9 @@
      </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayouBouton">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetFixedSize</enum>
+       </property>
        <property name="leftMargin">
         <number>30</number>
        </property>
@@ -52,6 +79,12 @@
        </property>
        <item>
         <widget class="QPushButton" name="buttonCharger">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Charger</string>
          </property>
@@ -59,13 +92,19 @@
        </item>
        <item>
         <widget class="QPushButton" name="buttonNoise">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Noise</string>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer">
+        <spacer name="horizontalSpacer_6">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -81,6 +120,9 @@
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetFixedSize</enum>
+       </property>
        <property name="topMargin">
         <number>0</number>
        </property>
@@ -121,11 +163,17 @@
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayoutImage">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetFixedSize</enum>
+       </property>
        <property name="leftMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -133,10 +181,16 @@
        <item>
         <widget class="QScrollArea" name="scrollAreaHauteur">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>300</width>
+           <height>300</height>
+          </size>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
@@ -146,30 +200,42 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>627</width>
-            <height>489</height>
+            <width>298</width>
+            <height>294</height>
            </rect>
           </property>
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>300</height>
+           </size>
+          </property>
           <widget class="QLabel" name="labelHauteur">
            <property name="geometry">
             <rect>
-             <x>3</x>
+             <x>-8</x>
              <y>-4</y>
-             <width>621</width>
-             <height>471</height>
+             <width>301</width>
+             <height>300</height>
             </rect>
            </property>
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>400</width>
+             <height>400</height>
+            </size>
            </property>
            <property name="text">
             <string/>
@@ -187,10 +253,16 @@
        <item>
         <widget class="QScrollArea" name="scrollAreaPente">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>300</width>
+           <height>300</height>
+          </size>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
@@ -203,18 +275,30 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>627</width>
-            <height>489</height>
+            <width>298</width>
+            <height>294</height>
            </rect>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>300</height>
+           </size>
           </property>
           <widget class="QLabel" name="labelPente">
            <property name="geometry">
             <rect>
-             <x>3</x>
+             <x>-8</x>
              <y>-4</y>
-             <width>621</width>
-             <height>471</height>
+             <width>300</width>
+             <height>301</height>
             </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>300</width>
+             <height>3000</height>
+            </size>
            </property>
            <property name="text">
             <string/>
@@ -223,16 +307,26 @@
             <set>Qt::AlignCenter</set>
            </property>
           </widget>
+          <zorder>labelPente</zorder>
+          <zorder></zorder>
+          <zorder></zorder>
+          <zorder></zorder>
          </widget>
         </widget>
        </item>
        <item>
         <widget class="QScrollArea" name="scrollAreaEau">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>300</width>
+           <height>300</height>
+          </size>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
@@ -242,24 +336,36 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>627</width>
-            <height>489</height>
+            <width>298</width>
+            <height>294</height>
            </rect>
           </property>
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>300</height>
+           </size>
+          </property>
           <widget class="QLabel" name="labelEau">
            <property name="geometry">
             <rect>
-             <x>3</x>
+             <x>-8</x>
              <y>-4</y>
-             <width>621</width>
-             <height>471</height>
+             <width>300</width>
+             <height>300</height>
             </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>300</width>
+             <height>300</height>
+            </size>
            </property>
            <property name="text">
             <string/>
@@ -275,6 +381,9 @@
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetFixedSize</enum>
+       </property>
        <property name="topMargin">
         <number>0</number>
        </property>
@@ -287,7 +396,7 @@
           <enum>Qt::Horizontal</enum>
          </property>
          <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
+          <enum>QSizePolicy::Preferred</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -323,7 +432,7 @@
           <enum>Qt::Horizontal</enum>
          </property>
          <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
+          <enum>QSizePolicy::Preferred</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -337,6 +446,9 @@
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayoutImage_2">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetFixedSize</enum>
+       </property>
        <property name="leftMargin">
         <number>10</number>
        </property>
@@ -368,10 +480,16 @@
        <item>
         <widget class="QScrollArea" name="scrollAreaVegetation">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>300</width>
+           <height>300</height>
+          </size>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
@@ -381,12 +499,12 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>629</width>
-            <height>488</height>
+            <width>298</width>
+            <height>293</height>
            </rect>
           </property>
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -394,17 +512,23 @@
           <widget class="QLabel" name="labelVegetation">
            <property name="geometry">
             <rect>
-             <x>3</x>
+             <x>-8</x>
              <y>6</y>
-             <width>621</width>
-             <height>461</height>
+             <width>300</width>
+             <height>300</height>
             </rect>
            </property>
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>400</width>
+             <height>400</height>
+            </size>
            </property>
            <property name="text">
             <string/>
@@ -422,10 +546,16 @@
        <item>
         <widget class="QScrollArea" name="scrollAreaRoute">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>300</width>
+           <height>300</height>
+          </size>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
@@ -435,12 +565,12 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>628</width>
-            <height>488</height>
+            <width>298</width>
+            <height>293</height>
            </rect>
           </property>
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -448,17 +578,23 @@
           <widget class="QLabel" name="labelRoute">
            <property name="geometry">
             <rect>
-             <x>3</x>
+             <x>-8</x>
              <y>6</y>
-             <width>621</width>
-             <height>461</height>
+             <width>300</width>
+             <height>300</height>
             </rect>
            </property>
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>300</width>
+             <height>300</height>
+            </size>
            </property>
            <property name="text">
             <string/>
@@ -479,7 +615,7 @@
           <enum>Qt::Horizontal</enum>
          </property>
          <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
+          <enum>QSizePolicy::Preferred</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
