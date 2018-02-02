@@ -17,7 +17,6 @@ public:
     ScalarField() = default;
     ScalarField(const Array& a, double defValue = 0.0) ;
     ScalarField(const Vector2& min, const Vector2& max, int _sizeX, int _sizeY, double defValue = 0.0) ;
-    ~ScalarField();
 
     void addValue(int x, int y, double value) {
         values[getIndex(x,y)] += value;;

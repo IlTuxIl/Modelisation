@@ -68,10 +68,19 @@ public:
         HeightField hf;
         hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 700.0);
 
-        hf = hf.reSample(250, 250);
-        Terrain t(hf);
-        Foret f = t.Vegetation(10.0);
-        f.saveForet("data/terrain.veget");
+//        hf = hf.reSample(250, 250);
+        t = Terrain(hf);
+        f = t.Vegetation(10.f);
+        for(int i = 0; i < 1; ++i){
+            std::cout << "Simulation de la " << i << " annees..." << std::endl;
+            f.simule();
+        }
+//        f.saveForet("data/terrain.veget");
+
+//        Foret f = Foret("data/terrain.veget", t);
+//        ScalarField veget = f.toScalar().normalize();
+//        veget.saveImg("data/Veget.ppm");
+
 //        hf.noise(vector2(0,0), vector2(x,y), 0, 100.0, 100, 100);
 
 //        HeightField hf;
@@ -82,7 +91,7 @@ public:
 
 //        hf.saveImg("data/toto.ppm");
         std::vector<Maillage *> mesh;
-        foret = f.toMaillage(50);
+        foret = f.toMaillage();
 
         _mesh = hf.getMaillage();
         _mesh.saveOBJ("data/terrain.obj");
@@ -116,9 +125,20 @@ public:
 
     // dessiner une nouvelle image
     int render() {
+        bool update = false;
         moveCam();
         std::vector<bool> affiche;
-        bool update = false;
+
+        if(key_state(' ') && canSimule){
+            f.simule();
+            foret = f.toMaillage();
+            canSimule = false;
+            update = true;
+        }
+        if(key_state('e'))
+            canSimule = true;
+
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         if(key_state(' '))
@@ -137,34 +157,42 @@ protected:
     Maillage _mesh;
     Maillage foret;
     float camSpeed = 5;
+    Foret f;
+    Terrain t;
+    bool canSimule = true;
 };
+
 
 
 int main(int argc, char **argv) {
 
     Framebuffer tp;
     tp.run();
-//
+
 //    HeightField hf;
-//    hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 700.0);
-//
+//    hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 1500.0);
+
 //    Terrain t(hf);
-//
-//    Foret f = t.Vegetation(10.0);
-//
+//    Foret f = t.Vegetation(10.f);
+//    Foret f = Foret("data/terrain.veget", t);
+
+//    for(int i = 0; i < 15; ++i){
+//        std::cout << "Simulation de la " << i << " annees..." << std::endl;
+//        f.simule();
+//    }
+
 //    ScalarField drai = t.getDrainage().racineCarre();
 //    drai = drai.normalize();
 //    ScalarField wet = t.getWetness().normalize();
 //    ScalarField slope = t.getSlope().normalize();
 //    ScalarField Pow = t.getPowerStream().normalize();
 //    ScalarField veget = f.toScalar().normalize();
-//
+
 //    wet.saveImg("data/Wetness.ppm");
 //    slope.saveImg("data/Slope.ppm");
 //    Pow.saveImg("data/PowerStream.ppm");
 //    drai.saveImg("data/Drainage.ppm");
 //    veget.saveImg("data/Veget.ppm");
-//
 //    f.saveForet("data/terrain.veget");
 
 //    HeightField hf;

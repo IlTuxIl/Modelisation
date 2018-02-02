@@ -10,6 +10,7 @@
 class Foret;
 class Terrain {
 public:
+    Terrain() = default;
     Terrain(const HeightField& h);
     Foret Vegetation(double canope, int nbIter = 10000);
 

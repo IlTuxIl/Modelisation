@@ -25,8 +25,6 @@ ScalarField::ScalarField(const Vector2 &min, const Vector2 &max, int _sizeX, int
     sizeGridY = (getYMax() - getYMin()) / (sizeY - 1);
 }
 
-ScalarField::~ScalarField() {
-}
 
 double ScalarField::GradientNorm(int i, int j) const {
 
@@ -73,7 +71,7 @@ Image ScalarField::saveImg(std::string filename) {
 }
 
 ScalarField ScalarField::normalize() const {
-    ScalarField ret(*this);
+    ScalarField ret(getArray());
     double max = 0.0;
     double min = 9999999;
 
@@ -170,7 +168,10 @@ double ScalarField::interpolationBilineaire(const Vector2& vec)const{
     Vector2 tmp(vec);
     getGridIndex(vec, xGrid, yGrid);
 
-    double x0y0 = values[getIndex(xGrid, yGrid)];
+    double x0y0 = values[getIndex(0, 0)];
+
+    if(checkBound(xGrid, yGrid))
+        x0y0 = values[getIndex(xGrid, yGrid)];
     double x1y0 = x0y0;
     double x0y1 = x0y0;
     double x1y1 = x0y0;
@@ -192,6 +193,7 @@ double ScalarField::interpolationBilineaire(const Vector2& vec)const{
            (1-U) * (V) * x0y1 +
            (U) * (1-V) * x1y0 +
            (U) * (V) * x1y1;
+
 }
 
 double ScalarField::interpolationBicubique(const Vector2& v)const{

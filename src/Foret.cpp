@@ -7,6 +7,7 @@
 Foret::Foret(std::string filename, Terrain &t) : array(t.getArray()){
     terrain = &t;
     loadForet(filename);
+    computeSpacialisation();
 }
 
 Foret::Foret(std::vector<Vector2> spawn, Terrain& t, double angleMax, double minWet, double maxWet) : array(t.getArray()){
@@ -15,31 +16,21 @@ Foret::Foret(std::vector<Vector2> spawn, Terrain& t, double angleMax, double min
         int random = rand() % 100;
 
         int x,y;
-        t.getSlope().getGridIndex(spawn[i], x, y);
+        array.getGridIndex(spawn[i], x, y);
 
         double s = t.getSlope().getValue(x, y);
         double wet = t.getWetness().getValue(x, y);
+        double h = t.getHeightMap().getValue(x, y);
 
-        if(s >= angleMax)
-            random *= 0;
-        else
-            random *= (1.0-s) * (1.0-s);
-
-        if(wet < minWet)
-            random *= 0;
-        else if(wet < maxWet) {
-            double tmp = (wet - minWet) / (maxWet - minWet);
-            random *= (1.0 - tmp) * (1.0 - tmp);
-
-        }
-        int age = rand() % 100;
+        int age = rand() % 50;
         if(random < 10)
             continue;
-        else if(random < 80)
-            veget.push_back(Sapin(spawn[i], age));
+        else if(random < 70)
+            veget.push_back(Sapin(spawn[i], h, s, wet, age));
         else
-            veget.push_back(Pommier(spawn[i], age));
+            veget.push_back(Pommier(spawn[i], h, s, wet, age));
     }
+    computeSpacialisation();
 }
 
 void Foret::saveForet(std::string filename) const {
@@ -64,6 +55,7 @@ void Foret::saveForet(std::string filename) const {
 }
 
 void Foret::loadForet(std::string filename) {
+
     std::ifstream fichier(filename, std::ios::out | std::ios::binary);
     if(!fichier.is_open())
     {
@@ -87,10 +79,18 @@ void Foret::loadForet(std::string filename) {
 
         Vector2 posDenormalise = Vector2(x, y);
 
-        if(espece == "Sapin")
-            veget.push_back(Sapin(posDenormalise, age));
-        else if(espece == "Pommier")
-            veget.push_back(Pommier(posDenormalise, age));
+        int x,y;
+        array.getGridIndex(posDenormalise, x, y);
+        if(array.checkBound(x, y)) {
+            double s = terrain->getSlope().getValue(x, y);
+            double wet = terrain->getWetness().getValue(x, y);
+            double h = terrain->getHeightMap().getValue(x, y);
+
+            if (espece == "Sapin")
+                veget.push_back(Sapin(posDenormalise, h, s, wet, age));
+            else if (espece == "Pommier")
+                veget.push_back(Pommier(posDenormalise, h, s, wet, age));
+        }
     }
 
     fichier.close();
@@ -101,22 +101,105 @@ ScalarField Foret::toScalar() {
     for(int i = 0; i < veget.size(); ++i){
         int x,y;
         ret.getGridIndex(veget[i].getPosition(), x, y);
-        ret.addValue(x, y, 1.0);
+        if(array.checkBound(x, y))
+            ret.addValue(x, y, 1.0);
     }
 
     return ret;
 }
 
-//TODO
-void Foret::simule() {
+void Foret::computeSpacialisation() {
+    densiteVeget.resize(array.getSizeX() * array.getSizeY());
 
-    for(Veget v : veget){
-        v.addAge();
+    for(int i = 0; i < veget.size(); ++i){
+        int x,y;
+        array.getGridIndex(veget[i].getPosition(), x, y);
+        if(array.checkBound(x, y))
+            densiteVeget[x + array.getSizeX() * y].push_back(veget[i]);
     }
-
 }
 
-Maillage Foret::toMaillage(float hauteur) const {
+void Foret::simule() {
+    std::vector<Veget> tmp;
+    int nbMort = 0;
+    int nbNaissance = 0;
+    std::cout << "nbArbre Avant Simule : " << veget.size()<< std::endl;
+    tmp.reserve(veget.size());
+
+    int cpt = 0;
+    for(Veget v : veget) {
+        cpt++;
+        if (v.simule()){
+            tmp.push_back(v);
+
+            for(Vector2 newTree : v.reproduction()){
+                int x,y;
+                array.getGridIndex(newTree, x, y);
+                bool flag = true;
+
+                for(int tmpY = y-1; tmpY < y+1; ++tmpY){
+                    for(int tmpX = x-1; tmpX < x+1; ++tmpX){
+
+                        if(!flag)
+                            break;
+                        if(array.checkBound(tmpX, tmpY)) {
+                            for (int i = 0; i < densiteVeget[tmpX + array.getSizeX() * tmpY].size(); ++i) {
+                                if (Vector2(newTree - densiteVeget[tmpX + array.getSizeX() * tmpY][i].getPosition()).length() < densiteVeget[tmpX + array.getSizeX() * tmpY][i].getCanopee() * 10) {
+                                    flag = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if(flag && array.checkBound(x, y)){
+
+                    double s = terrain->getSlope().getValue(x, y);
+                    double wet = terrain->getWetness().getValue(x, y);
+                    double h = terrain->getHeightMap().getValue(x, y);
+
+                    if(v.getEspece() == "Sapin") {
+                        Veget tree = Sapin(newTree, h, s, wet, 1);
+                        if(tree.simule()){
+                            tmp.push_back(tree);
+                            addSpacialisation(0, 0, tmp[tmp.size() - 1]);
+                            ++nbNaissance;
+                        }
+                    }
+                    else if(v.getEspece() == "Pommier") {
+                        Veget tree = Pommier(newTree, h, s, wet, 1);
+                        if(tree.simule()){
+                            tmp.push_back(Pommier(newTree, h, s, wet, 0));
+                            addSpacialisation(x, y, tmp[tmp.size() - 1]);
+                            ++nbNaissance;
+                        }
+                    }
+
+                }
+            }
+        }
+        else {
+            ++nbMort;
+            int x,y;
+            array.getGridIndex(v.getPosition(), x, y);
+
+            if(array.checkBound(x, y)) {
+                for (int i = 0; i < densiteVeget[x + array.getSizeX() * y].size(); ++i) {
+                    if (densiteVeget[x + array.getSizeX() * y][i].getPosition() == v.getPosition()){
+                        delSpacialisation(x, y, i);
+                        break;
+                    }
+                }
+            }
+
+        }
+    }
+    veget = tmp;
+    std::cout << "nbArbre Apres Simule : " << veget.size() << " nbMorts : " << nbMort << " nbNaissances : " << nbNaissance << std::endl;
+}
+
+Maillage Foret::toMaillage() const {
     Maillage ret;
     std::vector<float> vertex;
     std::vector<unsigned int> face;
@@ -133,7 +216,9 @@ Maillage Foret::toMaillage(float hauteur) const {
 
         vertex.push_back(x);
         vertex.push_back(y);
-        vertex.push_back(z + hauteur);
+        vertex.push_back(z + (float) veget[i].getHeight());
+
+//        std::cout << veget[i].getHeight() << std::endl;
     }
 
     for(int i = 0; i < veget.size()*2; i+=2){
@@ -145,4 +230,21 @@ Maillage Foret::toMaillage(float hauteur) const {
     ret.setVertexBuffer(vertex);
     ret.setIndiceBuffer(face);
     return ret;
+}
+
+void Foret::addSpacialisation(int x, int y, const Veget& v) {
+    densiteVeget[x + array.getSizeX() * y].push_back(v);
+}
+
+void swap(std::vector<Veget>& tab, int a, int b){
+    if(a != b){
+        Veget tmp = tab[a];
+        tab[a] = tab[b];
+        tab[b] = tmp;
+    }
+}
+
+void Foret::delSpacialisation(int x, int y, int id) {
+    swap(densiteVeget[x + array.getSizeX() * y], id, densiteVeget[x + array.getSizeX() * y].size() - 1);
+    densiteVeget[x + array.getSizeX() * y].pop_back();
 }

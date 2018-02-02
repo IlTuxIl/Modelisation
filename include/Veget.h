@@ -7,12 +7,15 @@
 
 
 #include "Vector.h"
+#include <vector>
 
 enum ESPECE_ARBRE {pommier, sapin};
 
 class Veget {
 public :
-    Veget(const Vector2& pos, ESPECE_ARBRE type, int _age);
+    Veget(const Vector2& pos, ESPECE_ARBRE type, int _age, const double& maxSlope,
+          const double& altitudeMin, const double& altitudeMax, const double& minWet,
+          const double& maxWet, const double& _maxHeight, const double& h, const double& s, const double& w, const double& maxCanopee);
     Vector2 getPosition() const {return position;}
     int getAge(){ return age;}
     void addAge() {age++;}
@@ -22,7 +25,9 @@ public :
     double getCanopee()const{return curCanopee;}
     double getHeight()const{return height;}
     int getMaturitee()const{return maturite;}
-    void computeDeloppement(double slope, double wetness);
+    bool simule();
+    std::vector<Vector2> reproduction() const;
+
 protected:
     Vector2 position;
     int age;
@@ -37,12 +42,12 @@ protected:
 
 class Pommier : public Veget{
 public :
-    Pommier(const Vector2& pos, int age = 0) : Veget(pos, pommier, age), esperanceVie(100), minWetness(0.1), maxWetness(999), maxSlope(0.2f), maxHeight(10.0), maxCanopee(10.0), altitudeMin(0.0), altitudeMax(1000.0), maturite(10){};
+    Pommier(const Vector2& pos, double hauteur, double slope, double wetness, int age = 0);
 };
 
-class Sapin : public Veget{
+class Sapin : public Veget {
 public :
-    Sapin(const Vector2& pos, int age = 0) : Veget(pos, sapin, age), esperanceVie(500), minWetness(0.3), maxWetness(999), maxSlope(0.4f), maxHeight(15.0), altitudeMin(0.0), maxCanopee(7.0), altitudeMax(2000.0), maturite(20){};
+    Sapin(const Vector2 &pos, double hauteur, double slope, double wetness, int age = 0);
 };
 
 
