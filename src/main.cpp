@@ -53,17 +53,14 @@ public:
         freq.push_back(1220.0);
         freq.push_back(550.0);
 
-        ampli.push_back(300.0);
-        ampli.push_back(140.0);
-        ampli.push_back(65.0);
-        ampli.push_back(30.0);
+        ampli.push_back(700.0);
+        ampli.push_back(354.0);
+        ampli.push_back(149.0);
+        ampli.push_back(85.0);
 
 //        AnalyticHeightField hf(Vector2(0,0), Vector2(x,y), 100, 100, freq, ampli);
-//        hf.normalize();
+//        hf.retourne();
 //        hf.saveImg("data/test.ppm");
-
-//        HeightField hf;
-//        hf.load("data/test.ppm", Vector2(0,0), Vector2(x,y), 0, 500);
 
         HeightField hf;
         hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 700.0);

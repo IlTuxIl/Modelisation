@@ -23,3 +23,17 @@ AnalyticHeightField::AnalyticHeightField(Vector2 min, Vector2 max, int _sizeX, i
     }
 
 }
+
+void AnalyticHeightField::retourne() {
+
+    double min = 9999999;
+
+    for(double v : values)
+        if(v < min)
+            min = v;
+
+
+    for(int i = 0; i < values.size(); ++i)
+        values[i] = -min + values[i];
+
+}

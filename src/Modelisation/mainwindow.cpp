@@ -26,11 +26,12 @@ void MainWindow::onNoise()
     ampli.push_back(65.0);
     ampli.push_back(30.0);
 
+
     double x = 10000.0f;
     double y = 10000.0f;
 
     AnalyticHeightField ahf(Vector2(0,0), Vector2(x,y), 100, 100, freq, ampli);
-    ahf.normalize2();
+    ahf.retourne();
 
     std::string filename_std("data/noise.ppm");
     ahf.saveImg(filename_std);
