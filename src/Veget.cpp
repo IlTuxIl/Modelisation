@@ -54,9 +54,9 @@ Sapin::Sapin(const Vector2 &pos, double hauteur, double slope, double wetness, i
 }
 
 bool Veget::simule() {
-    age++;
+    age += 1;
 
-    if(age > esperanceVie/2){
+    if(age > esperanceVie/4){
         int deathRng = rand() % 100;
         if(deathRng < 10)
             return false;
@@ -64,6 +64,7 @@ bool Veget::simule() {
 
     if(developpement <= 10)
         return false;
+
 
     height = std::min(age * 0.08 * (developpement/100.0) * maxHeight, maxHeight);
     curCanopee = std::min(age * 0.6 * (developpement/100.0) * maxCanopee, maxCanopee);
@@ -73,7 +74,7 @@ bool Veget::simule() {
 std::vector<Vector2> Veget::reproduction() const {
     std::vector<Vector2> ret;
     if(age > maturite){
-        int random = rand() % (developpement/10);
+        int random = rand() % std::max((developpement/20), 1);
 
         for(int i = 0; i < random; ++i){
             double p1 = (double) rand() / RAND_MAX;
