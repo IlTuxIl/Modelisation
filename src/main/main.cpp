@@ -164,14 +164,14 @@ protected:
 
 int main(int argc, char **argv) {
 
-    Framebuffer tp;
-    tp.run();
+    /*Framebuffer tp;
+    tp.run();*/
 
-//    HeightField hf;
-//    hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 1500.0);
+    HeightField hf;
+    hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 1500.0);
 
-//    Terrain t(hf);
-//    Foret f = t.Vegetation(10.f);
+    Terrain t(hf);
+    Foret f = t.Vegetation(10.f);
 //    Foret f = Foret("data/terrain.veget", t);
 
 //    for(int i = 0; i < 15; ++i){
@@ -179,19 +179,19 @@ int main(int argc, char **argv) {
 //        f.simule();
 //    }
 
-//    ScalarField drai = t.getDrainage().racineCarre();
-//    drai = drai.normalize();
-//    ScalarField wet = t.getWetness().normalize();
-//    ScalarField slope = t.getSlope().normalize();
-//    ScalarField Pow = t.getPowerStream().normalize();
-//    ScalarField veget = f.toScalar().normalize();
+    ScalarField drai = t.getDrainage().racineCarre();
+    drai = drai.normalize();
+    ScalarField wet = t.getWetness().normalize();
+    ScalarField slope = t.getSlope().normalize();
+    ScalarField Pow = t.getPowerStream().normalize();
+    ScalarField veget = f.toScalar().normalize();
 
-//    wet.saveImg("data/Wetness.ppm");
-//    slope.saveImg("data/Slope.ppm");
-//    Pow.saveImg("data/PowerStream.ppm");
-//    drai.saveImg("data/Drainage.ppm");
-//    veget.saveImg("data/Veget.ppm");
-//    f.saveForet("data/terrain.veget");
+    wet.saveImg("data/Wetness.ppm");
+    slope.saveImg("data/Slope.ppm");
+    Pow.saveImg("data/PowerStream.ppm");
+    drai.saveImg("data/Drainage.ppm");
+    veget.saveImg("data/Veget.ppm");
+    f.saveForet("data/terrain.veget");
 
 //    HeightField hf;
 //    hf.load("data/img.ppm", Vector2(0,0), Vector2(10.f,10.f), 0, 1.0);
