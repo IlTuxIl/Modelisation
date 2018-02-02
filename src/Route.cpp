@@ -94,7 +94,6 @@ Route::Route(const Vector2& depart, const Vector2& objectif, const HeightField& 
                 c.cout = cout_voisin;
 
                 // On considère la distance euclidienne comme heurisitique
-                c.heuristique = cout_voisin + (int) distance(voisin, index_objectif);
                 c.heuristique = cout_voisin + (int) distance(voisin, index_objectif); // TODO : Ajouter pente
             }
         }
