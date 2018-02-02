@@ -11,7 +11,7 @@ include_directories(include)
 include_directories(lib)
 
 file(GLOB GKIT lib/*.cpp lib/*.h)
-file(GLOB SOURCES src/*.cpp include/*.h)
+file(GLOB SOURCES src/*.cpp include/*.h src/main/main.cpp)
 file(GLOB QTSRC src/*.cpp include/*.h src/Modelisation/*.cpp src/Modelisation/*.h)
 
 #list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")

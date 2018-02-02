@@ -89,17 +89,20 @@ public:
 
 //        hf.saveImg("data/toto.ppm");
         std::vector<Maillage *> mesh;
-        foret = f.toMaillage();
+        sapin = f.toMaillage("Sapin");
+        pommier = f.toMaillage("Pommier");
 
         _mesh = hf.getMaillage();
         _mesh.saveOBJ("data/terrain.obj");
 
         mesh.push_back(&_mesh);
-        mesh.push_back(&foret);
+        mesh.push_back(&sapin);
+        mesh.push_back(&pommier);
 
         std::vector<Color> c;
         c.push_back(Color(0.6,0.6,0.6));
         c.push_back(Color(0.0,1.0,0.0));
+        c.push_back(Color(1.0,0.0,0.0));
 
 
         r = Render(mesh, c);
@@ -131,8 +134,10 @@ public:
             ++annee;
             std::cout << "Simulation de l'année : " << annee << std::endl;
             f.simule();
-            foret.clear();
-            foret = f.toMaillage();
+            sapin.clear();
+            sapin = f.toMaillage("Sapin");
+            pommier.clear();
+            pommier = f.toMaillage("Pommier");
             canSimule = false;
             update = true;
         }
@@ -142,6 +147,7 @@ public:
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        affiche.push_back(true);
         affiche.push_back(true);
         affiche.push_back(true);
 
@@ -154,7 +160,10 @@ protected:
     Orbiter m_camera;
     Render r;
     Maillage _mesh;
-    Maillage foret;
+
+    Maillage sapin;
+    Maillage pommier;
+
     float camSpeed = 5;
     Foret f;
     Terrain t;
@@ -169,7 +178,7 @@ int main(int argc, char **argv) {
 
 //    HeightField hf;
 //    hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 1500.0);
-
+//
 //    Terrain t(hf);
 //    Foret f = t.Vegetation(10.f);
 //    Foret f = Foret("data/terrain.veget", t);
@@ -185,7 +194,7 @@ int main(int argc, char **argv) {
 //    ScalarField slope = t.getSlope().normalize();
 //    ScalarField Pow = t.getPowerStream().normalize();
 //    ScalarField veget = f.toScalar().normalize();
-
+//
 //    wet.saveImg("data/Wetness.ppm");
 //    slope.saveImg("data/Slope.ppm");
 //    Pow.saveImg("data/PowerStream.ppm");
