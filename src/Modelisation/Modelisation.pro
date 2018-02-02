@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     ../ScalarField.cpp \
     ../Vector.cpp \
     ../Foret.cpp \
-    ../Veget.cpp
+    ../Veget.cpp \
+    ../Route.cpp
 
 HEADERS  += mainwindow.h \
     ../../include/AnalyticHeightField.h \
@@ -40,7 +41,8 @@ HEADERS  += mainwindow.h \
     ../../include/ScalarField.h \
     ../../include/Vector.h \
     ../../include/Veget.h \
-    ../../include/Foret.h
+    ../../include/Foret.h \
+    ../../include/Route.h
 
 FORMS    += mainwindow.ui
 
