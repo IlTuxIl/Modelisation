@@ -20,7 +20,7 @@ public:
     void simule();
     void saveForet(std::string filename)const;
     void loadForet(std::string filename);
-    Maillage toMaillage() const;
+    Maillage toMaillage(std::string espece = "all");
     ScalarField toScalar();
 protected:
     void computeSpacialisation();

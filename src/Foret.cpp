@@ -208,29 +208,32 @@ bool Foret::checkCanopee(int x, int y, Vector2 pos) const {
     return flag;
 }
 
-Maillage Foret::toMaillage() const {
+Maillage Foret::toMaillage(std::string espece) {
     Maillage ret;
     std::vector<float> vertex;
     std::vector<unsigned int> face;
 
     for(int i = 0; i < veget.size(); ++i){
 
-        float x = (float) veget[i].getPosition().getX();
-        float y = (float) veget[i].getPosition().getY();
-        float z = (float) terrain->getHeightMap().getHeight(veget[i].getPosition());
+        if((veget[i].getEspece() == espece) || (espece.compare("all") == 0)){
 
-        vertex.push_back(x);
-        vertex.push_back(y);
-        vertex.push_back(z);
+            float x = (float) veget[i].getPosition().getX();
+            float y = (float) veget[i].getPosition().getY();
+            float z = (float) terrain->getHeightMap().getHeight(veget[i].getPosition());
 
-        vertex.push_back(x);
-        vertex.push_back(y);
-        vertex.push_back(z + (float) veget[i].getHeight());
+            vertex.push_back(x);
+            vertex.push_back(y);
+            vertex.push_back(z);
 
+            vertex.push_back(x);
+            vertex.push_back(y);
+            vertex.push_back(z + (float) veget[i].getHeight());
+
+        }
 //        std::cout << veget[i].getHeight() << std::endl;
     }
 
-    for(int i = 0; i < veget.size()*2; i+=2){
+    for(int i = 0; i < vertex.size()/3; i+=2){
         face.push_back(i);
         face.push_back(i+1);
     }
