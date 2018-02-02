@@ -14,12 +14,12 @@
 #include "Route.h"
 
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+Q_OBJECT
 
 public slots:
     void onCharger();
@@ -30,15 +30,11 @@ public:
     ~MainWindow();
 
 private:
-    bool noiseFct = false;
-    std::string noNoiseFilename;
-
-    void Affiche(std::string filename = "data/noise.ppm");
+    void Affiche(std::string filename);
 
 private:
     Ui::MainWindow *ui;
     void closeEvent (QCloseEvent * event);
-    void resizeEvent(QResizeEvent *event);
 };
 
 #endif // MAINWINDOW_H
