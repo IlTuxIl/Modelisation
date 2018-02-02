@@ -58,7 +58,7 @@ bool Veget::simule() {
 
     if(age > esperanceVie/2){
         int deathRng = rand() % 100;
-        if(deathRng < 2)
+        if(deathRng < 10)
             return false;
     }
 
@@ -79,8 +79,8 @@ std::vector<Vector2> Veget::reproduction() const {
             double p1 = (double) rand() / RAND_MAX;
             double p2 = (double) rand() / RAND_MAX;
 
-            double x = position.getX() + (p1-0.5) * (curCanopee * 10);
-            double y = position.getY() + (p2-0.5) * (curCanopee * 10);
+            double x = position.getX() + (p1-0.5) * (curCanopee * 50);
+            double y = position.getY() + (p2-0.5) * (curCanopee * 50);
 
             ret.push_back(Vector2(x, y));
         }

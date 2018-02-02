@@ -32,8 +32,8 @@ std::vector<float> Maillage::getVertex() {
 //        ret.push_back((float) s.y());
 //        ret.push_back((float) s.z());
 //    }
-
     return vertex;
+
 }
 
 std::vector<unsigned int> Maillage::getIndice() {
@@ -41,7 +41,7 @@ std::vector<unsigned int> Maillage::getIndice() {
 }
 
 size_t Maillage::getVertexBufferSize() const {
-    return vertex.size() * sizeof(float) * 3;
+    return vertex.size() * sizeof(float);
 }
 
 size_t Maillage::getIndiceBufferSize() const {

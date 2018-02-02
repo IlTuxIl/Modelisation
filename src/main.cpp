@@ -72,7 +72,8 @@ public:
         t = Terrain(hf);
         f = t.Vegetation(10.f);
         for(int i = 0; i < 1; ++i){
-            std::cout << "Simulation de la " << i << " annees..." << std::endl;
+            ++annee;
+            std::cout << "Simulation de l'année : " << annee << std::endl;
             f.simule();
         }
 //        f.saveForet("data/terrain.veget");
@@ -130,7 +131,10 @@ public:
         std::vector<bool> affiche;
 
         if(key_state(' ') && canSimule){
+            ++annee;
+            std::cout << "Simulation de l'année : " << annee << std::endl;
             f.simule();
+            foret.clear();
             foret = f.toMaillage();
             canSimule = false;
             update = true;
@@ -141,8 +145,6 @@ public:
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        if(key_state(' '))
-            update = true;
         affiche.push_back(true);
         affiche.push_back(true);
 
@@ -159,10 +161,9 @@ protected:
     float camSpeed = 5;
     Foret f;
     Terrain t;
+    int annee = 0;
     bool canSimule = true;
 };
-
-
 
 int main(int argc, char **argv) {
 

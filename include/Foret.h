@@ -26,7 +26,7 @@ protected:
     void computeSpacialisation();
     void addSpacialisation(int x, int y, const Veget& v);
     void delSpacialisation(int x, int y, int id);
-
+    bool checkCanopee(int x, int y, Vector2 pos) const;
     Terrain* terrain;
     std::vector<Veget> veget;
     Array array;
