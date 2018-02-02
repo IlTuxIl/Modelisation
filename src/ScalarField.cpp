@@ -2,6 +2,7 @@
 // Created by julien on 04/12/17.
 //
 
+#include <HeightField.h>
 #include "ScalarField.h"
 
 ScalarField::ScalarField(const Array &a, double defValue) : Array(a){
@@ -68,6 +69,22 @@ Image ScalarField::saveImg(std::string filename) {
 
     Image img(filename, sizeX, sizeY, tmp.data());
     return img;
+}
+
+void ScalarField::normalize2(){
+    double max = 0.0;
+    double min = 9999999;
+
+    for(double v : values){
+        if(v > max)
+            max = v;
+        if(v < min)
+            min = v;
+    }
+
+    for(int i = 0; i < values.size(); ++i)
+        values[i] = ((values[i] - min) / (max - min)) * 255;
+
 }
 
 ScalarField ScalarField::normalize() const {

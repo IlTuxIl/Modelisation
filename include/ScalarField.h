@@ -37,6 +37,7 @@ public:
         return values[x];
     }
 
+    void normalize2();
     ScalarField normalize() const ;
     ScalarField racineCarre() const ;
 
