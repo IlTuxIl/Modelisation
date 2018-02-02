@@ -22,12 +22,11 @@ Compilation :
 Execution :
 	Affichage 3D (sans les routes)
 		./Modelisation
-	Affichage QT (sans la 3D)
+	Affichage QT (sans la 3D, végétation non-simulée)
 		./QTModelisation
 
 La touche espace permet de simuler 1 année (uniquement veget).
 
 Les images généré (Wetness.ppm, Slope.ppm, PowerStream.ppm, Drainage.ppm
 Veget.ppm et Route.ppm) sont dans le dossier data/
-
 

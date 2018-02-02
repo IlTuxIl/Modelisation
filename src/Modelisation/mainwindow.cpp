@@ -35,15 +35,13 @@ void MainWindow::onNoise()
 
     std::string filename_std("data/noise.ppm");
     ahf.saveImg(filename_std);
-//
-//    ScalarField s1 = ahf.Slope();
-//    s1.saveImg("data/slope.ppm");
-//
-//    ScalarField s2 = ahf.Drainage();
-//    s2.normalize();
-//    s2.saveImg("data/drainage.ppm");
 
     Terrain t(ahf);
+    Route r(t);
+
+    r.computeRoute(Vector2(150.0, 203.0), Vector2(8600.f,2200.f));
+    r.computeRoute(Vector2(150.0, 203.0), Vector2(7050.f, 8502.f));
+
     Foret f = t.Vegetation(10.f);
 
     ScalarField drai = t.getDrainage().racineCarre();
@@ -54,11 +52,7 @@ void MainWindow::onNoise()
     slope.saveImg("data/slope.ppm");
     drai.saveImg("data/drainage.ppm");
     veget.saveImg("data/veget.ppm");
-
-
-    // TODO remplir image Foret -> s3.saveImg("../../data/veget.ppm");
-
-    // TODO remplir image Route -> s4.saveImg("../../data/route.ppm");
+    r.toScalar().saveImg("data/route.ppm");
 
     Affiche(filename_std);
 }
@@ -95,7 +89,6 @@ void MainWindow::onCharger()
         drai.saveImg("data/drainage.ppm");
         veget.saveImg("data/veget.ppm");
         route.saveImg("data/route.ppm");
-        // TODO remplir image Route -> s4.saveImg("../../data/route.ppm");
 
         Affiche(filename_std);
     }
