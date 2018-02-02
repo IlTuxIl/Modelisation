@@ -80,16 +80,21 @@ void MainWindow::onCharger()
 
         Terrain t(hf);
         Foret f = t.Vegetation(10.f);
+        Route r(t);
+
+        r.computeRoute(Vector2(150.0, 203.0), Vector2(8600.f,2200.f));
+        r.computeRoute(Vector2(150.0, 203.0), Vector2(7050.f, 8502.f));
 
         ScalarField drai = t.getDrainage().racineCarre();
         drai = drai.normalize();
         ScalarField slope = t.getSlope().normalize();
         ScalarField veget = f.toScalar().normalize();
+        ScalarField route = r.toScalar();
 
         slope.saveImg("data/slope.ppm");
         drai.saveImg("data/drainage.ppm");
         veget.saveImg("data/veget.ppm");
-
+        route.saveImg("data/route.ppm");
         // TODO remplir image Route -> s4.saveImg("../../data/route.ppm");
 
         Affiche(filename_std);

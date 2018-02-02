@@ -2,6 +2,7 @@
 #include <AnalyticHeightField.h>
 #include <LayerField.h>
 #include <Terrain.h>
+#include <Route.h>
 
 #include "HeightField.h"
 #include "Image.h"
@@ -173,13 +174,22 @@ protected:
 
 int main(int argc, char **argv) {
 
-    Framebuffer tp;
-    tp.run();
+//    Framebuffer tp;
+//    tp.run();
 
-//    HeightField hf;
-//    hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 1500.0);
-//
-//    Terrain t(hf);
+    HeightField hf;
+    hf.load("data/terrain.ppm", Vector2(0,0), Vector2(10000.f,10000.f), 0, 700.0);
+    Terrain t(hf);
+
+    Route r(t);
+
+    r.computeRoute(Vector2(150.0, 203.0), Vector2(8600.f,2200.f));
+    r.computeRoute(Vector2(150.0, 203.0), Vector2(7050.f, 8502.f));
+
+    ScalarField route = r.toScalar();
+
+    route.saveImg("data/route.ppm");
+
 //    Foret f = t.Vegetation(10.f);
 //    Foret f = Foret("data/terrain.veget", t);
 

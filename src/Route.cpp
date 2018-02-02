@@ -19,25 +19,35 @@ bool operator==(Index const &a, Index const& b)
     return ( (a.x == b.x) && (a.y == b.y) );
 }
 
-Route::Route(const Vector2& depart, const Vector2& objectif, const HeightField& hf)
+Route::Route(const Terrain& hf)
 {
+    terrain = hf;
     //Case t_cases[hf.getSizeGridX()][hf.getSizeGridY()];
-    std::vector<std::vector<Case>> t_cases(hf.getSizeGridX());
-    for(uint i = 0; i < hf.getSizeGridX(); i++)
-    {
-        t_cases[i].resize(hf.getSizeGridY());
-    }
+    t_cases.resize(hf.getArray().getSizeX());
 
+    for(uint i = 0; i < hf.getArray().getSizeX(); i++)
+        t_cases[i].resize(hf.getArray().getSizeY());
+
+    for(int i = 0; i < hf.getArray().getSizeX(); i++){
+        for(int j = 0; j < hf.getArray().getSizeY(); ++j) {
+            t_cases[i][j].position = Index(i, j);
+        }
+    }
+}
+
+void Route::computeRoute(const Vector2 &depart, const Vector2 &objectif) {
     // Trouve pour départ et objectif les indes correspondants
-    Index index_depart((depart.getX() - hf.getXMin()) / hf.getSizeGridX(),
-                       (depart.getY() - hf.getYMin()) / hf.getSizeGridY());
-    Index index_objectif((objectif.getX() - hf.getXMin()) / hf.getSizeGridX(),
-                         (objectif.getY() - hf.getYMin()) / hf.getSizeGridY());
+    Index index_depart((depart.getX() - terrain.getArray().getXMin()) / terrain.getArray().getSizeGridX(),
+                       (depart.getY() - terrain.getArray().getYMin()) / terrain.getArray().getSizeGridY());
+    Index index_objectif((objectif.getX() - terrain.getArray().getXMin()) / terrain.getArray().getSizeGridX(),
+                         (objectif.getY() - terrain.getArray().getYMin()) / terrain.getArray().getSizeGridY());
 
     // Initialisation des variables
     std::set<Index> a_traiter, traites;
     a_traiter.insert(index_depart);
     t_cases[index_depart.x][index_depart.y].cout = 0;
+
+    std::vector<Index> tmpChemin;
 
     while (!a_traiter.empty())
     {
@@ -49,11 +59,12 @@ Route::Route(const Vector2& depart, const Vector2& objectif, const HeightField& 
         {
             cout = t_cases[pos_courante.x][pos_courante.y].cout;
             // On reconstruit le chemin
-            while (t_cases[pos_courante.x][pos_courante.y].parent != NULL)
+            while (!(t_cases[pos_courante.x][pos_courante.y].position == index_depart))
             {
-                chemin.push_back(pos_courante);
-                pos_courante = *t_cases[pos_courante.x][pos_courante.y].parent;//////// TODO
+                tmpChemin.push_back(pos_courante);
+                pos_courante = t_cases[pos_courante.x][pos_courante.y].parent;//////// TODO
             }
+            chemin.push_back(tmpChemin);
             return;
         }
 
@@ -65,12 +76,12 @@ Route::Route(const Vector2& depart, const Vector2& objectif, const HeightField& 
         float cout_actuel = t_cases[pos_courante.x][pos_courante.y].cout;
 
         // Pour chacune des positions voisines
-        std::vector<Index> voisins = getVoisins(pos_courante, hf.getSizeX(), hf.getSizeY());
+        std::vector<Index> voisins = getVoisins(pos_courante, terrain.getArray().getSizeX(), terrain.getArray().getSizeY());
 
         for(int i = 0; i < voisins.size(); ++i)
         {
             Index voisin = voisins[i];
-            float cout_voisin = calculeCout(pos_courante, voisin, hf) + cout_actuel;
+            float cout_voisin = calculeCout(pos_courante, voisin) + cout_actuel;
             bool best = false;
 
             // On vérifie si c'est la première fois qu'on passe sur cette case
@@ -79,7 +90,7 @@ Route::Route(const Vector2& depart, const Vector2& objectif, const HeightField& 
                 best = true;
                 a_traiter.insert(voisin);
             }
-            // On regarde si on a trouvé un meilleur chemin pour cette case
+                // On regarde si on a trouvé un meilleur chemin pour cette case
             else if(t_cases[voisin.x][voisin.y].cout > cout_voisin)
             {
                 best = true;
@@ -89,17 +100,14 @@ Route::Route(const Vector2& depart, const Vector2& objectif, const HeightField& 
             if (best)
             {
                 // On met à jour la case
-                Case& c = t_cases[voisin.x][voisin.y];
-                c.parent = &pos_courante;
-                c.cout = cout_voisin;
-
+                t_cases[voisin.x][voisin.y].parent = pos_courante;
+                t_cases[voisin.x][voisin.y].cout = cout_voisin;
                 // On considère la distance euclidienne comme heurisitique
-                c.heuristique = cout_voisin + (int) distance(voisin, index_objectif); // TODO : Ajouter pente
+                t_cases[voisin.x][voisin.y].heuristique = cout_voisin + (int) distance(voisin, index_objectif);
             }
         }
     }
 
-    // Pas de solution (ne devrait pas arrivé dans le cas du robot)
     assert(false);
 }
 
@@ -119,9 +127,12 @@ std::vector<Index> Route::getVoisins(const Index& p, int tailleX, int tailleY)
     return res;
 }
 
-float Route::calculeCout(const Index& pos_courante,const Index& voisin, const HeightField& hf)
+float Route::calculeCout(const Index& pos_courante,const Index& voisin)
 {
-    return 1.f; // TODO Prendre en compte la distance et la pente
+    float sCur = terrain.getHeightMap().getValue(pos_courante.x, pos_courante.y);
+    float sNext = terrain.getHeightMap().getValue(voisin.x, voisin.y);
+
+    return distance(pos_courante, voisin) + abs(sCur - sNext);
 }
 
 Index Route::findBest(const std::set<Index> &liste, const std::vector<std::vector<Case>>& t_cases)
@@ -141,4 +152,19 @@ Index Route::findBest(const std::set<Index> &liste, const std::vector<std::vecto
         }
     }
     return meilleurI;
+}
+
+ScalarField Route::toScalar() {
+    ScalarField ret(terrain.getArray(), 0.f);
+
+    for(int j = 0; j < chemin.size(); ++j) {
+        int size = chemin[j].size()-1;
+        ret.setValue(chemin[j][0].x, chemin[j][0].y, 255);
+
+        for (int i = 1; i < chemin[j].size() - 1; ++i)
+            ret.setValue(chemin[j][i].x, chemin[j][i].y, 100);
+
+        ret.setValue(chemin[j][size].x, chemin[j][size].y, 255);
+    }
+    return ret;
 }

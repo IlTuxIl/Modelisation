@@ -27,7 +27,6 @@ class HeightField : public ScalarField {
     HeightField reSample(int _sizeX, int _sizeY);
 //    void noise(const Vector2& min, const Vector2& max, double zMin, double zMax, int _sizeX, int _sizeY);
     void load(std::string filename, const Vector2& min, const Vector2& max, double zMin, double zMax);
-    void destroy();
     Vector3 getNormal(int x, int y)const;
     Maillage getMaillage();
 
